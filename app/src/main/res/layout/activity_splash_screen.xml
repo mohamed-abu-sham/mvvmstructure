@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.selwantech.raheeb.ui.splashscreen.SplashScreenViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/app_background">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_margin="@dimen/_25sdp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/logo" />
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/_7sdp"
+            android:id="@+id/progress"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_50sdp"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="@color/white"
+            android:progressBackgroundTint="@color/gray"/>
+    </RelativeLayout>
+
+</layout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.selwantech.raheeb.ui.emptyfragment.EmptyFragmentViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_effective"
+        android:id="@+id/container">
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:onClick="@{() -> viewModel.onBtnClick()}" />
+    </RelativeLayout>
+
+</layout>

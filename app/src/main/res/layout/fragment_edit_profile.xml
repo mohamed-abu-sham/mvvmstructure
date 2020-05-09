@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.selwantech.raheeb.ui.auth.editprofile.EditProfileViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="100dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:id="@+id/mainLayout"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/linearAddImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|start"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_10sdp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/ic_camera_green" />
+
+                        <LinearLayout
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="@dimen/_60sdp"
+                                android:layout_height="@dimen/_60sdp">
+
+                                <RelativeLayout
+                                    android:layout_width="@dimen/_70sdp"
+                                    android:layout_height="@dimen/_70sdp">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="@dimen/_50sdp"
+                                        android:layout_height="@dimen/_50sdp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerInParent="true"
+                                        android:visibility="visible"
+                                        app:cardCornerRadius="@dimen/_25sdp"
+                                        app:cardBackgroundColor="@color/white"
+                                        app:cardElevation="0dp">
+
+                                        <ImageView
+                                            android:id="@+id/imgPicture"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_gravity="center"
+                                            android:scaleType="centerCrop"
+                                            app:srcCompat="@drawable/ic_profile" />
+
+                                    </androidx.cardview.widget.CardView>
+
+                                </RelativeLayout>
+
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="@dimen/_25sdp"
+                                    android:layout_height="@dimen/_25sdp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentBottom="true"
+                                    app:cardBackgroundColor="@color/colorPrimaryDark"
+                                    app:cardCornerRadius="@dimen/_17sdp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/imgUpdateProfilePicture"
+                                        android:layout_width="@dimen/_15sdp"
+                                        android:layout_height="@dimen/_15sdp"
+                                        android:layout_gravity="center"
+                                        android:onClick="@{() -> viewModel.updatePictureClick()}"
+                                        android:tint="@color/white"
+                                        app:srcCompat="@drawable/ic_camera" />
+
+                                </androidx.cardview.widget.CardView>
+
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="@string/profile_picture"
+                            android:textColor="@color/very_light_blue"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_2sdp"
+                        app:cardElevation="1dp">
+
+                        <EditText
+                            android:id="@+id/edEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/white"
+                            android:drawableStart="@drawable/ic_email_nav"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:hint="@string/user_name"
+                            android:padding="10dp"
+                            android:textSize="16sp" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_2sdp"
+                        app:cardElevation="1dp">
+
+                        <TextView
+                            android:id="@+id/edPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:background="@color/white"
+                            android:cursorVisible="true"
+                            android:drawableStart="@drawable/ic_phone"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:padding="10dp"
+                            android:text="@string/phone_number"
+                            android:textColor="@color/edit_profile_gray_color"
+                            android:drawableTint="@color/navigation_gray"
+                            android:textSize="16sp" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_2sdp"
+                        app:cardElevation="1dp">
+
+                        <TextView
+                            android:id="@+id/edChangePassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:background="@color/white"
+                            android:drawableStart="@drawable/ic_lock_nav_register"
+                            android:drawableEnd="@drawable/ic_arrow_forward_black"
+                            android:onClick="@{() -> viewModel.changePasswordClicked()}"
+                            android:padding="10dp"
+                            android:text="@string/change_password"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:textSize="16sp" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_2sdp"
+                        app:cardElevation="1dp">
+
+                        <EditText
+                            android:id="@+id/edUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/white"
+                            android:drawableStart="@drawable/ic_profile_nav_register"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:hint="@string/user_name"
+                            android:padding="10dp"
+                            android:textSize="16sp" />
+                    </androidx.cardview.widget.CardView>
+
+                    <Button
+                        android:id="@+id/btnSignup"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_below="@id/mainLayout"
+                        android:layout_margin="@dimen/_30sdp"
+                        android:background="@drawable/shape_of_logo"
+                        android:onClick="@{() -> viewModel.onBtnClick()}"
+                        android:text="@string/save_changes"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+</layout>

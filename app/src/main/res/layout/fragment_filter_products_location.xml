@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.selwantech.raheeb.ui.menufragments.filterproductslocation.FilterProductLocationViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:id="@+id/container">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ToolbarColoredBackArrowDark" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/toolbar">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+            <RelativeLayout
+                android:id="@+id/itemView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/imgArrow"
+                    android:layout_toEndOf="@+id/cardView"
+                    android:text="amman"
+                    android:gravity="center|start"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/imgArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:textSize="12sp"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/distance"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5km"
+                android:id="@+id/tvSelectedDis"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textSize="12sp"
+                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    app:srcCompat="@drawable/ic_location"
+                    android:tint="@color/colorPrimaryDark"
+                    android:layout_marginTop="@dimen/_3sdp"/>
+
+                <com.selwantech.raheeb.seekbar.RangeSeekBar
+                    android:id="@+id/seekbarKm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    app:rsb_gravity="bottom"
+                    app:rsb_mode="single"
+                    app:rsb_indicator_background_color="@color/colorAccent"
+                    app:rsb_progress_color="@color/colorPrimaryDark"
+                    app:rsb_step_auto_bonding="true"
+                    app:rsb_step_color="@color/colorPrimaryDark"
+                    app:rsb_step_drawable="@drawable/dot_blue"
+                    app:rsb_step_height="@dimen/_5sdp"
+                    app:rsb_step_width="@dimen/_5sdp"
+                    app:rsb_step_radius="4dp"
+                    app:rsb_steps="4"
+                    app:rsb_thumb_drawable="@drawable/thumb_blue"
+                    app:rsb_thumb_width="@dimen/_14sdp"
+                    app:rsb_thumb_height="@dimen/_14sdp"
+                    app:rsb_tick_mark_layout_gravity="top"
+                    app:rsb_tick_mark_mode="other"
+                    app:rsb_tick_mark_text_array="@array/KmArray"
+                    app:rsb_tick_mark_text_color="@color/text_gray"
+                    app:rsb_tick_mark_text_size="10sp"
+                    app:rsb_tick_mark_text_margin="@dimen/_12sdp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    app:srcCompat="@drawable/ic_location"
+                    android:tint="@color/colorPrimaryDark"
+                    android:layout_marginTop="@dimen/_3sdp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginEnd="@dimen/_45sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:background="@drawable/shape_of_logo"
+            android:onClick="@{() -> viewModel.onApplyClicked()}"
+            android:text="@string/apply"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+</layout>

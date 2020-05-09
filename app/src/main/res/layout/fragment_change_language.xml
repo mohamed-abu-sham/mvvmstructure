@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.selwantech.raheeb.ui.changelanguage.ChangeLanguageViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:text="@string/please_choose_your_preferred_language"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTitle"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/linearUser"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_115sdp"
+                    android:background="@drawable/background_with_shadow_solid"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.onArClick()}"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/checkAr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:button="@drawable/check_box_selector_language"
+                        android:checked="false"
+                        android:enabled="false" />
+
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        app:srcCompat="@drawable/ic_saudi" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:text="@string/arabic"
+                        android:textColor="@color/very_light_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearFactory"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_115sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:background="@drawable/background_with_shadow_solid"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.onEnClick()}"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/checkEn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:button="@drawable/check_box_selector_language"
+                        android:checked="false"
+                        android:enabled="false" />
+
+                    <ImageView
+                        android:id="@+id/imgEnFlag"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/flag_united_kingdom" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:text="@string/english"
+                        android:textColor="@color/very_light_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/shape_of_logo"
+                android:onClick="@{() -> viewModel.saveClicked()}"
+                android:text="@string/save_changes"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "363560159806",
+    "firebase_url": "https://raheeb-7e8a5.firebaseio.com",
+    "project_id": "raheeb-7e8a5",
+    "storage_bucket": "raheeb-7e8a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363560159806:android:44a3c48b2d18e095f41f6f",
+        "android_client_info": {
+          "package_name": "com.selwantech.raheeb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "363560159806-5svsqt6op277qvu85s1faujbd4sc36td.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.selwantech.raheeb",
+            "certificate_hash": "3876a727df525deaf08628407894d60265fc0f12"
+          }
+        },
+        {
+          "client_id": "363560159806-k1kiesg51o2htbprrudbb9lk5lapiu23.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDush2X-qRdsPfun85e6K-dMYiNiGf7rzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "363560159806-k1kiesg51o2htbprrudbb9lk5lapiu23.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,11 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.ViewModelProviderFactory;
 import com.selwantech.raheeb.databinding.ActivityEmptyBinding;
 import com.selwantech.raheeb.model.DataExample;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
+import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import java.util.List;
 

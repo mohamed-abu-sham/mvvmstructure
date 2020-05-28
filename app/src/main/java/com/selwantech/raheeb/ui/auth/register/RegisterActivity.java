@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.ViewModelProviderFactory;
 import com.selwantech.raheeb.databinding.ActivityRegisterBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
+import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 

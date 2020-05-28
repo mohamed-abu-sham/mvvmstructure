@@ -1,7 +1,7 @@
 package com.selwantech.raheeb.repository.network;
 
 public class ApiConstants {
-    public static final String BASE_URL = "http://dev.365khadmat.tech/api/";
+    public static final String BASE_URL = "http://raheeb.selwantech.tech/api/";
     public static final String GET_DATA = "user/1/categories";
     public static final String PLATFORM = "android";
 
@@ -9,7 +9,7 @@ public class ApiConstants {
         public static final String VERIFY_PHONE = "auth/verifyPhone";
         public static final String VERIFY_CODE = "auth/verifyPhone/check-code";
         public static final String RESEND_CODE = "auth/verifyPhone/reset-code";
-        public static final String REGISTER_USER = "auth/register";
+        public static final String REGISTER_USER = "auth/new_register";
         public static final String LOGIN_USER = "auth/login";
         public static final String LOGIN_SOCIAL = "auth/login/socialMedia";
         public static final String FORGET_PASSWORD = "auth/forgotPassword/verifyPhone";
@@ -21,13 +21,12 @@ public class ApiConstants {
         public static final String UPDATE_PROFILE_PICTURE = "user/update/avatar";
     }
 
-    public class apiHomeService {
-        public static final String HOME_CATEGORIES = "app/home";
-        public static final String CATEGORY_SERVICES = "services/category/{category_id}";
+    public class apiProductService {
+        public static final String PRODUCTS = "posts";
     }
 
-    public class apiWalletService {
-        public static final String WALLET = "user/profile";
+    public class apiCategoryService {
+        public static final String ALL_CATEGORIES = "categories";
     }
 
     public class apiAddressService {

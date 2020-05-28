@@ -2,19 +2,19 @@ package com.selwantech.raheeb.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.selwantech.raheeb.databinding.CellLoadMoreBinding;
 import com.selwantech.raheeb.databinding.CellProductBinding;
-import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.interfaces.OnLoadMoreListener;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.Product;
 import com.selwantech.raheeb.ui.base.BaseViewHolder;
+import com.selwantech.raheeb.viewmodel.ItemProductViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,13 +137,11 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            GeneralFunction.loadImage(mContext,mProductList.get(position).getImage(),mBinding.imgProductPicture);
-            mBinding.imgProductPicture.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mRecyclerClick.onClick(mProductList.get(position),position);
-                }
-            });
+            if (mBinding.getViewModel() == null) {
+                mBinding.setViewModel(new ItemProductViewModel(mContext, mProductList.get(position), position, mRecyclerClick));
+            } else {
+                mBinding.getViewModel().setProduct(mProductList.get(position));
+            }
         }
 
     }

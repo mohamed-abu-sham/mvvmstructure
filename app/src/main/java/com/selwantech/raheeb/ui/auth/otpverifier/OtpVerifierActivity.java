@@ -5,10 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.ViewModelProviderFactory;
 import com.selwantech.raheeb.databinding.ActivityOtpVerifierBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
+import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
@@ -20,8 +21,8 @@ public class OtpVerifierActivity extends BaseActivity<ActivityOtpVerifierBinding
     private OtpVerifierViewModel mOtpViewModel;
     private ActivityOtpVerifierBinding mViewBinding;
 
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, OtpVerifierActivity.class);
+    public static Intent getStartIntent(Context context, int type) {
+        Intent intent = new Intent(context, OtpVerifierActivity.class).putExtra(AppConstants.BundleData.TYPE, type);
         return intent;
     }
 
@@ -56,6 +57,7 @@ public class OtpVerifierActivity extends BaseActivity<ActivityOtpVerifierBinding
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewBinding = getViewDataBinding();
+        mOtpViewModel.setType(getIntent().getIntExtra(AppConstants.BundleData.TYPE, 0));
         mOtpViewModel.setUp();
     }
 

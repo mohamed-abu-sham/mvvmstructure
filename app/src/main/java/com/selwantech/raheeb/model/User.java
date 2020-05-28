@@ -6,8 +6,7 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private static User objUser = null;
-    @SerializedName("token")
-    String token;
+
     @SerializedName("avatar")
     String avatar = "";
     @SerializedName("is_blocked")
@@ -28,6 +27,12 @@ public class User implements Serializable {
     private String password = "";
     @SerializedName("password_confirmation")
     private String password_confirmation = "";
+    @SerializedName("token")
+    String token;
+    @SerializedName("firebase_token")
+    String firebase_token;
+    @SerializedName("platform")
+    String platform = "android";
 
     private User() {
 
@@ -138,5 +143,21 @@ public class User implements Serializable {
 
     public void setSocial(boolean social) {
         isSocial = social;
+    }
+
+    public String getFirebase_token() {
+        return firebase_token;
+    }
+
+    public void setFirebase_token(String firebase_token) {
+        this.firebase_token = firebase_token;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 }

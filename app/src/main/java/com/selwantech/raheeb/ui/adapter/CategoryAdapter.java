@@ -2,17 +2,15 @@ package com.selwantech.raheeb.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.selwantech.raheeb.databinding.CellCategoryBinding;
-import com.selwantech.raheeb.databinding.CellHomeBinding;
-import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.Category;
 import com.selwantech.raheeb.ui.base.BaseViewHolder;
+import com.selwantech.raheeb.viewmodel.ItemCategoryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,14 +79,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-//            this.mBinding.tvName.setText(mCategoryList.get(position).getName());
-//            GeneralFunction.loadImage(mContext, mCategoryList.get(position).getImage(), this.mBinding.imgPicture);
-//            this.mBinding.cardFavoriteCell.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mRecyclerClick.onClick(mCategoryList.get(position), position);
-//                }
-//            });
+            if (mBinding.getViewModel() == null) {
+                mBinding.setViewModel(new ItemCategoryViewModel(mContext, mCategoryList.get(position), position, mRecyclerClick));
+            } else {
+                mBinding.getViewModel().setCategory(mCategoryList.get(position));
+            }
         }
 
     }

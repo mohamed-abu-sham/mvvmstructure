@@ -1,11 +1,9 @@
 package com.selwantech.raheeb.ui.category;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -15,20 +13,22 @@ import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentCategoryBinding;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.Category;
-import com.selwantech.raheeb.model.Slider;
 import com.selwantech.raheeb.repository.DataManager;
+import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.adapter.CategoryAdapter;
-import com.selwantech.raheeb.ui.adapter.HomeAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
+import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.SpacesItemDecoration;
+
+import java.util.ArrayList;
 
 public class CategoryViewModel extends BaseViewModel<CategoryNavigator, FragmentCategoryBinding> implements RecyclerClick<Category> {
 
     CategoryAdapter categoryAdapter;
     boolean isRefreshing = false;
     boolean isRetry = false;
-
+    boolean enableLoading = false;
     public <V extends ViewDataBinding, N extends BaseNavigator> CategoryViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (CategoryNavigator) navigation, (FragmentCategoryBinding) viewDataBinding);
     }
@@ -64,53 +64,34 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator, Fragment
 
     }
 
-
     public void getData() {
-//        if (!isRefreshing() && !isRetry()) {
-//            showLoading();
-//        }
-//        getDataManager().getHomeService().getDataApi().getHomeCategories()
-//                .toObservable()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(new CustomObserverResponse<Home>(new APICallBack<Home>() {
-//                    @Override
-//                    public void onSuccess(Home response) {
-//                        checkIsLoadMoreAndRefreshing(true);
-//                        categoryAdapter.addItems(response.getCategoryList());
-//                        notifiAdapter();
-//                        if (response.getSliderList().size() > 0) {
-//                            setUpViewPager(response.getSliderList());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(String error, int errorCode) {
-//                        if (categoryAdapter.getItemCount() == 0) {
-//                            showNoDataFound();
-//                        }
-//                        showSnackBar(getMyContext().getString(R.string.error),
-//                                error, getMyContext().getResources().getString(R.string.OK),
-//                                new SnackViewBulider.SnackbarCallback() {
-//                                    @Override
-//                                    public void onActionClick(Snackbar snackbar) {
-//                                        snackbar.dismiss();
-//                                    }
-//                                });
-//                        checkIsLoadMoreAndRefreshing(false);
-//                    }
-//                }));
+        if (!isRefreshing() && !isRetry()) {
+            enableLoading = true;
+        }
+        getDataManager().getCategoryService().getAllCategories(getMyContext(), enableLoading, new APICallBack<ArrayList<Category>>() {
+            @Override
+            public void onSuccess(ArrayList<Category> response) {
+                checkIsLoadMoreAndRefreshing(true);
+                categoryAdapter.addItems(response);
+                notifiAdapter();
+            }
 
-        categoryAdapter.addItem(new Category());
-        categoryAdapter.addItem(new Category());
-        categoryAdapter.addItem(new Category());
-        categoryAdapter.addItem(new Category());
-        categoryAdapter.addItem(new Category());
-        categoryAdapter.addItem(new Category());
-        categoryAdapter.addItem(new Category());
-        categoryAdapter.addItem(new Category());
-        categoryAdapter.addItem(new Category());
-        categoryAdapter.addItem(new Category());
+            @Override
+            public void onError(String error, int errorCode) {
+                if (categoryAdapter.getItemCount() == 0) {
+                    showNoDataFound();
+                }
+                showSnackBar(getMyContext().getString(R.string.error),
+                        error, getMyContext().getResources().getString(R.string.ok),
+                        new SnackViewBulider.SnackbarCallback() {
+                            @Override
+                            public void onActionClick(Snackbar snackbar) {
+                                snackbar.dismiss();
+                            }
+                        });
+                checkIsLoadMoreAndRefreshing(false);
+            }
+        });
     }
 
     private void showNoDataFound() {
@@ -160,7 +141,7 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator, Fragment
         } else if (isRetry()) {
             finishRetry(isSuccess);
         } else {
-            hideLoading();
+            enableLoading = false;
         }
     }
 

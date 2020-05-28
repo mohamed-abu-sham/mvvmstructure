@@ -4,19 +4,21 @@
 
     <data>
         <variable
-            name="all"
-            type="com.selwantech.raheeb.ui.adapter.HomeAdapter" />
+            name="viewModel"
+            type="com.selwantech.raheeb.viewmodel.ItemProductViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimaryDark"
+        android:onClick="@{viewModel::onItemClick}">
         <ImageView
             android:id="@+id/imgProductPicture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            imageUrl="@{viewModel.product.images.get(0).image}"
             android:scaleType="fitXY"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,7 +31,8 @@
                 app:srcCompat="@drawable/ic_shipping"
                 android:id="@+id/imgShipping"
                 android:layout_marginEnd="@dimen/_7sdp"
-                android:layout_marginBottom="@dimen/_4sdp"/>
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:visibility="@{viewModel.isShipping}" />
         </LinearLayout>
 
     </RelativeLayout>

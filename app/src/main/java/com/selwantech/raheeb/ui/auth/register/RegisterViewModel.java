@@ -1,31 +1,32 @@
 package com.selwantech.raheeb.ui.auth.register;
 
 import android.content.Context;
-import android.util.Patterns;
 
 import androidx.databinding.ViewDataBinding;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityRegisterBinding;
+import com.selwantech.raheeb.enums.PhoneNumberTypes;
 import com.selwantech.raheeb.helper.SessionManager;
-import com.selwantech.raheeb.model.RegisterResponse;
 import com.selwantech.raheeb.model.User;
+import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
 import com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-
 public class RegisterViewModel extends BaseViewModel<RegisterNavigator, ActivityRegisterBinding> {
 
     public <V extends ViewDataBinding, N extends BaseNavigator> RegisterViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (RegisterNavigator) navigation, (ActivityRegisterBinding) viewDataBinding);
+    }
+
+    @Override
+    protected void setUp() {
+
     }
 
     public void privacyPolicyClicked() {
@@ -46,52 +47,42 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator, Activity
                         });
                 return;
             }
-            getMyContext().startActivity(OtpVerifierActivity.getStartIntent(getMyContext()));
-//            registerUser();
+            generateUserObj();
+            sendOtp();
         }
     }
 
-    public void registerUser() {
-        getDataManager().getAuthService().getDataApi().registerUser(getUserObj())
-                .toObservable()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<RegisterResponse>(getMyContext(), true, new APICallBack<RegisterResponse>() {
-                    @Override
-                    public void onSuccess(RegisterResponse response) {
-                        User user = response.getUser();
-                        user.setToken(response.getJwt_token());
-                        User.getInstance().setObjUser(user);
-                        SessionManager.createUserLoginSession();
-                        getDataManager().getAuthService().reInit();
-                        getDataManager().getAuthService().updateFirebaseToken(getMyContext(), true, new APICallBack() {
-                            @Override
-                            public void onSuccess(Object response) {
-                                getBaseActivity().finishAffinity();
-//                                getBaseActivity().startActivity(MainActivity.newIntent(getMyContext()));
-                            }
+    public void sendOtp() {
+        getDataManager().getAuthService().sendOtp(getMyContext(), true, User.getInstance().getPhone(), new APICallBack<VerifyPhoneResponse>() {
+            @Override
+            public void onSuccess(VerifyPhoneResponse response) {
+                User.getInstance().setToken(response.getToken());
+                getMyContext().startActivity(OtpVerifierActivity.getStartIntent(getMyContext()
+                        , PhoneNumberTypes.REGISTER.getValue()));
+            }
 
+            @Override
+            public void onError(String error, int errorCode) {
+                showSnackBar(getMyContext().getString(R.string.error),
+                        error, getMyContext().getResources().getString(R.string.ok),
+                        new SnackViewBulider.SnackbarCallback() {
                             @Override
-                            public void onError(String error, int errorCode) {
-                                showToast(error);
+                            public void onActionClick(Snackbar snackbar) {
+                                snackbar.dismiss();
                             }
                         });
-                    }
-
-                    @Override
-                    public void onError(String error, int errorCode) {
-                        showToast(error);
-                    }
-                }));
+            }
+        });
     }
 
-    private User getUserObj() {
+    private User generateUserObj() {
         User user = User.getInstance();
         user.setEmail(getViewBinding().edEmail.getText().toString().trim());
         user.setName(getViewBinding().edUserName.getText().toString());
         user.setPhone(getViewBinding().edPhoneNumber.getText().toString());
         user.setPassword(getViewBinding().edPassword.getText().toString());
         user.setPassword_confirmation(getViewBinding().edConfirmPassword.getText().toString());
+        user.setFirebase_token(SessionManager.getKeyFirebaseToken());
         return user;
     }
 
@@ -114,11 +105,6 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator, Activity
             getViewBinding().edPhoneNumber.setError(getMyContext().getString(R.string.phone_number_is_required));
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(getViewBinding().edEmail.getText().toString().trim()).matches()) {
-            error = +1;
-            getViewBinding().edEmail.setError(getMyContext().getString(R.string.email_is_required));
-        }
-
         if (getViewBinding().edPassword.getText().toString().isEmpty()) {
             error = +1;
             getViewBinding().edPassword.setError(getMyContext().getString(R.string.password_is_required));
@@ -133,8 +119,5 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator, Activity
         return error == 0;
     }
 
-    @Override
-    protected void setUp() {
 
-    }
 }

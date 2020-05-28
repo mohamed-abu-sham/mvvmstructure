@@ -4,11 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.ViewModelProviderFactory;
 import com.selwantech.raheeb.databinding.FragmentCategoryBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
+import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 

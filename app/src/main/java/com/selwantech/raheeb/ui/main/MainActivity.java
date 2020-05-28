@@ -11,10 +11,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.ViewModelProviderFactory;
 import com.selwantech.raheeb.databinding.ActivityMainBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
+import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 

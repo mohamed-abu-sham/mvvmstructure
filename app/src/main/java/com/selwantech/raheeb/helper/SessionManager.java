@@ -4,11 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.gson.Gson;
-import com.selwantech.raheeb.App;
 import com.selwantech.raheeb.model.User;
 
 public class SessionManager {
@@ -70,12 +66,6 @@ public class SessionManager {
 
     public static void logoutUser() {
         editor = mSharedPref.edit();
-        // Clearing all data from Shared Preferences
-        LoginManager.getInstance().logOut();
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        GoogleSignIn.getClient(App.getInstance().getApplicationContext(), gso).signOut();
         User.getInstance().setObjUser(null);
         String oldToken = getKeyFirebaseToken();
         editor.clear();

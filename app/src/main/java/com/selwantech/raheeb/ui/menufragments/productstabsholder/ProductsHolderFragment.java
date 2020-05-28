@@ -1,22 +1,16 @@
 package com.selwantech.raheeb.ui.menufragments.productstabsholder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
-
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.ViewModelProviderFactory;
 import com.selwantech.raheeb.databinding.FragmentProductsTabsHolderBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
+import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 

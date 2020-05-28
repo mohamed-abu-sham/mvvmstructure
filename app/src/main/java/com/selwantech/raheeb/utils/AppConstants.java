@@ -94,5 +94,7 @@ public final class AppConstants {
         public static final String PRODUCT = "PRODUCT";
         public static final String REQUEST_TYPE = "REQUEST_TYPE";
         public static final String FILTER_LOCATION = "FILTER_LOCATION";
+        public static final String TYPE = "TYPE";
+        public static final String ADDRESS = "ADDRESS";
     }
 }

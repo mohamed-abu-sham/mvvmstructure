@@ -44,12 +44,13 @@
                 android:layout_marginEnd="@dimen/_15sdp">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/tvLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@id/imgArrow"
                     android:layout_toEndOf="@+id/cardView"
                     android:text="amman"
+                    android:singleLine="true"
                     android:gravity="center|start"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
@@ -66,6 +67,7 @@
                     android:text="@string/edit"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"
+                    android:onClick="@{()->viewModel.onEditLocationClick()}"
                     android:textSize="12sp"/>
 
             </RelativeLayout>

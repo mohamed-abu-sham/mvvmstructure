@@ -3,6 +3,7 @@ package com.selwantech.raheeb.repository.network.services;
 import android.content.Context;
 
 import com.selwantech.raheeb.helper.SessionManager;
+import com.selwantech.raheeb.model.LoginObject;
 import com.selwantech.raheeb.model.ProfileResponse;
 import com.selwantech.raheeb.model.RegisterResponse;
 import com.selwantech.raheeb.model.SocialLogin;
@@ -85,6 +86,46 @@ public class AuthService {
                 }));
     }
 
+    public void login(Context mContext, boolean enableLoading, LoginObject loginObject, APICallBack<RegisterResponse> apiCallBack) {
+        getDataApi().loginUser(loginObject)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<RegisterResponse>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void sendOtp(Context mContext, boolean enableLoading, String phoneNumber, APICallBack<VerifyPhoneResponse> apiCallBack) {
+        getDataApi().verifyPhone(phoneNumber)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void verifyOtp(Context mContext, boolean enableLoading, String token, String otp, APICallBack<String> apiCallBack) {
+        getDataApi().verifyCode(token, otp)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void registerUser(Context mContext, boolean enableLoading, User user, APICallBack<RegisterResponse> apiCallBack) {
+        getDataApi().registerUser(user)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<RegisterResponse>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void resendOtp(Context mContext, boolean enableLoading, String token, APICallBack<VerifyPhoneResponse> apiCallBack) {
+        getDataApi().resendCode(token)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(mContext, enableLoading, apiCallBack));
+    }
+
     public DataApi getDataApi() {
         return mDataApi;
     }
@@ -109,8 +150,7 @@ public class AuthService {
         Single<Response<GeneralResponse<RegisterResponse>>> registerUser(@Body User user);
 
         @POST(ApiConstants.apiAuthService.LOGIN_USER)
-        Single<Response<GeneralResponse<RegisterResponse>>> loginUser(@Query("phone_number") String phone_number,
-                                                                      @Query("password") String password);
+        Single<Response<GeneralResponse<RegisterResponse>>> loginUser(@Body LoginObject loginObject);
 
         @POST(ApiConstants.apiAuthService.LOGIN_SOCIAL)
         Single<Response<GeneralResponse<RegisterResponse>>> loginWithSocial(@Body SocialLogin socialLogin);

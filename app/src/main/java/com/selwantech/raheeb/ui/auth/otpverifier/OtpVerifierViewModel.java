@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 
 import androidx.databinding.ViewDataBinding;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityOtpVerifierBinding;
 import com.selwantech.raheeb.enums.DialogTypes;
@@ -18,22 +19,25 @@ import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
-import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordActivity;
 import com.selwantech.raheeb.ui.auth.login.LoginActivity;
-import com.selwantech.raheeb.ui.auth.register.RegisterActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
+import com.selwantech.raheeb.ui.main.MainActivity;
+import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.TimeUtils;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, ActivityOtpVerifierBinding> {
 
     int type;
     long milliToFinish = 90000;
+
+    public <V extends ViewDataBinding, N extends BaseNavigator> OtpVerifierViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
+        super(mContext, dataManager, (OtpVerifierNavigator) navigation, (ActivityOtpVerifierBinding) viewDataBinding);
+        setOtpTextWatcher();
+        countDownTimer.start();
+    }
+
     CountDownTimer countDownTimer = new CountDownTimer(milliToFinish, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
@@ -47,25 +51,20 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
         }
     };
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> OtpVerifierViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (OtpVerifierNavigator) navigation, (ActivityOtpVerifierBinding) viewDataBinding);
-        setOtpTextWatcher();
-        countDownTimer.start();
+    @Override
+    protected void setUp() {
     }
 
     public void verifyCode() {
         if (isValidate()) {
-//            getDataManager().getAuthService().getDataApi().verifyCode(token, getOtp())
-//                    .toObservable()
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribeOn(Schedulers.io())
-//                    .subscribe(new CustomObserverResponse<String>(getMyContext(), true, new APICallBack<String>() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//                            if (((OtpVerifierActivity) getMyContext()).getType() == PhoneNumberTypes.REGISTER.getValue()) {
-//                                getMyContext().startActivity
-//                                        (RegisterActivity.newIntent(getMyContext()));
-//                            } else if (((OtpVerifierActivity) getMyContext()).getType() == PhoneNumberTypes.REGISTER_SOCIAL.getValue()) {
+            getDataManager().getAuthService().verifyOtp(getMyContext(),
+                    true, User.getInstance().getToken(), getOtp(), new APICallBack<String>() {
+                        @Override
+                        public void onSuccess(String response) {
+                            if (type == PhoneNumberTypes.REGISTER.getValue()) {
+                                registerUser();
+                            }
+//                            else if (((OtpVerifierActivity) getMyContext()).getType() == PhoneNumberTypes.REGISTER_SOCIAL.getValue()) {
 //                                if (User.getObjUser() == null) {
 //                                    showErrorDialog();
 //                                } else {
@@ -75,14 +74,51 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
 //                                getMyContext().startActivity
 //                                        (CreatePasswordActivity.newIntent(getMyContext(), token));
 //                            }
-//                        }
-//
-//                        @Override
-//                        public void onError(String error, int errorCode) {
-//                            showToast(error);
-//                        }
-//                    }));
 
+                        }
+
+                        @Override
+                        public void onError(String error, int errorCode) {
+                            showSnackBar(getMyContext().getString(R.string.error),
+                                    error, getMyContext().getResources().getString(R.string.ok),
+                                    new SnackViewBulider.SnackbarCallback() {
+                                        @Override
+                                        public void onActionClick(Snackbar snackbar) {
+                                            snackbar.dismiss();
+                                        }
+                                    });
+                        }
+                    });
+        }
+    }
+
+    public void registerUser() {
+        if (isValidate()) {
+            getDataManager().getAuthService().registerUser(getMyContext(),
+                    true, User.getInstance(), new APICallBack<RegisterResponse>() {
+                        @Override
+                        public void onSuccess(RegisterResponse response) {
+                            User user = response.getUser();
+                            user.setToken(response.getJwt_token());
+                            User.getInstance().setObjUser(user);
+                            SessionManager.createUserLoginSession();
+                            getDataManager().getAuthService().reInit();
+                            getBaseActivity().finishAffinity();
+                            getBaseActivity().startActivity(MainActivity.newIntent(getMyContext()));
+                        }
+
+                        @Override
+                        public void onError(String error, int errorCode) {
+                            showSnackBar(getMyContext().getString(R.string.error),
+                                    error, getMyContext().getResources().getString(R.string.ok),
+                                    new SnackViewBulider.SnackbarCallback() {
+                                        @Override
+                                        public void onActionClick(Snackbar snackbar) {
+                                            snackbar.dismiss();
+                                        }
+                                    });
+                        }
+                    });
         }
     }
 
@@ -146,28 +182,7 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
         return user;
     }
 
-    public void resendCode() {
-        if (milliToFinish == 0) {
-//            getDataManager().getAuthService().getDataApi().resendCode(token)
-//                    .toObservable()
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribeOn(Schedulers.io())
-//                    .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(getMyContext(), true, new APICallBack<VerifyPhoneResponse>() {
-//                        @Override
-//                        public void onSuccess(VerifyPhoneResponse response) {
-//                            token = response.getToken();
-//                            milliToFinish = 90000;
-//                            countDownTimer.start();
-//                            getViewBinding().tvResend.setTextColor(getMyContext().getResources().getColor(R.color.black));
-//                        }
-//
-//                        @Override
-//                        public void onError(String error, int errorCode) {
-//                            showToast(error);
-//                        }
-//                    }));
-        }
-    }
+
 
     public boolean isValidate() {
         int error = 0;
@@ -262,7 +277,31 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
         this.type = type;
     }
 
-    @Override
-    protected void setUp() {
+    public void resendCode() {
+        if (milliToFinish == 0) {
+            getDataManager().getAuthService().resendOtp(getMyContext(),
+                    true, User.getInstance().getToken(), new APICallBack<VerifyPhoneResponse>() {
+                        @Override
+                        public void onSuccess(VerifyPhoneResponse response) {
+                            User.getInstance().setToken(response.getToken());
+                            milliToFinish = 90000;
+                            countDownTimer.start();
+                            getViewBinding().tvResend.setTextColor(getMyContext().getResources().getColor(R.color.black));
+                        }
+
+                        @Override
+                        public void onError(String error, int errorCode) {
+                            showSnackBar(getMyContext().getString(R.string.error),
+                                    error, getMyContext().getResources().getString(R.string.ok),
+                                    new SnackViewBulider.SnackbarCallback() {
+                                        @Override
+                                        public void onActionClick(Snackbar snackbar) {
+                                            snackbar.dismiss();
+                                        }
+                                    });
+                        }
+                    });
+        }
     }
+
 }

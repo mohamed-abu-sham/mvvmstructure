@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="all"
-            type="com.selwantech.raheeb.ui.adapter.CategoryAdapter" />
+            name="viewModel"
+            type="com.selwantech.raheeb.viewmodel.ItemCategoryViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -25,8 +25,8 @@
             <ImageView
                 android:id="@+id/imgPicture"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_60sdp"
-                android:src="@drawable/t_shirt"
+                imageUrl="@{viewModel.category.image}"
+                android:layout_height="@dimen/_70sdp"
                 android:padding="@dimen/_4sdp"
                 android:background="@drawable/shape_rounded_empty_gray"/>
 
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:text="Provider"
+                android:text="@{viewModel.category.name}"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>

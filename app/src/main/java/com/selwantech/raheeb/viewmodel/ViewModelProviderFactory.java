@@ -1,4 +1,4 @@
-package com.selwantech.raheeb;
+package com.selwantech.raheeb.viewmodel;
 
 import android.content.Context;
 
@@ -19,6 +19,7 @@ import com.selwantech.raheeb.ui.emptyactivity.EmptyActivityViewModel;
 import com.selwantech.raheeb.ui.emptyfragment.EmptyFragmentViewModel;
 import com.selwantech.raheeb.ui.filebox.FileBoxViewModel;
 import com.selwantech.raheeb.ui.main.MainActivityViewModel;
+import com.selwantech.raheeb.ui.mappicker.MapPickerViewModel;
 import com.selwantech.raheeb.ui.menufragments.filterproductslocation.FilterProductLocationViewModel;
 import com.selwantech.raheeb.ui.menufragments.product.ProductViewModel;
 import com.selwantech.raheeb.ui.menufragments.productstabsholder.ProductsHolderViewModel;
@@ -99,6 +100,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         }else if (modelClass.isAssignableFrom(CategoryViewModel.class)) {
             //noinspection unchecked
             return (T) new CategoryViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(MapPickerViewModel.class)) {
+            //noinspection unchecked
+            return (T) new MapPickerViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

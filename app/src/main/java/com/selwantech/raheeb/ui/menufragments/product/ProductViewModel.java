@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductBinding;
+import com.selwantech.raheeb.interfaces.OnLoadMoreListener;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.FilterPrice;
+import com.selwantech.raheeb.model.FilterProduct;
 import com.selwantech.raheeb.model.Product;
 import com.selwantech.raheeb.repository.DataManager;
+import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.adapter.HomeAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
@@ -23,14 +27,18 @@ import com.selwantech.raheeb.ui.dialog.FilterDateFragmentDialog;
 import com.selwantech.raheeb.ui.dialog.FilterPriceFragmentDialog;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.ItemTouchCallBack;
+import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.SpacesItemDecoration;
+
+import java.util.ArrayList;
 
 public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentProductBinding> implements RecyclerClick<Product> {
 
     HomeAdapter homeAdapter;
     boolean isRefreshing = false;
     boolean isRetry = false;
-
+    boolean enableLoading = false;
+    boolean isLoadMore = false;
     public <V extends ViewDataBinding, N extends BaseNavigator> ProductViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ProductNavigator) navigation, (FragmentProductBinding) viewDataBinding);
     }
@@ -61,7 +69,16 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
         getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
         homeAdapter = new HomeAdapter(getMyContext(), this,getViewBinding().recyclerView);
         getViewBinding().recyclerView.setAdapter(homeAdapter);
-
+        homeAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                homeAdapter.addItem(null);
+                homeAdapter.notifyItemInserted(homeAdapter.getItemCount() - 1);
+                getViewBinding().recyclerView.scrollToPosition(homeAdapter.getItemCount() - 1);
+                setLoadMore(true);
+                getData();
+            }
+        });
         SpacesItemDecoration decoration = new SpacesItemDecoration(16);
         getViewBinding().recyclerView.addItemDecoration(decoration);
         ItemTouchHelper ith = new ItemTouchHelper(new ItemTouchCallBack(homeAdapter,homeAdapter.getArrayList()));
@@ -69,54 +86,33 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
     }
 
     public void getData() {
+        if (!isLoadMore() && !isRefreshing() && !isRetry()) {
+            enableLoading = true;
+        }
+        getDataManager().getProductService().getProducts(getMyContext(), enableLoading, new APICallBack<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                checkIsLoadMoreAndRefreshing(true);
+                homeAdapter.addItems(response);
+                notifyAdapter();
+            }
 
-        homeAdapter.addItem(new Product(R.drawable.app_background));
-        homeAdapter.addItem(new Product(R.drawable.logo));
-        homeAdapter.addItem(new Product(R.drawable.ic_arrow_back));
-        homeAdapter.addItem(new Product(R.drawable.head));
-        homeAdapter.addItem(new Product(R.drawable.app_background));
-        homeAdapter.addItem(new Product(R.drawable.t_shirt));
-        homeAdapter.addItem(new Product(R.drawable.shirt));
-        homeAdapter.addItem(new Product(R.drawable.t_shirt));
-        homeAdapter.addItem(new Product(R.drawable.head));
-        homeAdapter.addItem(new Product(R.drawable.shirt));
-        homeAdapter.addItem(new Product(R.drawable.app_background));
-        notifyAdapter();
-
-//        if (!isRefreshing() && !isRetry()) {
-//            showLoading();
-//        }
-//        getDataManager().getHomeService().getDataApi().getHomeCategories()
-//                .toObservable()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(new CustomObserverResponse<Home>(new APICallBack<Home>() {
-//                    @Override
-//                    public void onSuccess(Home response) {
-//                        checkIsLoadMoreAndRefreshing(true);
-//                        homeAdapter.addItems(response.getCategoryList());
-//                        notifiAdapter();
-//                        if (response.getSliderList().size() > 0) {
-//                            setUpViewPager(response.getSliderList());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(String error, int errorCode) {
-//                        if (homeAdapter.getItemCount() == 0) {
-//                            showNoDataFound();
-//                        }
-//                        showSnackBar(getMyContext().getString(R.string.error),
-//                                error, getMyContext().getResources().getString(R.string.OK),
-//                                new SnackViewBulider.SnackbarCallback() {
-//                                    @Override
-//                                    public void onActionClick(Snackbar snackbar) {
-//                                        snackbar.dismiss();
-//                                    }
-//                                });
-//                        checkIsLoadMoreAndRefreshing(false);
-//                    }
-//                }));
+            @Override
+            public void onError(String error, int errorCode) {
+                if (homeAdapter.getItemCount() == 0) {
+                    showNoDataFound();
+                }
+                showSnackBar(getMyContext().getString(R.string.error),
+                        error, getMyContext().getResources().getString(R.string.ok),
+                        new SnackViewBulider.SnackbarCallback() {
+                            @Override
+                            public void onActionClick(Snackbar snackbar) {
+                                snackbar.dismiss();
+                            }
+                        });
+                checkIsLoadMoreAndRefreshing(false);
+            }
+        });
     }
 
     private void showNoDataFound() {
@@ -129,8 +125,9 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
         FilterPriceFragmentDialog dialog = new FilterPriceFragmentDialog.Builder().build();
         dialog.setMethodCallBack(new FilterPriceFragmentDialog.FilterPriceCallBack() {
             @Override
-            public void callBack(FilterPrice dateAndTime) {
-
+            public void callBack(FilterPrice filterPrice) {
+                FilterProduct.getInstance().setPrice_min(filterPrice.getMin());
+                FilterProduct.getInstance().setPrice_max(filterPrice.getMax());
             }
         });
         dialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
@@ -183,9 +180,26 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
             finishRefreshing(isSuccess);
         } else if (isRetry()) {
             finishRetry(isSuccess);
+        } else if (isLoadMore()) {
+            finishLoadMore();
         } else {
-            hideLoading();
+            enableLoading = false;
         }
+    }
+
+    public boolean isLoadMore() {
+        return isLoadMore;
+    }
+
+    public void setLoadMore(boolean loadMore) {
+        isLoadMore = loadMore;
+    }
+
+    public void finishLoadMore() {
+        homeAdapter.remove(homeAdapter.getItemCount() - 1);
+        notifyAdapter();
+        homeAdapter.setLoaded();
+        setLoadMore(false);
     }
 
     protected void setRetring() {

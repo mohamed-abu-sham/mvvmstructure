@@ -6,10 +6,10 @@ import java.io.Serializable;
 
 public class RegisterResponse implements Serializable {
 
-    @SerializedName("jwt_token")
+    @SerializedName("token")
     String jwt_token;
 
-    @SerializedName("customer")
+    @SerializedName("user")
     User user;
 
     public String getJwt_token() {

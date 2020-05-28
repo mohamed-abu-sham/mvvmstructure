@@ -19,10 +19,10 @@ import androidx.core.content.ContextCompat;
 import com.selwantech.raheeb.BR;
 import com.selwantech.raheeb.BuildConfig;
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.ViewModelProviderFactory;
 import com.selwantech.raheeb.databinding.ActivitySplashScreenBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
+import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

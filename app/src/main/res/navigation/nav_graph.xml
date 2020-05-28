@@ -28,7 +28,11 @@
     <fragment
         android:id="@+id/filterProductLocationFragment"
         android:name="com.selwantech.raheeb.ui.menufragments.filterproductslocation.FilterProductLocationFragment"
-        android:label="FilterProductLocationFragment" />
+        android:label="FilterProductLocationFragment">
+        <action
+            android:id="@+id/action_filterProductLocationFragment_to_mapPickerFragment"
+            app:destination="@id/mapPickerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productFragment"
         android:name="com.selwantech.raheeb.ui.menufragments.product.ProductFragment"
@@ -37,5 +41,9 @@
         android:id="@+id/categoryFragment"
         android:name="com.selwantech.raheeb.ui.category.CategoryFragment"
         android:label="CategoryFragment" />
+    <fragment
+        android:id="@+id/mapPickerFragment"
+        android:name="com.selwantech.raheeb.ui.mappicker.MapPickerFragment"
+        android:label="MapPickerFragment" />
 
 </navigation>

@@ -259,6 +259,7 @@
     <string name="km30">30km</string>
     <string name="reset">Reset</string>
     <string name="categories">Categories</string>
+    <string name="ok">Ok</string>
     <string-array name="KmArray">
         <item>@string/km5</item>
         <item>@string/km10</item>

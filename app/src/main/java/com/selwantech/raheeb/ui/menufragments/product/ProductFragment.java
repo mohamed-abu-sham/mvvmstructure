@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.ViewModelProviderFactory;
 import com.selwantech.raheeb.databinding.FragmentProductBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
+import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
@@ -35,7 +36,6 @@ public class ProductFragment extends BaseFragment<FragmentProductBinding, Produc
     @Override
     public void onResume() {
         super.onResume();
-        mHomeViewModel.getData();
     }
 
     @Override
@@ -84,17 +84,12 @@ public class ProductFragment extends BaseFragment<FragmentProductBinding, Produc
     }
 
     @Override
-    public void goBack() {
-        getBaseActivity().onFragmentDetached(TAG);
-    }
-
-    @Override
-    public void showToast(String message) {
-
-    }
-
-    @Override
     public void callBack(int requestCode, int resultCode, Intent data) {
 
+    }
+
+    @Override
+    public int getRequestType() {
+        return getArguments().getInt(AppConstants.BundleData.REQUEST_TYPE, 0);
     }
 }

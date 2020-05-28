@@ -12,7 +12,9 @@ import androidx.navigation.Navigation;
 import com.google.android.material.tabs.TabLayout;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductsTabsHolderBinding;
+import com.selwantech.raheeb.enums.FilterProductResultsTypes;
 import com.selwantech.raheeb.enums.ProductTypes;
+import com.selwantech.raheeb.model.FilterProduct;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
@@ -67,14 +69,20 @@ public class ProductsHolderViewModel extends BaseViewModel<ProductsHolderNavigat
         ProductFragment fragment = new ProductFragment();
         switch (position) {
             case 0:
+                FilterProduct.getInstance().setShipping(false);
+                FilterProduct.getInstance().setPick_up(false);
                 bundle.putInt(AppConstants.BundleData.REQUEST_TYPE, ProductTypes.ALL.getTypeValue());
                 fragment.setArguments(bundle);
                 return fragment;
             case 1:
+                FilterProduct.getInstance().setShipping(false);
+                FilterProduct.getInstance().setPick_up(true);
                 bundle.putInt(AppConstants.BundleData.REQUEST_TYPE, ProductTypes.PICKUP.getTypeValue());
                 fragment.setArguments(bundle);
                 return fragment;
             default:
+                FilterProduct.getInstance().setShipping(true);
+                FilterProduct.getInstance().setPick_up(false);
                 bundle.putInt(AppConstants.BundleData.REQUEST_TYPE, ProductTypes.SHIPPING.getTypeValue());
                 fragment.setArguments(bundle);
                 return fragment;
@@ -82,7 +90,7 @@ public class ProductsHolderViewModel extends BaseViewModel<ProductsHolderNavigat
     }
     public void onFilterLocationClicked(){
         Bundle data = new Bundle();
-        data.putInt("requestCode", 1);
+        data.putInt("requestCode", FilterProductResultsTypes.LOCATION.getValue());
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
                 .navigate(R.id.action_productsHolderFragment_to_filterProductLocationFragment);
     }

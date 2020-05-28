@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.CountDownTimer;
-import android.os.Handler;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -15,9 +14,9 @@ import com.selwantech.raheeb.databinding.ActivitySplashScreenBinding;
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeActivity;
-import com.selwantech.raheeb.ui.auth.login.LoginActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
+import com.selwantech.raheeb.ui.main.MainActivity;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -85,7 +84,7 @@ public class SplashScreenViewModel extends BaseViewModel<SplashScreenNavigator, 
             if (SessionManager.isLoggedIn()) {
                 SessionManager.getUserDetails();
                 getBaseActivity().finish();
-//                getMyContext().startActivity(MainActivity.newIntent(getMyContext()));
+                getMyContext().startActivity(MainActivity.newIntent(getMyContext()));
             } else {
                 getBaseActivity().finish();
                 getMyContext().startActivity(ChooseUserTypeActivity.newIntent(getMyContext()));

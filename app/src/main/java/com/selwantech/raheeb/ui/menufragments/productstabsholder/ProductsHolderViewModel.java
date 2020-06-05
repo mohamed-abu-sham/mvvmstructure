@@ -49,7 +49,7 @@ public class ProductsHolderViewModel extends BaseViewModel<ProductsHolderNavigat
         getViewBinding().tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                fragmentManager.beginTransaction().replace(R.id.fragment_products_tab, getItem(0)).commit();
+                fragmentManager.beginTransaction().replace(R.id.fragment_products_tab, getItem(tab.getPosition())).commit();
             }
 
             @Override

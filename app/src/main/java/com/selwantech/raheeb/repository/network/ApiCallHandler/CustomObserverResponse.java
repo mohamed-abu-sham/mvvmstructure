@@ -23,10 +23,12 @@ public class CustomObserverResponse<T> extends CustomDialogUtils implements Obse
     APICallBack apiCallBack;
     Context context;
 
+    boolean withProgress;
     public CustomObserverResponse(Context mContext, boolean withProgress, APICallBack apiCallBack) {
         super(mContext, withProgress, false);
         context = mContext;
         this.apiCallBack = apiCallBack;
+        this.withProgress = withProgress;
     }
 //    public CustomObserverResponse(APICallBack apiCallBack) {
 //        this.apiCallBack = apiCallBack;
@@ -34,7 +36,9 @@ public class CustomObserverResponse<T> extends CustomDialogUtils implements Obse
 
     @Override
     public void onSubscribe(Disposable d) {
-        showProgress();
+        if (withProgress) {
+            showProgress();
+        }
     }
 
     @Override
@@ -62,7 +66,9 @@ public class CustomObserverResponse<T> extends CustomDialogUtils implements Obse
 
     @Override
     public void onError(Throwable e) {
-        hideProgress();
+        if (withProgress) {
+            hideProgress();
+        }
         if (e instanceof HttpException) {
             HttpException httpException = (HttpException) e;
             int statusCode = httpException.code();
@@ -81,7 +87,9 @@ public class CustomObserverResponse<T> extends CustomDialogUtils implements Obse
 
     @Override
     public void onComplete() {
-        hideProgress();
+        if (withProgress) {
+            hideProgress();
+        }
     }
 
     private void errorHandler(int code, GeneralResponse errorBody) {

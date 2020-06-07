@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#55ACEE</color>
     <color name="colorAccent">#000000</color>
 
-    <color name="black_effective">#2a2a2a</color>
+    <color name="black_effective">#373737</color>
     <color name="dark_gray">#7A7A7A</color>
 
     <color name="order_cell_red">#D12323</color>
@@ -55,6 +55,7 @@
 
     <color name="color_blue">#55ACEE</color>
     <color name="color_blue_dark">#10629A</color>
+    <color name="color_dark_gold">#EBC806</color>
     <color name="text_gray">#A8A8A8</color>
     <color name="rsbColorSeekBarDefault">#c3c3c3</color>
     <color name="rsbColorThumbPressed">#FFE7E7E7</color>

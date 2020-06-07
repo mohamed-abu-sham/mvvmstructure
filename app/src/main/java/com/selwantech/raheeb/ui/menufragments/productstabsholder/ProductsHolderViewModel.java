@@ -1,14 +1,18 @@
 package com.selwantech.raheeb.ui.menufragments.productstabsholder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductsTabsHolderBinding;
@@ -18,11 +22,16 @@ import com.selwantech.raheeb.model.FilterProduct;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
+import com.selwantech.raheeb.ui.main.MainActivity;
 import com.selwantech.raheeb.ui.menufragments.product.ProductFragment;
 import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.utils.SnackViewBulider;
 
 public class ProductsHolderViewModel extends BaseViewModel<ProductsHolderNavigator, FragmentProductsTabsHolderBinding> {
 
+    ProductFragment fragmentAll = new ProductFragment();
+    ProductFragment fragmentPickUP = new ProductFragment();
+    ProductFragment fragmentShipping = new ProductFragment();
 
     public <V extends ViewDataBinding, N extends BaseNavigator> ProductsHolderViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ProductsHolderNavigator) navigation, (FragmentProductsTabsHolderBinding) viewDataBinding);
@@ -31,6 +40,16 @@ public class ProductsHolderViewModel extends BaseViewModel<ProductsHolderNavigat
     @Override
     protected void setUp() {
         setUpTablayout();
+        getViewBinding().edSearch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (MotionEvent.ACTION_UP == event.getAction()) {
+                    showSearchTools(true);
+                }
+
+                return false;
+            }
+        });
     }
 
     public void setUpTablayout() {
@@ -65,27 +84,26 @@ public class ProductsHolderViewModel extends BaseViewModel<ProductsHolderNavigat
 
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
-        getNavigator().getChildFragment().popBackStack();
-        ProductFragment fragment = new ProductFragment();
+//        getNavigator().getChildFragment().popBackStack();
         switch (position) {
             case 0:
                 FilterProduct.getInstance().setShipping(false);
                 FilterProduct.getInstance().setPick_up(false);
                 bundle.putInt(AppConstants.BundleData.REQUEST_TYPE, ProductTypes.ALL.getTypeValue());
-                fragment.setArguments(bundle);
-                return fragment;
+                fragmentAll.setArguments(bundle);
+                return fragmentAll;
             case 1:
                 FilterProduct.getInstance().setShipping(false);
                 FilterProduct.getInstance().setPick_up(true);
                 bundle.putInt(AppConstants.BundleData.REQUEST_TYPE, ProductTypes.PICKUP.getTypeValue());
-                fragment.setArguments(bundle);
-                return fragment;
+                fragmentPickUP.setArguments(bundle);
+                return fragmentPickUP;
             default:
                 FilterProduct.getInstance().setShipping(true);
                 FilterProduct.getInstance().setPick_up(false);
                 bundle.putInt(AppConstants.BundleData.REQUEST_TYPE, ProductTypes.SHIPPING.getTypeValue());
-                fragment.setArguments(bundle);
-                return fragment;
+                fragmentShipping.setArguments(bundle);
+                return fragmentShipping;
         }
     }
     public void onFilterLocationClicked(){
@@ -98,5 +116,66 @@ public class ProductsHolderViewModel extends BaseViewModel<ProductsHolderNavigat
     public void onCategoryClicked(){
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
                 .navigate(R.id.action_productsHolderFragment_to_categoryFragment);
+    }
+
+    public void showSearchTools(boolean showSearchTools) {
+        getViewBinding().imgSearch.setVisibility(showSearchTools ? View.VISIBLE : View.GONE);
+        getViewBinding().imgCancelSearch.setVisibility(showSearchTools ? View.VISIBLE : View.GONE);
+        getViewBinding().imgLocation.setVisibility(!showSearchTools ? View.VISIBLE : View.GONE);
+        getViewBinding().imgCategory.setVisibility(!showSearchTools ? View.VISIBLE : View.GONE);
+    }
+
+    public void onCancelSearchClicked() {
+        getBaseActivity().hideKeyboard();
+        getViewBinding().edSearch.setText("");
+        getViewBinding().edSearch.clearFocus();
+        FilterProduct.getInstance().setTitle("");
+        showSearchTools(false);
+        applySearch();
+    }
+
+    public void onSearchClicked() {
+        getBaseActivity().hideKeyboard();
+        getViewBinding().edSearch.clearFocus();
+        if (isSearchValid()) {
+            showSearchTools(false);
+            FilterProduct.getInstance().setTitle(getViewBinding().edSearch.getText().toString());
+            applySearch();
+        }
+    }
+
+    private void applySearch() {
+        ((MainActivity) getBaseActivity()).onActivityResultFromFragment(
+                FilterProductResultsTypes.SEARCH.getValue(), Activity.RESULT_OK, null);
+    }
+
+    private boolean isSearchValid() {
+        if (getViewBinding().edSearch.getText().toString().trim().isEmpty()) {
+            showSnackBar(getMyContext().getResources().getString(R.string.error),
+                    getMyContext().getResources().getString(R.string.please_type_your_search_text),
+                    getMyContext().getResources().getString(R.string.ok),
+                    new SnackViewBulider.SnackbarCallback() {
+                        @Override
+                        public void onActionClick(Snackbar snackbar) {
+                            snackbar.dismiss();
+                        }
+                    });
+            return false;
+        }
+        return true;
+    }
+
+    public void onResume() {
+        switch (getViewBinding().tabLayout.getTabAt(getViewBinding().tabLayout.getSelectedTabPosition()).getPosition()) {
+            case 0:
+                fragmentAll.onResume();
+                break;
+            case 1:
+                fragmentPickUP.onResume();
+                break;
+            case 2:
+                fragmentShipping.onResume();
+                break;
+        }
     }
 }

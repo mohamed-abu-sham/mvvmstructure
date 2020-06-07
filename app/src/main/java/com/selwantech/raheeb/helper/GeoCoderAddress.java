@@ -34,7 +34,7 @@ public class GeoCoderAddress implements Serializable {
         addresses = this.geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
         String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
         GeoAddress geoAddress = new GeoAddress(addresses.get(0).getLocality(),
-                addresses.get(0).getSubLocality() + "/" + addresses.get(0).getThoroughfare(),
+                addresses.get(0).getSubLocality(),
                 addresses.get(0).getCountryName(),
                 addresses.get(0).getPostalCode(),
                 addresses.get(0).getFeatureName(),

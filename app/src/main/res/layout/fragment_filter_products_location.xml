@@ -86,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5km"
+                android:text="..."
                 android:id="@+id/tvSelectedDis"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
@@ -126,17 +126,17 @@
                     app:rsb_step_height="@dimen/_5sdp"
                     app:rsb_step_width="@dimen/_5sdp"
                     app:rsb_step_radius="4dp"
-                    app:rsb_steps="4"
                     app:rsb_thumb_drawable="@drawable/thumb_blue"
                     app:rsb_thumb_width="@dimen/_14sdp"
                     app:rsb_thumb_height="@dimen/_14sdp"
                     app:rsb_tick_mark_layout_gravity="top"
                     app:rsb_tick_mark_mode="other"
-                    app:rsb_tick_mark_text_array="@array/KmArray"
                     app:rsb_tick_mark_text_color="@color/text_gray"
                     app:rsb_tick_mark_text_size="10sp"
                     app:rsb_tick_mark_text_margin="@dimen/_12sdp" />
 
+
+                <!--                app:rsb_tick_mark_text_array="@array/KmArray"-->
                 <ImageView
                     android:layout_width="@dimen/_12sdp"
                     android:layout_height="@dimen/_12sdp"

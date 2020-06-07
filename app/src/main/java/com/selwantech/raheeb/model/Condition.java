@@ -2,7 +2,9 @@ package com.selwantech.raheeb.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Condition {
+import java.io.Serializable;
+
+public class Condition implements Serializable {
 
     @SerializedName("name")
     private String name;

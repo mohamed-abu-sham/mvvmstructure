@@ -2,7 +2,9 @@ package com.selwantech.raheeb.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ProductOwner {
+import java.io.Serializable;
+
+public class ProductOwner implements Serializable {
 
     @SerializedName("rate")
     private double rate;
@@ -17,7 +19,7 @@ public class ProductOwner {
     private int id;
 
     @SerializedName("avatar")
-    private Object avatar;
+    private String avatar;
 
     public double getRate() {
         return rate;
@@ -35,7 +37,7 @@ public class ProductOwner {
         return id;
     }
 
-    public Object getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 }

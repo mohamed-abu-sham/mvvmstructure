@@ -52,6 +52,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.auth.login.LoginActivity"/>
         <activity android:name=".ui.auth.chooseusertype.ChooseUserTypeActivity"/>
@@ -61,7 +66,18 @@
         <activity android:name=".ui.auth.phonenumber.PhoneNumberActivity"/>
         <activity android:name=".ui.filebox.FileBoxActivity"/>
 
-        <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.main.MainActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <data
+                    android:host="raheeb.selwantech.tech"
+                    android:pathPrefix="/product"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

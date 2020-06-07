@@ -22,6 +22,7 @@ import com.selwantech.raheeb.ui.main.MainActivityViewModel;
 import com.selwantech.raheeb.ui.mappicker.MapPickerViewModel;
 import com.selwantech.raheeb.ui.menufragments.filterproductslocation.FilterProductLocationViewModel;
 import com.selwantech.raheeb.ui.menufragments.product.ProductViewModel;
+import com.selwantech.raheeb.ui.menufragments.productdetails.ProductDetailsViewModel;
 import com.selwantech.raheeb.ui.menufragments.productstabsholder.ProductsHolderViewModel;
 import com.selwantech.raheeb.ui.splashscreen.SplashScreenViewModel;
 
@@ -103,6 +104,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(MapPickerViewModel.class)) {
             //noinspection unchecked
             return (T) new MapPickerViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(ProductDetailsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ProductDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

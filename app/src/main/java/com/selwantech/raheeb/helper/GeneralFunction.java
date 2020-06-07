@@ -43,6 +43,16 @@ public class GeneralFunction {
         Glide.with(imageView.getContext()).applyDefaultRequestOptions(requestOptions).load(url).into(imageView);
     }
 
+    @BindingAdapter("imageResources")
+    public static void setImageResource(ImageView imageView, int resource) {
+        imageView.setImageResource(resource);
+    }
+
+    @BindingAdapter("textResources")
+    public static void setTextResource(TextView textView, int resource) {
+        textView.setText(resource);
+    }
+
     public static void loadImage(Context mContext, String imgUrl, ImageView imageView) {
 
         RequestOptions requestOptions = new RequestOptions();

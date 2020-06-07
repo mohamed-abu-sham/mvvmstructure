@@ -3,7 +3,8 @@ package com.selwantech.raheeb.enums;
 public enum FilterProductResultsTypes {
     LOCATION(1),
     SORT(2),
-    PRICE(3);
+    PRICE(3),
+    SEARCH(4);
 
     private int typeID;
 

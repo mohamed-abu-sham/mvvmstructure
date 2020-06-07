@@ -22,34 +22,71 @@
             android:gravity="center"
             android:background="@color/colorPrimaryDark">
 
-            <EditText
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_weight="1"
-                android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_20sdp"
-                android:hint="@string/search_here"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="@dimen/_10sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:gravity="start|center"
-                android:textSize="14sp"
-                android:background="@drawable/shape_rounded_empty_gray_light"/>
+                android:layout_weight="1"
+                android:background="@drawable/shape_rounded_empty_gray_light"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:gravity="start|center"
+                    android:hint="@string/search_here"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
-                app:srcCompat="@drawable/ic_message"
+                android:id="@+id/imgCancelSearch"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:onClick="@{()->viewModel.onCancelSearchClicked()}"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_close_gray" />
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:onClick="@{()->viewModel.onSearchClicked()}"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_search_white" />
+
+            <ImageView
+                android:id="@+id/imgCategory"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_category"
                 android:onClick="@{()->viewModel.onCategoryClicked()}"/>
 
             <ImageView
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:id="@+id/imgLocation"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
                 app:srcCompat="@drawable/ic_location"
                 android:tint="@color/white"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:visibility="visible"
                 android:onClick="@{() -> viewModel.onFilterLocationClicked()}"/>
         </LinearLayout>
 

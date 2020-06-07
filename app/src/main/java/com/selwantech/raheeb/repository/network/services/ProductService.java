@@ -20,6 +20,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
@@ -51,6 +53,33 @@ public class ProductService {
                 .subscribe(new CustomObserverResponse<ArrayList<Product>>(mContext, enableLoading, apiCallBack));
     }
 
+    public void getProduct(Context mContext, boolean enableLoading, int productId, APICallBack<Product> apiCallBack) {
+
+        getDataApi().getProduct(productId)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<Product>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void addFavorite(Context mContext, boolean enableLoading, int productId, APICallBack<String> apiCallBack) {
+
+        getDataApi().addFavorite(productId)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void removeFavorite(Context mContext, boolean enableLoading, int productId, APICallBack<String> apiCallBack) {
+
+        getDataApi().removeFavorite(productId)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+
 
     public DataApi getDataApi() {
         return mDataApi;
@@ -58,10 +87,17 @@ public class ProductService {
 
     public interface DataApi {
 
-        //        @Body FilterProduct filterProduct
         @GET(ApiConstants.apiProductService.PRODUCTS)
         Single<Response<GeneralResponse<ArrayList<Product>>>> getProducts(@Query("data") String filterProduct);
 
+        @GET(ApiConstants.apiProductService.PRODUCT)
+        Single<Response<GeneralResponse<Product>>> getProduct(@Path("productId") int productId);
+
+        @POST(ApiConstants.apiProductService.ADD_FAVORITE)
+        Single<Response<GeneralResponse<String>>> addFavorite(@Path("productId") int productId);
+
+        @POST(ApiConstants.apiProductService.REMOVE_FAVORITE)
+        Single<Response<GeneralResponse<String>>> removeFavorite(@Path("productId") int productId);
 
     }
 }

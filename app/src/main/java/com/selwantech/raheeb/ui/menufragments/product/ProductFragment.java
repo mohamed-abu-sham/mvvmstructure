@@ -85,11 +85,12 @@ public class ProductFragment extends BaseFragment<FragmentProductBinding, Produc
 
     @Override
     public void callBack(int requestCode, int resultCode, Intent data) {
-
+        mHomeViewModel.applyFilter();
     }
 
     @Override
     public int getRequestType() {
         return getArguments().getInt(AppConstants.BundleData.REQUEST_TYPE, 0);
     }
+
 }

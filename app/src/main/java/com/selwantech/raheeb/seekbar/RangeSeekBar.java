@@ -20,6 +20,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 
 import com.selwantech.raheeb.R;
+import com.selwantech.raheeb.model.Distance;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -109,7 +110,7 @@ public class RangeSeekBar extends View {
     private int tickMarkTextColor;
     private int tickMarkInRangeTextColor;
     //The texts displayed on the scale
-    private CharSequence[] tickMarkTextArray;
+    private ArrayList<Distance> tickMarkTextArray;
     //radius of progress bar
     private float progressRadius;
     //the color of seekBar in progress
@@ -191,8 +192,7 @@ public class RangeSeekBar extends View {
     }
 
     private boolean verifyStepsMode() {
-        if (steps < 1 || stepsHeight <= 0 || stepsWidth <= 0) return false;
-        return true;
+        return steps >= 1 && !(stepsHeight <= 0) && !(stepsWidth <= 0);
     }
 
     private void initStepsBitmap() {
@@ -229,7 +229,7 @@ public class RangeSeekBar extends View {
             tickMarkMode = t.getInt(R.styleable.RangeSeekBar_rsb_tick_mark_mode, TRICK_MARK_MODE_NUMBER);
             tickMarkGravity = t.getInt(R.styleable.RangeSeekBar_rsb_tick_mark_gravity, TICK_MARK_GRAVITY_CENTER);
             tickMarkLayoutGravity = t.getInt(R.styleable.RangeSeekBar_rsb_tick_mark_layout_gravity, Gravity.TOP);
-            tickMarkTextArray = t.getTextArray(R.styleable.RangeSeekBar_rsb_tick_mark_text_array);
+//            tickMarkTextArray = t.getTextArray(R.styleable.RangeSeekBar_rsb_tick_mark_text_array);
             tickMarkTextMargin = (int) t.getDimension(R.styleable.RangeSeekBar_rsb_tick_mark_text_margin, Utils.dp2px(getContext(), 7));
             tickMarkTextSize = (int) t.getDimension(R.styleable.RangeSeekBar_rsb_tick_mark_text_size, Utils.dp2px(getContext(), 12));
             tickMarkTextColor = t.getColor(R.styleable.RangeSeekBar_rsb_tick_mark_text_color, progressDefaultColor);
@@ -335,8 +335,8 @@ public class RangeSeekBar extends View {
     }
 
     protected int getTickMarkRawHeight() {
-        if (tickMarkTextArray != null && tickMarkTextArray.length > 0) {
-            return tickMarkTextMargin + Utils.measureText(String.valueOf(tickMarkTextArray[0]), tickMarkTextSize).height() + 3;
+        if (tickMarkTextArray != null && tickMarkTextArray.size() > 0) {
+            return tickMarkTextMargin + Utils.measureText(tickMarkTextArray.get(0).toString(), tickMarkTextSize).height() + 3;
         }
         return 0;
     }
@@ -389,9 +389,9 @@ public class RangeSeekBar extends View {
     // the scale range of different color display
     protected void onDrawTickMark(Canvas canvas, Paint paint) {
         if (tickMarkTextArray != null) {
-            int trickPartWidth = progressWidth / (tickMarkTextArray.length - 1);
-            for (int i = 0; i < tickMarkTextArray.length; i++) {
-                final String text2Draw = tickMarkTextArray[i].toString();
+            int trickPartWidth = progressWidth / (tickMarkTextArray.size() - 1);
+            for (int i = 0; i < tickMarkTextArray.size(); i++) {
+                final String text2Draw = tickMarkTextArray.get(i).toString();
                 if (TextUtils.isEmpty(text2Draw)) continue;
                 paint.getTextBounds(text2Draw, 0, text2Draw.length(), tickMarkTextRect);
                 paint.setColor(tickMarkTextColor);
@@ -622,7 +622,7 @@ public class RangeSeekBar extends View {
                 if ((seekBarMode == SEEKBAR_MODE_RANGE) && leftSB.currPercent == rightSB.currPercent) {
                     currTouchSB.materialRestore();
                     if (callback != null) {
-                        callback.onStopTrackingTouch(this, currTouchSB == leftSB);
+                        callback.onStopTrackingTouch(this, currTouchSB == leftSB, tickMarkTextArray.get((int) currTouchSB.currPercent));
                     }
                     if (x - touchDownX > 0) {
                         //method to move right
@@ -703,7 +703,7 @@ public class RangeSeekBar extends View {
                     getParent().requestDisallowInterceptTouchEvent(true);
                 }
                 if (callback != null) {
-                    callback.onStopTrackingTouch(this, currTouchSB == leftSB);
+                    callback.onStopTrackingTouch(this, currTouchSB == leftSB, tickMarkTextArray.get((int) currTouchSB.currPercent));
                 }
                 changeThumbActivateState(false);
                 break;
@@ -1018,16 +1018,16 @@ public class RangeSeekBar extends View {
         this.tickMarkGravity = tickMarkGravity;
     }
 
-    public CharSequence[] getTickMarkTextArray() {
+    public ArrayList<Distance> getTickMarkTextArray() {
         return tickMarkTextArray;
     }
 
-    public void setTickMarkTextArray(CharSequence[] tickMarkTextArray) {
+    public void setTickMarkTextArray(ArrayList<Distance> tickMarkTextArray) {
         this.tickMarkTextArray = tickMarkTextArray;
     }
-    public void setTickMarkTextArray(String[] tickMarkTextArray) {
-        this.tickMarkTextArray = tickMarkTextArray;
-    }
+//    public void setTickMarkTextArray(String[] tickMarkTextArray) {
+//        this.tickMarkTextArray = tickMarkTextArray;
+//    }
 
     public float getMinInterval() {
         return minInterval;

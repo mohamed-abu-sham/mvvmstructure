@@ -28,7 +28,8 @@ public class GeoAddress implements Serializable {
     @SerializedName("state")
     boolean isDefualt = false;
 
-    public GeoAddress(String City, String State, String Country, String PostalCode, String KnownName, double latitude, double longitude) {
+    public GeoAddress(String City, String State, String Country,
+                      String PostalCode, String KnownName, double latitude, double longitude) {
         this.City = City;
         this.geocoding = State;
         this.Country = Country;
@@ -120,9 +121,9 @@ public class GeoAddress implements Serializable {
 
     public String getAddress() {
         StringBuilder addressStr = new StringBuilder();
-        addressStr.append(getCountry() + ",");
-        addressStr.append(getCity() + ",");
-        addressStr.append(getGeocoding());
+        addressStr.append((getCountry() != null ? getCountry() : "unnamedCountry") + ",");
+        addressStr.append((getCity() != null ? getCity() : "unnamedCity") + ",");
+        addressStr.append(getGeocoding() != null ? getGeocoding() : "unnamedRoad");
         return addressStr.toString();
     }
 }

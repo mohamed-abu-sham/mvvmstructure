@@ -14,6 +14,7 @@ import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityMainBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -70,11 +71,31 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
                 new AppBarConfiguration.Builder(navController.getGraph())
                         .build();
         NavigationUI.setupWithNavController(getViewDataBinding().bottomSheet, navController);
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_VIEW.equals(action)) {
+            handleSendText(intent);
+        }
     }
 
+    void handleSendText(Intent intent) {
+        String sharedText = intent.getData().toString();
+        if (sharedText != null &&
+                sharedText.contains("product") &&
+                sharedText.contains("id")) {
+            Bundle data = new Bundle();
+            int productId = Integer.valueOf(sharedText.substring(sharedText.indexOf("=") + 1));
+            data.putInt(AppConstants.BundleData.PRODUCT_ID, productId);
+            Navigation.findNavController(this, R.id.nav_host_fragment)
+                    .navigate(R.id.productDetailsFragment, data);
+        }
+    }
     public void onActivityResultFromFragment(int requestCode, int resultCode, @Nullable Intent data) {
         onActivityResult(requestCode, resultCode, data);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

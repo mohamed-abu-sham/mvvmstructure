@@ -1,6 +1,5 @@
 package com.selwantech.raheeb.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -8,34 +7,24 @@ import java.io.Serializable;
 public class FilterProduct implements Serializable {
 
     private static FilterProduct filterProduct = null;
-    @Expose
     @SerializedName("lat")
     double lat = 0.0;
-    @Expose
     @SerializedName("lon")
     double lon = 0.0;
-    @Expose
     @SerializedName("price_min")
     double price_min = 0.0;
-    @Expose
     @SerializedName("price_max")
     double price_max = 0.0;
-    @Expose
     @SerializedName("shipping")
     boolean shipping = false;
-    @Expose
     @SerializedName("pick_up")
     boolean pick_up = false;
-    @Expose
     @SerializedName("category_id")
     int category_id = 0;
-    @Expose
     @SerializedName("distance")
     int distance = 0;
-    @Expose
     @SerializedName("title")
     String title;
-    @Expose
     @SerializedName("ordering")
     String ordering;
 

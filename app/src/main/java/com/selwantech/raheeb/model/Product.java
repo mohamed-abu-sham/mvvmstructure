@@ -1,11 +1,15 @@
 package com.selwantech.raheeb.model;
 
+import androidx.databinding.BaseObservable;
+
 import com.google.gson.annotations.SerializedName;
+import com.selwantech.raheeb.App;
+import com.selwantech.raheeb.R;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Product implements Serializable {
+public class Product extends BaseObservable implements Serializable {
 
     @SerializedName("date")
     private String date;
@@ -32,7 +36,7 @@ public class Product implements Serializable {
     private boolean isShipNationwide;
 
     @SerializedName("chat_id")
-    private Object chatId;
+    private int chatId;
 
     @SerializedName("condition")
     private Condition condition;
@@ -93,7 +97,7 @@ public class Product implements Serializable {
         return isShipNationwide;
     }
 
-    public Object getChatId() {
+    public int getChatId() {
         return chatId;
     }
 
@@ -131,5 +135,22 @@ public class Product implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setFaverate(boolean faverate) {
+        isFaverate = faverate;
+        notifyChange();
+    }
+
+    public String isFavoriteText() {
+        return !isIsFaverate() ?
+                App.getInstance().getApplicationContext().getResources().getString(R.string.favorite) :
+                App.getInstance().getApplicationContext().getResources().getString(R.string.unfavorite);
+    }
+
+    public int isFavoriteDrawable() {
+        return !isIsFaverate() ?
+                R.drawable.ic_favorite_white :
+                R.drawable.ic_favorite;
     }
 }

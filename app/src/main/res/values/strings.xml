@@ -260,6 +260,17 @@
     <string name="reset">Reset</string>
     <string name="categories">Categories</string>
     <string name="ok">Ok</string>
+    <string name="please_type_your_search_text">Please type your search text</string>
+    <string name="ask">Ask</string>
+    <string name="make_offer">Make Offer</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="report">Report</string>
+    <string name="share">Share</string>
+    <string name="map_is_approximate_to_keep_the_sellers_location_private">Map is approximate to keep the seller’s location private</string>
+    <string name="unfavorite">Unfavorite</string>
+    <string name="share_this_product_with">Share this product with</string>
+
+
     <string-array name="KmArray">
         <item>@string/km5</item>
         <item>@string/km10</item>

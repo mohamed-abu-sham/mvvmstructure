@@ -58,6 +58,7 @@ public class ProductsHolderFragment extends
     @Override
     public void onResume() {
         super.onResume();
+        mViewModel.onResume();
     }
 
     @Override

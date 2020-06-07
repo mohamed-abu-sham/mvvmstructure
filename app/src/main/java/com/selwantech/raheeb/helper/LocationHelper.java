@@ -254,13 +254,13 @@ public class LocationHelper implements LocationListener,
                             resolvable.startResolutionForResult(
                                     (Activity) context,
                                     101);
-                            returnLastLatLng();
+//                            returnLastLatLng();
                         } catch (IntentSender.SendIntentException e) {
                         } catch (ClassCastException e) {
                         }
                         break;
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        returnLastLatLng();
+//                        returnLastLatLng();
                         break;
                 }
             }

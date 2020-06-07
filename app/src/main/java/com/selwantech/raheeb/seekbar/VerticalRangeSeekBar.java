@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -13,9 +12,11 @@ import android.view.ViewGroup;
 import androidx.annotation.IntDef;
 
 import com.selwantech.raheeb.R;
+import com.selwantech.raheeb.model.Distance;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 
 
 /**
@@ -135,10 +136,10 @@ public class VerticalRangeSeekBar extends RangeSeekBar {
     @Override
     protected void onDrawTickMark(Canvas canvas, Paint paint) {
         if (getTickMarkTextArray() != null) {
-            int arrayLength = getTickMarkTextArray().length;
+            int arrayLength = getTickMarkTextArray().size();
             int trickPartWidth = getProgressWidth() / (arrayLength - 1);
             for (int i = 0; i < arrayLength; i++) {
-                final String text2Draw = getTickMarkTextArray()[i].toString();
+                final String text2Draw = getTickMarkTextArray().get(i).toString();
                 if (TextUtils.isEmpty(text2Draw)) continue;
                 paint.getTextBounds(text2Draw, 0, text2Draw.length(), tickMarkTextRect);
                 paint.setColor(getTickMarkTextColor());
@@ -194,11 +195,11 @@ public class VerticalRangeSeekBar extends RangeSeekBar {
     @Override
     protected int getTickMarkRawHeight() {
         if (maxTickMarkWidth > 0) return getTickMarkTextMargin() + maxTickMarkWidth;
-        if (getTickMarkTextArray() != null && getTickMarkTextArray().length > 0) {
-            int arrayLength = getTickMarkTextArray().length;
-            maxTickMarkWidth = Utils.measureText(String.valueOf(getTickMarkTextArray()[0]), getTickMarkTextSize()).width();
+        if (getTickMarkTextArray() != null && getTickMarkTextArray().size() > 0) {
+            int arrayLength = getTickMarkTextArray().size();
+            maxTickMarkWidth = Utils.measureText(getTickMarkTextArray().get(0).toString(), 16).width();
             for (int i = 1; i < arrayLength; i++) {
-                int width = Utils.measureText(String.valueOf(getTickMarkTextArray()[i]), getTickMarkTextSize()).width();
+                int width = Utils.measureText(getTickMarkTextArray().get(i).toString(), 16).width();
                 if (maxTickMarkWidth < width) {
                     maxTickMarkWidth = width;
                 }
@@ -215,7 +216,7 @@ public class VerticalRangeSeekBar extends RangeSeekBar {
     }
 
     @Override
-    public void setTickMarkTextArray(CharSequence[] tickMarkTextArray) {
+    public void setTickMarkTextArray(ArrayList<Distance> tickMarkTextArray) {
         super.setTickMarkTextArray(tickMarkTextArray);
         maxTickMarkWidth = 0;
     }

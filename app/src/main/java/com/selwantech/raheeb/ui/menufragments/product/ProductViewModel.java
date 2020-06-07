@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -54,6 +55,8 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
                 getData();
             }
         });
+
+
     }
 
 
@@ -65,6 +68,7 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
                 getData();
             }
         });
+
         getViewBinding().recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
         homeAdapter = new HomeAdapter(getMyContext(), this,getViewBinding().recyclerView);
@@ -128,6 +132,7 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
             public void callBack(FilterPrice filterPrice) {
                 FilterProduct.getInstance().setPrice_min(filterPrice.getMin());
                 FilterProduct.getInstance().setPrice_max(filterPrice.getMax());
+                applyFilter();
             }
         });
         dialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
@@ -139,6 +144,7 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
             @Override
             public void callBack(int filterId) {
 
+                applyFilter();
             }
         });
         dialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
@@ -157,6 +163,14 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
     public void onClick(Product product, int position) {
         Bundle data = new Bundle();
         data.putSerializable(AppConstants.BundleData.PRODUCT, product);
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.productDetailsFragment, data);
+    }
+
+    public void applyFilter() {
+        getViewBinding().swipeRefreshLayout.setRefreshing(true);
+        setIsRefreshing(true);
+        getData();
     }
 
     public boolean isRefreshing() {

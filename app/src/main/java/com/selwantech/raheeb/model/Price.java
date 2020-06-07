@@ -2,7 +2,9 @@ package com.selwantech.raheeb.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Price {
+import java.io.Serializable;
+
+public class Price implements Serializable {
 
     @SerializedName("amount")
     private String amount;

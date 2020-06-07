@@ -23,6 +23,9 @@ public class ApiConstants {
 
     public class apiProductService {
         public static final String PRODUCTS = "posts";
+        public static final String PRODUCT = "posts/{productId}/show";
+        public static final String ADD_FAVORITE = "user/post/{productId}/faverate";
+        public static final String REMOVE_FAVORITE = "user/post/{productId}/unFaverate";
     }
 
     public class apiCategoryService {
@@ -55,7 +58,7 @@ public class ApiConstants {
     public class apiAppService {
         public static final String PRIVACY_POLICY = "app/privacy-policy";
         public static final String TERMS_AND_CONDITION = "app/terms-and-condations";
-        public static final String ABOUT_US = "app/about-us";
+        public static final String DISTANCES = "app/distance";
 
     }
 

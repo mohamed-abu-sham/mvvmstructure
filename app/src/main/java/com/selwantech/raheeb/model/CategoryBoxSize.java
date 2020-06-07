@@ -2,7 +2,9 @@ package com.selwantech.raheeb.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CategoryBoxSize {
+import java.io.Serializable;
+
+public class CategoryBoxSize implements Serializable {
 
     @SerializedName("image")
     private String image;

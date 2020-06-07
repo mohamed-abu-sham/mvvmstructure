@@ -69,6 +69,27 @@
         <item name="fontFamily">@font/cairo_regular</item>
     </style>
 
+    <style name="poppins_black">
+        <item name="fontFamily">@font/poppins_black</item>
+    </style>
+
+    <style name="poppins_bold">
+        <item name="fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <style name="poppins_semi_bold">
+        <item name="fontFamily">@font/poppins_semi_bold</item>
+    </style>
+
+    <style name="poppins_medium">
+        <item name="fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="poppins_regular">
+        <item name="fontFamily">@font/poppins_regular</item>
+    </style>
+
+
     <style name="AppThemeBlackText" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>

@@ -42,19 +42,17 @@ public class FilterTypeAdapter extends TypeAdapter<FilterProduct> {
             out.value(value.isPick_up());
         }
 
-        if (value.getDistance() != 0) {
-            out.name("distance");
-            out.value(value.getDistance());
-        }
+        out.name("distance");
+        out.value(value.getDistance());
 
         if (value.getTitle() != null
-                && value.getTitle().isEmpty()) {
+                && !value.getTitle().isEmpty()) {
             out.name("title");
             out.value(value.getTitle());
         }
 
         if (value.getOrdering() != null
-                && value.getOrdering().isEmpty()) {
+                && !value.getOrdering().isEmpty()) {
             out.name("ordering");
             out.value(value.getOrdering());
         }

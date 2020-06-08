@@ -5,7 +5,9 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.selwantech.raheeb.helper.FilterTypeAdapter;
+import com.selwantech.raheeb.model.BuyNow;
 import com.selwantech.raheeb.model.FilterProduct;
+import com.selwantech.raheeb.model.PriceDetails;
 import com.selwantech.raheeb.model.Product;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.ApiClient;
@@ -19,6 +21,7 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -72,7 +75,6 @@ public class ProductService {
     }
 
     public void removeFavorite(Context mContext, boolean enableLoading, int productId, APICallBack<String> apiCallBack) {
-
         getDataApi().removeFavorite(productId)
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -80,6 +82,29 @@ public class ProductService {
                 .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
     }
 
+    public void makeOffer(Context mContext, boolean enableLoading, int productId, double amount, APICallBack<String> apiCallBack) {
+        getDataApi().makeOffer(productId, amount)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void getPriceDetails(Context mContext, boolean enableLoading, int productId, APICallBack<PriceDetails> apiCallBack) {
+        getDataApi().getPriceDetails(productId)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<PriceDetails>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void buyNow(Context mContext, boolean enableLoading, int productId, BuyNow buyNow, APICallBack<String> apiCallBack) {
+        getDataApi().buyNow(productId, buyNow)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
 
     public DataApi getDataApi() {
         return mDataApi;
@@ -93,11 +118,21 @@ public class ProductService {
         @GET(ApiConstants.apiProductService.PRODUCT)
         Single<Response<GeneralResponse<Product>>> getProduct(@Path("productId") int productId);
 
+        @GET(ApiConstants.apiProductService.PRICE_DETAILS)
+        Single<Response<GeneralResponse<PriceDetails>>> getPriceDetails(@Path("productId") int productId);
+
         @POST(ApiConstants.apiProductService.ADD_FAVORITE)
         Single<Response<GeneralResponse<String>>> addFavorite(@Path("productId") int productId);
 
         @POST(ApiConstants.apiProductService.REMOVE_FAVORITE)
         Single<Response<GeneralResponse<String>>> removeFavorite(@Path("productId") int productId);
+
+        @POST(ApiConstants.apiProductService.MAKE_OFFER)
+        Single<Response<GeneralResponse<String>>> makeOffer(@Path("productId") int productId,
+                                                            @Query("price") double amount);
+
+        @POST(ApiConstants.apiProductService.BUY_NOW)
+        Single<Response<GeneralResponse<String>>> buyNow(@Path("productId") int productId, @Body BuyNow buyNow);
 
     }
 }

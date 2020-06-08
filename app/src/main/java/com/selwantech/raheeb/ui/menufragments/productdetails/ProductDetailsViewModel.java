@@ -2,8 +2,12 @@ package com.selwantech.raheeb.ui.menufragments.productdetails;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.text.Html;
+import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -18,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductDetailsBinding;
+import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.helper.GeoCoderAddress;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.ImagesItem;
@@ -27,9 +32,10 @@ import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.adapter.ProductImagesAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
+import com.selwantech.raheeb.ui.dialog.OfferFragmentDialog;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SmoothMoveMarker;
 import com.selwantech.raheeb.utils.SnackViewBulider;
-import com.selwantech.raheeb.utils.SpacesItemDecoration;
 
 import java.io.IOException;
 
@@ -54,10 +60,11 @@ public class ProductDetailsViewModel extends
         setUpRecycler();
         if (getNavigator().getProductId() == -1) {
             product = getNavigator().getProduct();
-            setProductAddress();
+            setTexts();
             initMap();
             product.getImages().get(0).setSelected(true);
             productImagesAdapter.addItems(product.getImages());
+            setShippingView();
         } else {
             getProduct();
         }
@@ -67,8 +74,8 @@ public class ProductDetailsViewModel extends
     private void setUpRecycler() {
         getViewBinding().recyclerViewProductImage.recyclerView.setLayoutManager(new LinearLayoutManager(getMyContext(), LinearLayoutManager.HORIZONTAL, false));
         getViewBinding().recyclerViewProductImage.recyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
-        getViewBinding().recyclerViewProductImage.recyclerView.addItemDecoration(decoration);
+//        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
+//        getViewBinding().recyclerViewProductImage.recyclerView.addItemDecoration(decoration);
         productImagesAdapter = new ProductImagesAdapter(getMyContext(), this);
         getViewBinding().recyclerViewProductImage.recyclerView.setAdapter(productImagesAdapter);
 
@@ -80,8 +87,9 @@ public class ProductDetailsViewModel extends
             public void onSuccess(Product response) {
                 product = response;
                 getViewBinding().setData(product);
-                setProductAddress();
+                setTexts();
                 initMap();
+                setShippingView();
             }
 
             @Override
@@ -123,16 +131,85 @@ public class ProductDetailsViewModel extends
         }
     }
 
-    public void setProductAddress() {
+    public void setTexts() {
+
+        getViewBinding().tvLocation.setText(Html.fromHtml(getLocationText()));
+        getViewBinding().tvLocation2.setText(getAddress());
+        if (product.isIsShipNationwide()) {
+            getViewBinding().tvGroundShipping.setText(getMyContext().getResources().getString(R.string.ground_shipping) + " " + "100 SAR");
+            getViewBinding().tvShippingProtectionDis.setText(Html.fromHtml(getShippingProtectionDescription()));
+            getViewBinding().tvPriceDetails.setText(getPriceDetails());
+            getViewBinding().tvShippedToYou.setText(getShippedToYouText());
+        }
+        if (product.getProductOwner().isIsValid()) {
+            getViewBinding().linearOwnerInfo.setVisibility(View.VISIBLE);
+            getViewBinding().tvOwnerRate.setText(product.getProductOwner().getRateString());
+        }
+    }
+
+    public void setShippingView() {
+        if (product.isIsShipNationwide()) {
+            getViewBinding().tvLocation.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_shipping_blue, 0, R.drawable.ic_question_blue, 0);
+            getViewBinding().linearShip.setVisibility(View.VISIBLE);
+            getViewBinding().viewShip.setVisibility(View.VISIBLE);
+            getViewBinding().linearShipProtection.setVisibility(View.VISIBLE);
+            getViewBinding().viewShipProtection.setVisibility(View.VISIBLE);
+            getViewBinding().linearPriceDetails.setVisibility(View.VISIBLE);
+            getViewBinding().linearShippedToYou.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private String getShippedToYouText() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getMyContext().getResources().getString(R.string.have_it_shipped_to_you_for));
+        stringBuilder.append(" ");
+        stringBuilder.append("10 SAR");
+        return stringBuilder.toString();
+    }
+
+    private String getLocationText() {
+        StringBuilder location = new StringBuilder();
+        if (product.isIsShipNationwide()) {
+            location.append(getMyContext().getResources().getString(R.string.ships_from));
+        }
+        location.append(getAddress());
+        if (product.isIsShipNationwide()) {
+            location.append(" ");
+            location.append(getMyContext().getResources().getString(R.string.for_price));
+            location.append(" ");
+            location.append(GeneralFunction.textColor("100 SAR", "#55ACEE"));
+        }
+        return location.toString();
+    }
+
+    private String getAddress() {
         try {
-            String location = GeoCoderAddress.getInstance()
+            return GeoCoderAddress.getInstance()
                     .getAddress(new LatLng(product.getLat()
                             , product.getLon())).getAddress();
-            getViewBinding().tvLocation.setText(location);
-            getViewBinding().tvLocation2.setText(location);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "";
+    }
+
+    private String getPriceDetails() {
+        StringBuilder priceDetails = new StringBuilder();
+        priceDetails.append(product.getPrice().getFormatted());
+        priceDetails.append(" + ");
+        priceDetails.append("10 SAR");
+        priceDetails.append(" ");
+        priceDetails.append(getMyContext().getResources().getString(R.string.shipping));
+        return priceDetails.toString();
+    }
+
+    private String getShippingProtectionDescription() {
+        StringBuilder description = new StringBuilder();
+        description.append(getMyContext().getResources().getString(R.string.shipping_protection_text));
+        description.append(" ");
+        description.append(GeneralFunction.textColor(getMyContext().getResources().getString(R.string.learn_more), "#55ACEE"));
+        return description.toString();
     }
 
     public void onFavoriteClicked() {
@@ -208,11 +285,44 @@ public class ProductDetailsViewModel extends
     }
 
     public void onMakeOfferClicked() {
+        OfferFragmentDialog offerFragmentDialog = new OfferFragmentDialog.Builder().build();
+        offerFragmentDialog.setMethodCallBack(new OfferFragmentDialog.OfferCallBack() {
+            @Override
+            public void callBack(double amount) {
+                sendOffer(amount);
+            }
+        });
+        offerFragmentDialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
+    }
 
+    private void sendOffer(double amount) {
+        getDataManager().getProductService().makeOffer(getMyContext(), true, product.getId(), amount, new APICallBack<String>() {
+            @Override
+            public void onSuccess(String response) {
+                showToast(response);
+            }
+
+            @Override
+            public void onError(String error, int errorCode) {
+                showSnackBar(getMyContext().getResources().getString(R.string.error),
+                        error,
+                        getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
+                            @Override
+                            public void onActionClick(Snackbar snackbar) {
+                                snackbar.dismiss();
+                            }
+                        });
+            }
+        });
     }
 
     public void onBuyNowClicked() {
-
+        if (product != null) {
+            Bundle data = new Bundle();
+            data.putSerializable(AppConstants.BundleData.PRODUCT, product);
+            Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                    .navigate(R.id.action_productDetailsFragment_to_reviewOfferFragment, data);
+        }
     }
 
     public void onBackClicked() {
@@ -221,6 +331,8 @@ public class ProductDetailsViewModel extends
 
     @Override
     public void onClick(ImagesItem imagesItem, int position) {
-
+        GeneralFunction.loadImage(getMyContext(), imagesItem.getImage(), getViewBinding().imgProduct);
     }
+
+
 }

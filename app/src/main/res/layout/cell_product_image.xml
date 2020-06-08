@@ -13,7 +13,7 @@
         android:id="@+id/cardCell"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_margin="@dimen/_7sdp"
+        android:layout_margin="@dimen/_5sdp"
         app:cardCornerRadius="@dimen/_3sdp"
         app:cardElevation="0dp">
 

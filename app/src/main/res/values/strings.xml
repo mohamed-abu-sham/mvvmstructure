@@ -31,7 +31,7 @@
     <string name="profile_picture">Profile picture</string>
     <string name="upload_picture">Upload picture</string>
     <string name="your_agree_to_raheeb">Your Agree To Raheeb</string>
-    <string name="terms_of_service">Terms Of Service</string>
+    <string name="terms_of_service">Terms Of Service .</string>
     <string name="and">And</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="already_have_an_account">Already have an account?</string>
@@ -269,6 +269,34 @@
     <string name="map_is_approximate_to_keep_the_sellers_location_private">Map is approximate to keep the seller’s location private</string>
     <string name="unfavorite">Unfavorite</string>
     <string name="share_this_product_with">Share this product with</string>
+    <string name="enter_your_offer">Enter your offer</string>
+    <string name="amount">Amount</string>
+    <string name="amount_must_be_more_than_0">Amount must be more than 0</string>
+    <string name="ships_from">"Ships from "</string>
+    <string name="for_price">For</string>
+    <string name="ship">Ship</string>
+    <string name="ground_shipping">ground_shipping</string>
+    <string name="shipping_purchase_protection">Shipping purchase protection</string>
+    <string name="shipping_protection_text">Items shipped through RAHEEB come with a free Money-back guarantee.</string>
+    <string name="learn_more">Learn more</string>
+    <string name="have_it_shipped_to_you_for">Have it shipped to you for</string>
+    <string name="review_offer">Review offer</string>
+    <string name="add_address">Add an address</string>
+    <string name="name">Name</string>
+    <string name="first_and_last_name">first and last name</string>
+    <string name="floor_number">Floor number</string>
+    <string name="building_number">Building number</string>
+    <string name="submit">Submit</string>
+    <string name="enter_shipping_info">Enter shipping info</string>
+    <string name="item_price">Item Price</string>
+    <string name="sale_tax">Sale tax (estimated)</string>
+    <string name="you_pay">You pay</string>
+    <string name="google_pay">Google pay</string>
+    <string name="by_continuing_you_accept_the_name_apps">By continuing, you accept the name apps</string>
+    <string name="cash_on_pickup">Cash on pickup</string>
+    <string name="please_choose_shipping_address">Please choose shipping address</string>
+    <string name="please_choose_payment_method">Please choose payment method</string>
+    <string name="trusted_member">Trusted member</string>
 
 
     <string-array name="KmArray">

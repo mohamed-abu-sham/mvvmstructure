@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_7sdp"
         app:cardCornerRadius="@dimen/_3sdp"
+        android:onClick="@{viewModel::onItemClick}"
         app:cardElevation="0dp">
 
         <LinearLayout

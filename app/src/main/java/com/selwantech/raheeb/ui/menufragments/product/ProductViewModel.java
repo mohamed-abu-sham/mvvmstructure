@@ -83,7 +83,7 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
                 getData();
             }
         });
-        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         getViewBinding().recyclerView.addItemDecoration(decoration);
         ItemTouchHelper ith = new ItemTouchHelper(new ItemTouchCallBack(homeAdapter,homeAdapter.getArrayList()));
 //        ith.attachToRecyclerView(getViewBinding().recyclerView);

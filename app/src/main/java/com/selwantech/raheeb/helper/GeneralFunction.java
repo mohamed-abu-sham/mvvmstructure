@@ -7,6 +7,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -69,6 +70,21 @@ public class GeneralFunction {
         requestOptions.error(R.mipmap.ic_launcher);
         Glide.with(mContext).applyDefaultRequestOptions(requestOptions).load(imgUrl).into(imageView);
 
+    }
+
+    public static String textColor(String text, String color) {
+        String input = "<font color=" + color + ">" + text + "</font>";
+        return input;
+    }
+
+    public static void enableDisableViewHolder(View view, boolean enabled) {
+        view.setEnabled(enabled);
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+            for (int idx = 0; idx < group.getChildCount(); idx++) {
+                enableDisableViewHolder(group.getChildAt(idx), enabled);
+            }
+        }
     }
 
     public static void loadImage(Context mContext, int img, ImageView imageView) {

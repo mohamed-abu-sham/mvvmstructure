@@ -125,7 +125,7 @@ public class Product extends BaseObservable implements Serializable {
         return id;
     }
 
-    public ProductOwner getUser() {
+    public ProductOwner getProductOwner() {
         return productOwner;
     }
 

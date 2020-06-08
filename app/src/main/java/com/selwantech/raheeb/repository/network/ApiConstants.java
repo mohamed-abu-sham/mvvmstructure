@@ -24,8 +24,11 @@ public class ApiConstants {
     public class apiProductService {
         public static final String PRODUCTS = "posts";
         public static final String PRODUCT = "posts/{productId}/show";
+        public static final String PRICE_DETAILS = "user/post/sold/{productId}/calculate_price";
         public static final String ADD_FAVORITE = "user/post/{productId}/faverate";
         public static final String REMOVE_FAVORITE = "user/post/{productId}/unFaverate";
+        public static final String MAKE_OFFER = "user/post/{productId}/offer";
+        public static final String BUY_NOW = "user/post/sold/{productId}/buy_now";
     }
 
     public class apiCategoryService {

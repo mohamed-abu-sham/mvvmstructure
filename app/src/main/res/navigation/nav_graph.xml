@@ -52,6 +52,26 @@
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.selwantech.raheeb.ui.menufragments.productdetails.ProductDetailsFragment"
-        android:label="ProductDetailsFragment" />
+        android:label="ProductDetailsFragment">
+        <action
+            android:id="@+id/action_productDetailsFragment_to_reviewOfferFragment"
+            app:destination="@id/reviewOfferFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewOfferFragment"
+        android:name="com.selwantech.raheeb.ui.menufragments.reviewoffer.ReviewOfferFragment"
+        android:label="ReviewOfferFragment">
+        <action
+            android:id="@+id/action_reviewOfferFragment_to_shippingInfoFragment"
+            app:destination="@id/shippingInfoFragment" />
+        <action
+            android:id="@+id/action_reviewOfferFragment_to_productsHolderFragment"
+            app:destination="@id/productsHolderFragment"
+            app:popUpTo="@id/nav_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/shippingInfoFragment"
+        android:name="com.selwantech.raheeb.ui.menufragments.shippinginfo.ShippingInfoFragment"
+        android:label="ShippingInfoFragment" />
 
 </navigation>

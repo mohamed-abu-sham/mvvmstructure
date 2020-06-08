@@ -78,6 +78,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
         if (Intent.ACTION_VIEW.equals(action)) {
             handleSendText(intent);
         }
+
     }
 
     void handleSendText(Intent intent) {

@@ -1,5 +1,6 @@
 package com.selwantech.raheeb.ui.category;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 
@@ -11,13 +12,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentCategoryBinding;
+import com.selwantech.raheeb.enums.FilterProductResultsTypes;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.Category;
+import com.selwantech.raheeb.model.FilterProduct;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.adapter.CategoryAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
+import com.selwantech.raheeb.ui.main.MainActivity;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.SpacesItemDecoration;
 
@@ -117,6 +121,10 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator, Fragment
 //        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment).navigate(R.id.action_nav_home_to_servicesFragment,
 //                data);
 
+        FilterProduct.getInstance().setCategory_id(category.getId());
+        popUp();
+        ((MainActivity) getBaseActivity()).onActivityResultFromFragment(
+                FilterProductResultsTypes.SEARCH.getValue(), Activity.RESULT_OK, null);
     }
 
     public boolean isRefreshing() {

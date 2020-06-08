@@ -99,9 +99,9 @@ public class ProductImagesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 }
             });
             if (imagesItemList.get(position).isSelected()) {
-                mBinding.imgPicture.setAlpha((float) 0.7);
+                mBinding.imgPicture.setAlpha((float) 0.5);
             } else {
-                mBinding.imgPicture.setAlpha((float) 0);
+                mBinding.imgPicture.setAlpha((float) 1);
             }
         }
 

@@ -25,6 +25,10 @@ public class ProductOwner implements Serializable {
         return rate;
     }
 
+    public String getRateString() {
+        return String.valueOf(rate);
+    }
+
     public boolean isIsValid() {
         return isValid;
     }

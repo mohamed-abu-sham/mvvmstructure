@@ -6,68 +6,43 @@ import java.io.Serializable;
 
 public class Address implements Serializable {
 
-    @SerializedName("id")
-    int id;
-    @SerializedName("title")
-    String title;
+    @SerializedName("name")
+    String name;
     @SerializedName("lat")
     String latitude;
     @SerializedName("lon")
     String longitude;
+    @SerializedName("floor")
+    String floor;
+    @SerializedName("building_number")
+    String building;
 
-    boolean selected;
 
-    public Address() {
-
+    public Address(String name, String latitude, String longitude, String floor, String building) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.floor = floor;
+        this.building = building;
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
 
     public String getLatitude() {
         return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLatitudeDouble() {
-        return Double.valueOf(latitude);
     }
 
     public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public String getFloor() {
+        return floor;
     }
 
-    public Double getLongitudeDouble() {
-        return Double.valueOf(longitude);
+    public String getBuilding() {
+        return building;
     }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
 }

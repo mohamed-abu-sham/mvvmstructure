@@ -24,6 +24,8 @@ import com.selwantech.raheeb.ui.menufragments.filterproductslocation.FilterProdu
 import com.selwantech.raheeb.ui.menufragments.product.ProductViewModel;
 import com.selwantech.raheeb.ui.menufragments.productdetails.ProductDetailsViewModel;
 import com.selwantech.raheeb.ui.menufragments.productstabsholder.ProductsHolderViewModel;
+import com.selwantech.raheeb.ui.menufragments.reviewoffer.ReviewOfferViewModel;
+import com.selwantech.raheeb.ui.menufragments.shippinginfo.ShippingInfoViewModel;
 import com.selwantech.raheeb.ui.splashscreen.SplashScreenViewModel;
 
 import javax.inject.Inject;
@@ -107,6 +109,12 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(ProductDetailsViewModel.class)) {
             //noinspection unchecked
             return (T) new ProductDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(ReviewOfferViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ReviewOfferViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(ShippingInfoViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ShippingInfoViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

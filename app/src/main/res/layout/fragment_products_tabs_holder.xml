@@ -8,103 +8,120 @@
             type="com.selwantech.raheeb.ui.menufragments.productstabsholder.ProductsHolderViewModel" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="@color/colorPrimaryDark">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_rounded_empty_gray_light"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/edSearch"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:drawableStart="@drawable/ic_search"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:gravity="start|center"
-                    android:hint="@string/search_here"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:textSize="14sp" />
-
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:id="@+id/imgCancelSearch"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:onClick="@{()->viewModel.onCancelSearchClicked()}"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_close_gray" />
-
-            <ImageView
-                android:id="@+id/imgSearch"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:onClick="@{()->viewModel.onSearchClicked()}"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_search_white" />
-
-            <ImageView
-                android:id="@+id/imgCategory"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:visibility="visible"
-                app:srcCompat="@drawable/ic_category"
-                android:onClick="@{()->viewModel.onCategoryClicked()}"/>
-
-            <ImageView
-                android:id="@+id/imgLocation"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                app:srcCompat="@drawable/ic_location"
-                android:tint="@color/white"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:visibility="visible"
-                android:onClick="@{() -> viewModel.onFilterLocationClicked()}"/>
-        </LinearLayout>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:tabTextAppearance="@style/MineCustomTabText" />
-
-        <fragment
-            android:id="@+id/fragment_products_tab"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:background="@color/white"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_rounded_empty_gray_light"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edSearch"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:drawableStart="@drawable/ic_search"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:gravity="start|center"
+                        android:hint="@string/search_here"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgCancelSearch"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:onClick="@{()->viewModel.onCancelSearchClicked()}"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_close_gray" />
+
+                <ImageView
+                    android:id="@+id/imgSearch"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:onClick="@{()->viewModel.onSearchClicked()}"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_search_white" />
+
+                <ImageView
+                    android:id="@+id/imgCategory"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:onClick="@{()->viewModel.onCategoryClicked()}"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_category" />
+
+                <ImageView
+                    android:id="@+id/imgLocation"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:onClick="@{() -> viewModel.onFilterLocationClicked()}"
+                    android:tint="@color/white"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_location" />
+            </LinearLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:tabTextAppearance="@style/MineCustomTabText" />
+
+            <fragment
+                android:id="@+id/fragment_products_tab"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabFilter"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:backgroundTint="@color/color_blue"
+            app:srcCompat="@drawable/ic_filter" />
+
+    </RelativeLayout>
 
 </layout>

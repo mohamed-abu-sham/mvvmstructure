@@ -2,9 +2,12 @@ package com.selwantech.raheeb.ui.productjourneys.createproductjourney.addprice;
 
 import android.content.Context;
 
+import androidx.activity.OnBackPressedCallback;
+
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductPriceBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
+import com.selwantech.raheeb.interfaces.BackPressed;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
@@ -17,6 +20,8 @@ import javax.inject.Inject;
 public class AddPriceFragment extends BaseFragment<FragmentAddProductPriceBinding, AddPriceViewModel> implements AddPriceNavigator {
 
     private static final String TAG = AddPriceFragment.class.getSimpleName();
+
+    BackPressed backPressed;
 
     @Inject
     ViewModelProviderFactory factory;
@@ -64,8 +69,33 @@ public class AddPriceFragment extends BaseFragment<FragmentAddProductPriceBindin
     @Override
     protected void setUp() {
         mViewBinding = getViewDataBinding();
-
+        setUpLocalToolbar();
         mViewModel.setUp();
+        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                backPressed.onBackPressed(2);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                backPressed.onBackPressed(2);
+            }
+        });
+    }
+
+    private void setUpLocalToolbar() {
+        mViewBinding.toolbar.toolbar.setTitle(R.string.set_your_price);
+        mViewBinding.toolbar.toolbar.setNavigationIcon(getMyContext().getResources().getDrawable(R.drawable.ic_arrow_back));
+        mViewBinding.toolbar.toolbar.setNavigationOnClickListener(v -> {
+            backPressed.onBackPressed(2);
+        });
     }
 
     @Override
@@ -77,4 +107,8 @@ public class AddPriceFragment extends BaseFragment<FragmentAddProductPriceBindin
         return mViewModel.returnData();
     }
 
+
+    public void setBackPressed(BackPressed backPressed) {
+        this.backPressed = backPressed;
+    }
 }

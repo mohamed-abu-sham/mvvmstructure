@@ -2,9 +2,12 @@ package com.selwantech.raheeb.ui.productjourneys.createproductjourney.adddetails
 
 import android.content.Context;
 
+import androidx.activity.OnBackPressedCallback;
+
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductDetailsBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
+import com.selwantech.raheeb.interfaces.BackPressed;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
@@ -18,6 +21,8 @@ public class AddDetailsFragment extends BaseFragment<FragmentAddProductDetailsBi
         AddDetailsViewModel> implements AddDetailsNavigator {
 
     private static final String TAG = AddDetailsFragment.class.getSimpleName();
+
+    BackPressed backPressed;
 
     @Inject
     ViewModelProviderFactory factory;
@@ -65,9 +70,33 @@ public class AddDetailsFragment extends BaseFragment<FragmentAddProductDetailsBi
     @Override
     protected void setUp() {
         mViewBinding = getViewDataBinding();
-        setUpToolbar(mViewBinding.toolbar, TAG,
-                R.string.describe_your_item);
+        setUpLocalToolbar();
         mViewModel.setUp();
+        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                backPressed.onBackPressed(1);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                backPressed.onBackPressed(1);
+            }
+        });
+    }
+
+    private void setUpLocalToolbar() {
+        mViewBinding.toolbar.toolbar.setTitle(R.string.describe_your_item);
+        mViewBinding.toolbar.toolbar.setNavigationIcon(getMyContext().getResources().getDrawable(R.drawable.ic_arrow_back));
+        mViewBinding.toolbar.toolbar.setNavigationOnClickListener(v -> {
+            backPressed.onBackPressed(1);
+        });
     }
 
     @Override
@@ -77,6 +106,11 @@ public class AddDetailsFragment extends BaseFragment<FragmentAddProductDetailsBi
 
     public Post onNextClicked() {
         return mViewModel.returnData();
+    }
+
+
+    public void setBackPressed(BackPressed backPressed) {
+        this.backPressed = backPressed;
     }
 
 }

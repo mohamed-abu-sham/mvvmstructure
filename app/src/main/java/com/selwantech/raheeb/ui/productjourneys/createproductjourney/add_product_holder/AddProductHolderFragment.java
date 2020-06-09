@@ -16,6 +16,7 @@ public class AddProductHolderFragment extends BaseFragment<FragmentAddProductHol
 
     private static final String TAG = AddProductHolderFragment.class.getSimpleName();
 
+
     @Inject
     ViewModelProviderFactory factory;
     private AddProductHolderViewModel mViewModel;
@@ -64,5 +65,6 @@ public class AddProductHolderFragment extends BaseFragment<FragmentAddProductHol
 
         mViewModel.setUp();
     }
+
 
 }

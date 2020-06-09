@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductHolderBinding;
+import com.selwantech.raheeb.interfaces.BackPressed;
 import com.selwantech.raheeb.model.CreatePostProgress;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
@@ -19,7 +20,8 @@ import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addimage.Ad
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addprice.AddPriceFragment;
 import com.selwantech.raheeb.utils.AppConstants;
 
-public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNavigator, FragmentAddProductHolderBinding> {
+public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNavigator, FragmentAddProductHolderBinding>
+        implements BackPressed {
 
     CreatePostProgress createPostProgress;
 
@@ -54,12 +56,15 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
         bundle.putSerializable(AppConstants.BundleData.POST, post);
         switch (position) {
             case 0:
+                addImageFragment.setBackPressed(this::onBackPressed);
                 addImageFragment.setArguments(bundle);
                 return addImageFragment;
             case 1:
+                addDetailsFragment.setBackPressed(this::onBackPressed);
                 addDetailsFragment.setArguments(bundle);
                 return addDetailsFragment;
             case 2:
+                addPriceFragment.setBackPressed(this::onBackPressed);
                 addPriceFragment.setArguments(bundle);
                 return addPriceFragment;
             default:
@@ -111,4 +116,31 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
     private void moveFragment(int position) {
         fragmentManager.beginTransaction().replace(R.id.create_product_fragment, getItem(position)).commit();
     }
+
+
+    @Override
+    public void onBackPressed(int position) {
+        if (position == 0) {
+            popUp();
+        } else {
+            moveFragment(position - 1);
+            currentFragment = position - 1;
+            reverseProgress(position);
+        }
+    }
+
+    private void reverseProgress(int position) {
+        switch (position) {
+            case 1:
+                createPostProgress.setAddDetails(false);
+                break;
+            case 2:
+                createPostProgress.setAddPrice(false);
+                break;
+            case 3:
+                createPostProgress.setFinish(false);
+                break;
+        }
+    }
+
 }

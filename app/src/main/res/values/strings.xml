@@ -317,6 +317,7 @@
     <string name="describe_your_item">Describe your item</string>
     <string name="please_choose_the_category">Please choose the category</string>
     <string name="amount_must_be_greater_than_0">Amount must be greater than 0</string>
+    <string name="set_your_price">Set your price</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

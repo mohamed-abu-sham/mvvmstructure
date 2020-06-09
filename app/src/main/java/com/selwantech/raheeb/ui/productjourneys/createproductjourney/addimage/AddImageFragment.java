@@ -3,9 +3,12 @@ package com.selwantech.raheeb.ui.productjourneys.createproductjourney.addimage;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.activity.OnBackPressedCallback;
+
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductImagesBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
+import com.selwantech.raheeb.interfaces.BackPressed;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
@@ -24,7 +27,7 @@ public class AddImageFragment extends BaseFragment<FragmentAddProductImagesBindi
 
     private static final String TAG = AddImageFragment.class.getSimpleName();
 
-
+    BackPressed backPressed;
     @Inject
     ViewModelProviderFactory factory;
     private AddImageViewModel mViewModel;
@@ -70,10 +73,34 @@ public class AddImageFragment extends BaseFragment<FragmentAddProductImagesBindi
     @Override
     protected void setUp() {
         mViewBinding = getViewDataBinding();
-        setUpToolbar(mViewBinding.toolbar, TAG, R.string.post_an_item);
+        setUpLocalToolbar();
         mViewModel.setUp();
+        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                backPressed.onBackPressed(0);
+            }
+        });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                backPressed.onBackPressed(1);
+            }
+        });
+    }
+
+    private void setUpLocalToolbar() {
+        mViewBinding.toolbar.toolbar.setTitle(R.string.post_an_item);
+        mViewBinding.toolbar.toolbar.setNavigationIcon(getMyContext().getResources().getDrawable(R.drawable.ic_arrow_back));
+        mViewBinding.toolbar.toolbar.setNavigationOnClickListener(v -> {
+            backPressed.onBackPressed(0);
+        });
+    }
     @Override
     public void callBack(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -105,6 +132,11 @@ public class AddImageFragment extends BaseFragment<FragmentAddProductImagesBindi
 
     public Post onNextClicked() {
         return mViewModel.returnData();
+
+    }
+
+    public void setBackPressed(BackPressed backPressed) {
+        this.backPressed = backPressed;
     }
 
 }

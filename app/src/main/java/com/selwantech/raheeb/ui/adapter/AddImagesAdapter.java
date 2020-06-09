@@ -83,8 +83,14 @@ public class AddImagesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         imagesItemList.remove(position);
     }
 
-    public List getArrayList() {
+    public List getList() {
         return imagesItemList;
+    }
+
+    public ArrayList<String> getArrayList() {
+        ArrayList<String> list = new ArrayList<>(imagesItemList);
+        list.remove(imagesItemList.size() - 1);
+        return list;
     }
 
     public String getItem(int position) {

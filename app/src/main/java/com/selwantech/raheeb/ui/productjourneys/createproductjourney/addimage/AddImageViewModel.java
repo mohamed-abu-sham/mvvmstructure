@@ -24,8 +24,6 @@ import com.selwantech.raheeb.utils.ItemTouchCallBack;
 import com.selwantech.raheeb.utils.PickImageUtility;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
-import java.util.ArrayList;
-
 public class AddImageViewModel extends BaseViewModel<AddImageNavigator, FragmentAddProductImagesBinding>
         implements RecyclerClick<String> {
 
@@ -46,7 +44,7 @@ public class AddImageViewModel extends BaseViewModel<AddImageNavigator, Fragment
         addImagesAdapter = new AddImagesAdapter(getMyContext(), this);
         getViewBinding().recyclerViewAddImage.recyclerView.setAdapter(addImagesAdapter);
         addImagesAdapter.addItem(null);
-        ItemTouchHelper ith = new ItemTouchHelper(new ItemTouchCallBack(addImagesAdapter, addImagesAdapter.getArrayList()));
+        ItemTouchHelper ith = new ItemTouchHelper(new ItemTouchCallBack(addImagesAdapter, addImagesAdapter.getList()));
         ith.attachToRecyclerView(getViewBinding().recyclerViewAddImage.recyclerView);
 
     }
@@ -58,7 +56,10 @@ public class AddImageViewModel extends BaseViewModel<AddImageNavigator, Fragment
         GeneralFunction.loadImage(getMyContext(), image, getViewBinding().imgProduct);
         addImagesAdapter.remove(addImagesAdapter.getItemCount() - 1);
         addImagesAdapter.addItem(image);
-        addImagesAdapter.addItem(null);
+        if (addImagesAdapter.getItemCount() < 11) {
+            addImagesAdapter.addItem(null);
+        }
+        getViewBinding().recyclerViewAddImage.recyclerView.scrollToPosition(addImagesAdapter.getItemCount() - 1);
     }
 
     public void addImageClicked() {
@@ -79,8 +80,7 @@ public class AddImageViewModel extends BaseViewModel<AddImageNavigator, Fragment
 
     public Post returnData() {
         if (isValid()) {
-            addImagesAdapter.remove(addImagesAdapter.getItemCount() - 1);
-            getNavigator().getPost().setImages(new ArrayList<>(addImagesAdapter.getArrayList()));
+            getNavigator().getPost().setImages(addImagesAdapter.getArrayList());
             getNavigator().getPost().setTitle(getViewBinding().edTitle.getText().toString());
             return getNavigator().getPost();
         }

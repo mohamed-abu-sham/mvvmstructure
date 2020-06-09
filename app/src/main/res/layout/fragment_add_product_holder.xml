@@ -31,21 +31,21 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="wrap_content"
             app:cardElevation="@dimen/_15sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/btnNext"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginStart="@dimen/_35sdp"
+                    android:layout_marginStart="@dimen/_25sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_35sdp"
+                    android:layout_marginEnd="@dimen/_25sdp"
                     android:background="@drawable/shape_of_logo"
                     android:onClick="@{()->viewModel.onNextClick()}"
                     android:text="@string/next"
@@ -55,6 +55,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_70sdp"
+                    android:layout_marginStart="@dimen/_25sdp"
+                    android:layout_marginEnd="@dimen/_25sdp"
                     android:orientation="horizontal">
 
                     <LinearLayout

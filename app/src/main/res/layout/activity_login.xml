@@ -192,7 +192,7 @@
                             android:layout_height="@dimen/_25sdp"
                             android:text="@string/log_in"
                             app:srcCompat="@drawable/ic_twitter"
-                            android:textColor="@color/white" />
+                            android:tint="@color/colorPrimaryDark" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

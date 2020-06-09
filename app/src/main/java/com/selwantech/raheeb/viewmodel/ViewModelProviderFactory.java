@@ -20,12 +20,16 @@ import com.selwantech.raheeb.ui.emptyfragment.EmptyFragmentViewModel;
 import com.selwantech.raheeb.ui.filebox.FileBoxViewModel;
 import com.selwantech.raheeb.ui.main.MainActivityViewModel;
 import com.selwantech.raheeb.ui.mappicker.MapPickerViewModel;
-import com.selwantech.raheeb.ui.menufragments.filterproductslocation.FilterProductLocationViewModel;
-import com.selwantech.raheeb.ui.menufragments.product.ProductViewModel;
-import com.selwantech.raheeb.ui.menufragments.productdetails.ProductDetailsViewModel;
-import com.selwantech.raheeb.ui.menufragments.productstabsholder.ProductsHolderViewModel;
-import com.selwantech.raheeb.ui.menufragments.reviewoffer.ReviewOfferViewModel;
-import com.selwantech.raheeb.ui.menufragments.shippinginfo.ShippingInfoViewModel;
+import com.selwantech.raheeb.ui.productjourneys.createproductjourney.add_product_holder.AddProductHolderViewModel;
+import com.selwantech.raheeb.ui.productjourneys.createproductjourney.adddetails.AddDetailsViewModel;
+import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addimage.AddImageViewModel;
+import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addprice.AddPriceViewModel;
+import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.filterproductslocation.FilterProductLocationViewModel;
+import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.product.ProductViewModel;
+import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productdetails.ProductDetailsViewModel;
+import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productstabsholder.ProductsHolderViewModel;
+import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.reviewoffer.ReviewOfferViewModel;
+import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.shippinginfo.ShippingInfoViewModel;
 import com.selwantech.raheeb.ui.splashscreen.SplashScreenViewModel;
 
 import javax.inject.Inject;
@@ -115,6 +119,18 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(ShippingInfoViewModel.class)) {
             //noinspection unchecked
             return (T) new ShippingInfoViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(AddProductHolderViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AddProductHolderViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(AddImageViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AddImageViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(AddDetailsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AddDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(AddPriceViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AddPriceViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

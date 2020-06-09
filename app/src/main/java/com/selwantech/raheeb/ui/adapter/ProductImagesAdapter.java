@@ -11,7 +11,7 @@ import com.selwantech.raheeb.databinding.CellProductImageBinding;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.ImagesItem;
 import com.selwantech.raheeb.ui.base.BaseViewHolder;
-import com.selwantech.raheeb.viewmodel.ProductImageViewModel;
+import com.selwantech.raheeb.viewmodel.ItemProductImageViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +82,7 @@ public class ProductImagesAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             if (mBinding.getViewModel() == null) {
-                mBinding.setViewModel(new ProductImageViewModel(mContext, imagesItemList.get(position), position, mRecyclerClick));
+                mBinding.setViewModel(new ItemProductImageViewModel(mContext, imagesItemList.get(position), position, mRecyclerClick));
             } else {
                 mBinding.getViewModel().setImagesItem(imagesItemList.get(position));
             }

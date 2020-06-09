@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.selwantech.raheeb.ui.menufragments.shippinginfo.ShippingInfoViewModel" />
+            type="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.shippinginfo.ShippingInfoViewModel" />
     </data>
 
     <LinearLayout
@@ -124,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/extraListTextTxt"
                     android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_marginBottom="@dimen/_40sdp"
                     android:background="@drawable/extras_background"
                     android:hint="@string/floor_number"
                     android:inputType="textMultiLine"

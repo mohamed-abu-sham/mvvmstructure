@@ -1,5 +1,7 @@
 package com.selwantech.raheeb.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -18,5 +20,11 @@ public class Condition implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }

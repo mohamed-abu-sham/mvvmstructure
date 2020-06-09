@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityMainBinding;
+import com.selwantech.raheeb.helper.LocationHelper;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
 import com.selwantech.raheeb.utils.AppConstants;
@@ -100,7 +101,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (getActivityResultCallBack() != null) {
+        if (getActivityResultCallBack() != null && requestCode != LocationHelper.LOCATION_REQUEST_CODE) {
             getActivityResultCallBack().callBack(requestCode, resultCode, data);
         }
     }

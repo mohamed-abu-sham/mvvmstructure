@@ -1,7 +1,9 @@
 package com.selwantech.raheeb.repository.network;
 
 public class ApiConstants {
-    public static final String BASE_URL = "http://raheeb.selwantech.tech/api/";
+//    public static final String BASE_URL = "http://raheeb.selwantech.tech/api/";
+
+    public static final String BASE_URL = "http://157.245.252.177/api/";
     public static final String GET_DATA = "user/1/categories";
     public static final String PLATFORM = "android";
 
@@ -62,6 +64,8 @@ public class ApiConstants {
         public static final String PRIVACY_POLICY = "app/privacy-policy";
         public static final String TERMS_AND_CONDITION = "app/terms-and-condations";
         public static final String DISTANCES = "app/distance";
+        public static final String CONDITION = "condition_type";
+        public static final String CURRENCY = "app/currency";
 
     }
 

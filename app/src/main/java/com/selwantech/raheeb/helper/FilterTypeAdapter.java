@@ -57,6 +57,11 @@ public class FilterTypeAdapter extends TypeAdapter<FilterProduct> {
             out.value(value.getOrdering());
         }
 
+        if (value.getCategory_id() != 0) {
+            out.name("category_id");
+            out.value(value.getCategory_id());
+        }
+
         out.endObject();
     }
 

@@ -121,7 +121,7 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator, Fragment
 //        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment).navigate(R.id.action_nav_home_to_servicesFragment,
 //                data);
 
-        FilterProduct.getInstance().setCategory_id(category.getId());
+        FilterProduct.getInstance().setCategory(category);
         popUp();
         ((MainActivity) getBaseActivity()).onActivityResultFromFragment(
                 FilterProductResultsTypes.SEARCH.getValue(), Activity.RESULT_OK, null);

@@ -37,6 +37,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class LocationHelper implements LocationListener,
         OnConnectionFailedListener, ConnectionCallbacks {
+    public final static int LOCATION_REQUEST_CODE = 1001;
     public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private static final int PERMISSION_REQUEST_CODE = 1;
     private final int INTERVAL = 5000;
@@ -253,7 +254,7 @@ public class LocationHelper implements LocationListener,
                             ResolvableApiException resolvable = (ResolvableApiException) exception;
                             resolvable.startResolutionForResult(
                                     (Activity) context,
-                                    101);
+                                    LOCATION_REQUEST_CODE);
 //                            returnLastLatLng();
                         } catch (IntentSender.SendIntentException e) {
                         } catch (ClassCastException e) {

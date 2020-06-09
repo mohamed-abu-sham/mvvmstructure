@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.selwantech.raheeb.helper.FilterTypeAdapter;
+import com.selwantech.raheeb.model.Condition;
 import com.selwantech.raheeb.model.Distance;
 import com.selwantech.raheeb.model.FilterProduct;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -50,6 +51,22 @@ public class AppService {
                 .subscribe(new CustomObserverResponse<ArrayList<Distance>>(mContext, enableLoading, apiCallBack));
     }
 
+    public void getConditions(Context mContext, boolean enableLoading, APICallBack<ArrayList<Condition>> apiCallBack) {
+        getDataApi().getConditions()
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<ArrayList<Condition>>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void getCurrency(Context mContext, boolean enableLoading, APICallBack<String> apiCallBack) {
+        getDataApi().getCurrency()
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+
 
     public DataApi getDataApi() {
         return mDataApi;
@@ -59,6 +76,14 @@ public class AppService {
 
         @GET(ApiConstants.apiAppService.DISTANCES)
         Single<Response<GeneralResponse<ArrayList<Distance>>>> getDistances();
+
+        @GET(ApiConstants.apiAppService.CONDITION)
+        Single<Response<GeneralResponse<ArrayList<Condition>>>> getConditions();
+
+        @GET(ApiConstants.apiAppService.CURRENCY)
+        Single<Response<GeneralResponse<String>>> getCurrency();
+
+
 
 
     }

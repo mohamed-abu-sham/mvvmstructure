@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.selwantech.raheeb.viewmodel.ProductImageViewModel" />
+            type="com.selwantech.raheeb.viewmodel.ItemProductImageViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

@@ -97,5 +97,15 @@ public final class AppConstants {
         public static final String TYPE = "TYPE";
         public static final String ADDRESS = "ADDRESS";
         public static final String PRODUCT_ID = "PRODUCT_ID";
+        public static final String POST = "POST";
+    }
+
+    public class FILTER_BY_KEYS {
+
+        public static final String LOCATION = "LOCATION";
+        public static final String PRICE = "PRICE";
+        public static final String DISTANCE = "DISTANCE";
+        public static final String ORDER_BY = "ORDER_BY";
+        public static final String CATEGORY = "CATEGORY";
     }
 }

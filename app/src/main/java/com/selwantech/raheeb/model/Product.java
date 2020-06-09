@@ -50,6 +50,9 @@ public class Product extends BaseObservable implements Serializable {
     @SerializedName("price")
     private Price price;
 
+    @SerializedName("shipping_price")
+    private Price shipping_price;
+
     @SerializedName("is_faverate")
     private boolean isFaverate;
 
@@ -115,6 +118,10 @@ public class Product extends BaseObservable implements Serializable {
 
     public Price getPrice() {
         return price;
+    }
+
+    public Price getShipping_price() {
+        return shipping_price;
     }
 
     public boolean isIsFaverate() {

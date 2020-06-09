@@ -6,17 +6,17 @@ import java.io.Serializable;
 
 public class BuyNow implements Serializable {
 
-    @SerializedName("shipping_method")
-    String shipping_method = "cach";
+    @SerializedName("payment_method")
+    String payment_method = "cash";
     @SerializedName("address")
     Address address;
 
-    public String getShipping_method() {
-        return shipping_method;
+    public String getPayment_method() {
+        return payment_method;
     }
 
-    public void setShipping_method(String shipping_method) {
-        this.shipping_method = shipping_method;
+    public void setPayment_method(String payment_method) {
+        this.payment_method = payment_method;
     }
 
     public Address getAddress() {

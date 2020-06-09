@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.selwantech.raheeb.ui.menufragments.filterproductslocation.FilterProductLocationViewModel" />
+            type="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.filterproductslocation.FilterProductLocationViewModel" />
     </data>
 
     <RelativeLayout
@@ -109,7 +109,7 @@
                     android:tint="@color/colorPrimaryDark"
                     android:layout_marginTop="@dimen/_3sdp"/>
 
-                <com.selwantech.raheeb.seekbar.RangeSeekBar
+                <com.selwantech.raheeb.utils.seekbar.RangeSeekBar
                     android:id="@+id/seekbarKm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

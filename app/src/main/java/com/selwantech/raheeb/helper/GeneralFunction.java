@@ -72,9 +72,28 @@ public class GeneralFunction {
 
     }
 
-    public static String textColor(String text, String color) {
+    public static String textMultiColor(String text, String color) {
         String input = "<font color=" + color + ">" + text + "</font>";
         return input;
+    }
+
+    @BindingAdapter("textviewColor")
+    public static void textColor(TextView textView, int color) {
+        textView.setTextColor(color);
+    }
+
+    public static void tintImageView(Context mContext, ImageView imageView, int color) {
+        imageView.setColorFilter(ContextCompat.getColor(mContext,
+                color), android.graphics.PorterDuff.Mode.SRC_IN);
+    }
+
+    @BindingAdapter("tintButton")
+    public static void tintButton(TextView button, int color) {
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+        //the color is a direct color int and not a color resource
+        DrawableCompat.setTint(buttonDrawable, color);
+        button.setBackground(buttonDrawable);
     }
 
     public static void enableDisableViewHolder(View view, boolean enabled) {
@@ -95,12 +114,6 @@ public class GeneralFunction {
         Glide.with(mContext).applyDefaultRequestOptions(requestOptions).load(img).into(imageView);
 
     }
-
-    public static void tintImageView(Context mContext, ImageView imageView, int color) {
-        imageView.setColorFilter(ContextCompat.getColor(mContext,
-                color), android.graphics.PorterDuff.Mode.SRC_IN);
-    }
-
     public static void tintViewBackgroundTint(View view, int color) {
         Drawable buttonDrawable = view.getBackground();
         buttonDrawable = DrawableCompat.wrap(buttonDrawable);

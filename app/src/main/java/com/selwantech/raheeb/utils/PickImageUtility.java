@@ -77,7 +77,6 @@ public class PickImageUtility {
     public static void Crop(Uri image, Activity mContext, boolean isSquare) {
         if (isSquare)
             CropImage.activity(image)
-                    .setAspectRatio(1, 1)
                     .start(mContext);
         else
             CropImage.activity(image)

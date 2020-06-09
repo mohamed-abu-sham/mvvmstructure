@@ -1,8 +1,17 @@
 package com.selwantech.raheeb.model;
 
-import com.google.gson.annotations.SerializedName;
+import android.content.Context;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.annotations.SerializedName;
+import com.selwantech.raheeb.App;
+import com.selwantech.raheeb.R;
+import com.selwantech.raheeb.helper.GeoCoderAddress;
+import com.selwantech.raheeb.utils.AppConstants;
+
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class FilterProduct implements Serializable {
 
@@ -20,7 +29,7 @@ public class FilterProduct implements Serializable {
     @SerializedName("pick_up")
     boolean pick_up = false;
     @SerializedName("category_id")
-    int category_id = 0;
+    Category category = null;
     @SerializedName("distance")
     int distance = 0;
     @SerializedName("title")
@@ -43,8 +52,12 @@ public class FilterProduct implements Serializable {
     }
 
     public void setObj(FilterProduct filterProduct) {
-
         FilterProduct.filterProduct = filterProduct;
+    }
+
+    public void clearData() {
+        setObj(null);
+        getInstance();
     }
 
     public double getLat() {
@@ -96,11 +109,15 @@ public class FilterProduct implements Serializable {
     }
 
     public int getCategory_id() {
-        return category_id;
+        return category != null ? category.getId() : 0;
     }
 
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getDistance() {
@@ -125,5 +142,54 @@ public class FilterProduct implements Serializable {
 
     public void setOrdering(String ordering) {
         this.ordering = ordering;
+    }
+
+    public ArrayList<FilterBy> getArraylist() {
+        Context mContext = App.getInstance();
+        ArrayList<FilterBy> filterByArrayList = new ArrayList<>();
+        if (getLat() != 0.0 && getLon() != 0.0) {
+            try {
+                filterByArrayList.add(new FilterBy(AppConstants.FILTER_BY_KEYS.LOCATION,
+                        mContext.getResources().getString(R.string.location),
+                        GeoCoderAddress.getInstance().getAddress(new LatLng(getLat(), getLon())).getAddress()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (getPrice_min() != 0.0 && getPrice_max() != 0.0) {
+            filterByArrayList.add(new FilterBy(AppConstants.FILTER_BY_KEYS.PRICE,
+                    mContext.getResources().getString(R.string.price),
+                    getPrice_min() + " " +
+                            mContext.getResources().getString(R.string.between) + " " +
+                            getPrice_max()));
+        }
+
+        if (getDistance() != 0) {
+            filterByArrayList.add(new FilterBy(AppConstants.FILTER_BY_KEYS.DISTANCE,
+                    mContext.getResources().getString(R.string.distance),
+                    getDistance() + mContext.getResources().getString(R.string.km)));
+
+        }
+
+        if (getTitle() != null
+                && !getTitle().isEmpty()) {
+            filterByArrayList.add(new FilterBy(AppConstants.FILTER_BY_KEYS.DISTANCE,
+                    mContext.getResources().getString(R.string.search),
+                    getTitle()));
+        }
+
+        if (getOrdering() != null
+                && !getOrdering().isEmpty()) {
+            filterByArrayList.add(new FilterBy(AppConstants.FILTER_BY_KEYS.ORDER_BY,
+                    mContext.getResources().getString(R.string.order_by),
+                    getOrdering()));
+        }
+        if (getCategory() != null) {
+            filterByArrayList.add(new FilterBy(AppConstants.FILTER_BY_KEYS.CATEGORY,
+                    mContext.getResources().getString(R.string.category),
+                    getCategory().getName()));
+        }
+        return filterByArrayList;
     }
 }

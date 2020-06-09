@@ -297,7 +297,26 @@
     <string name="please_choose_shipping_address">Please choose shipping address</string>
     <string name="please_choose_payment_method">Please choose payment method</string>
     <string name="trusted_member">Trusted member</string>
-
+    <string name="next">Next</string>
+    <string name="photo">Photo</string>
+    <string name="details">Details</string>
+    <string name="filter_by">Filter by</string>
+    <string name="between">-</string>
+    <string name="order_by">Order by</string>
+    <string name="category">Category</string>
+    <string name="the_max_must_be_grater_than_min">The Max must be grater than Min</string>
+    <string name="no_filter_applied">-No filters applied-</string>
+    <string name="apply_to_clear_filters">-Apply to clear filters-</string>
+    <string name="km">Km</string>
+    <string name="drag_to_reorder_Add_up_to_11_more_photos">Drag to reorder . Add up to 11 more photos .</string>
+    <string name="title">Title</string>
+    <string name="post_an_item">Post an item</string>
+    <string name="please_add_product_images">Please add product images</string>
+    <string name="condition">Condition</string>
+    <string name="see_more">See more</string>
+    <string name="describe_your_item">Describe your item</string>
+    <string name="please_choose_the_category">Please choose the category</string>
+    <string name="amount_must_be_greater_than_0">Amount must be greater than 0</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

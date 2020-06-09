@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/productsHolderFragment"
-        android:name="com.selwantech.raheeb.ui.menufragments.productstabsholder.ProductsHolderFragment"
+        android:name="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productstabsholder.ProductsHolderFragment"
         android:label="ProductsHolderFragment"
         tools:layout="@layout/fragment_products_tabs_holder">
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/filterProductLocationFragment"
-        android:name="com.selwantech.raheeb.ui.menufragments.filterproductslocation.FilterProductLocationFragment"
+        android:name="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.filterproductslocation.FilterProductLocationFragment"
         android:label="FilterProductLocationFragment">
         <action
             android:id="@+id/action_filterProductLocationFragment_to_mapPickerFragment"
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/productFragment"
-        android:name="com.selwantech.raheeb.ui.menufragments.product.ProductFragment"
+        android:name="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.product.ProductFragment"
         android:label="ProductFragment">
         <action
             android:id="@+id/action_productFragment_to_productDetailsFragment"
@@ -51,7 +51,7 @@
         android:label="MapPickerFragment" />
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="com.selwantech.raheeb.ui.menufragments.productdetails.ProductDetailsFragment"
+        android:name="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productdetails.ProductDetailsFragment"
         android:label="ProductDetailsFragment">
         <action
             android:id="@+id/action_productDetailsFragment_to_reviewOfferFragment"
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/reviewOfferFragment"
-        android:name="com.selwantech.raheeb.ui.menufragments.reviewoffer.ReviewOfferFragment"
+        android:name="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.reviewoffer.ReviewOfferFragment"
         android:label="ReviewOfferFragment">
         <action
             android:id="@+id/action_reviewOfferFragment_to_shippingInfoFragment"
@@ -71,7 +71,11 @@
     </fragment>
     <fragment
         android:id="@+id/shippingInfoFragment"
-        android:name="com.selwantech.raheeb.ui.menufragments.shippinginfo.ShippingInfoFragment"
+        android:name="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.shippinginfo.ShippingInfoFragment"
         android:label="ShippingInfoFragment" />
+    <fragment
+        android:id="@+id/nav_post"
+        android:name="com.selwantech.raheeb.ui.productjourneys.createproductjourney.add_product_holder.AddProductHolderFragment"
+        android:label="CreateProductHolderFragment" />
 
 </navigation>

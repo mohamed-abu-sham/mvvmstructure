@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.selwantech.raheeb.ui.menufragments.productstabsholder.ProductsHolderViewModel" />
+            type="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productstabsholder.ProductsHolderViewModel" />
     </data>
 
     <RelativeLayout
@@ -120,6 +120,7 @@
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_15sdp"
             android:backgroundTint="@color/color_blue"
+            android:onClick="@{()->viewModel.onFilterByClicked()}"
             app:srcCompat="@drawable/ic_filter" />
 
     </RelativeLayout>

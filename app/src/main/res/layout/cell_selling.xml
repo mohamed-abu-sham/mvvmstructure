@@ -55,14 +55,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="center|start"
-                    android:orientation="horizontal">
+                    android:id="@+id/relativeInteracted"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imgUser1"
-                        imageUrl="@{viewModel.selling.productOwner.avatar}"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@color/color_blue" />
+                        android:src="@color/color_blue"
+                        android:visibility="gone" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imgUser2"
@@ -70,7 +72,7 @@
                         android:layout_height="15dp"
                         android:layout_marginStart="-7.5dp"
                         android:layout_toEndOf="@id/imgUser1"
-                        android:src="@color/color_gray_light" />
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -79,15 +81,17 @@
                         android:layout_toEndOf="@id/imgUser2"
                         android:background="@drawable/shape_oval_dotted"
                         android:gravity="center"
-                        android:minHeight="15dp">
+                        android:id="@+id/linearMoreCount"
+                        android:minHeight="15dp"
+                        android:visibility="gone">
 
                         <TextView
+                            android:id="@+id/tvMoreCount"
                             style="@style/poppins_light"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_7sdp"
                             android:layout_marginEnd="@dimen/_7sdp"
-                            android:text="+ 5"
                             android:textColor="@color/text_gray"
                             android:textSize="8sp" />
                     </LinearLayout>
@@ -99,7 +103,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="center|start"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="@{viewModel.viewMarkedSold()}">
 
                     <TextView
                         android:id="@+id/tvSellingFast"
@@ -110,13 +115,15 @@
                         android:onClick="@{viewModel::onSellFasterClick}"
                         android:text="@string/selling_faster"
                         android:textColor="@color/color_blue"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:visibility="gone" />
 
                     <View
                         android:layout_width="0.5dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
+                        android:visibility="gone"
                         android:background="@color/text_gray" />
 
                     <TextView

@@ -3,6 +3,7 @@ package com.selwantech.raheeb.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Selling implements Serializable {
@@ -63,6 +64,10 @@ public class Selling implements Serializable {
 
     @SerializedName("status")
     private String status;
+
+    @SerializedName("interacted_people")
+    private ArrayList<String> interacted_people;
+
 
     public String getDate() {
         return date;
@@ -138,5 +143,13 @@ public class Selling implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public ArrayList<String> getInteracted_people() {
+        return interacted_people;
+    }
+
+    public void setInteracted_people(ArrayList<String> interacted_people) {
+        this.interacted_people = interacted_people;
     }
 }

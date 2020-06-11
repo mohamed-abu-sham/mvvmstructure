@@ -101,6 +101,7 @@ public final class AppConstants {
         public static final String PRODUCT_OWNER = "PRODUCT_OWNER";
         public static final String MY_OFFER = "MY_OFFER";
         public static final String USER_ID = "USER_ID";
+        public static final String SELLING_ITEM = "SELLING_ITEM";
     }
 
     public class FILTER_BY_KEYS {
@@ -110,5 +111,11 @@ public final class AppConstants {
         public static final String DISTANCE = "DISTANCE";
         public static final String ORDER_BY = "ORDER_BY";
         public static final String CATEGORY = "CATEGORY";
+    }
+
+    public class PRODUCT_STATUS {
+        public static final String AVAILABLE = "available";
+        public static final String SOLD_OTHER_APP = "sold_other_app";
+        public static final String SOLD = "sold";
     }
 }

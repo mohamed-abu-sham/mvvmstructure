@@ -138,7 +138,7 @@ public class SellingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             if (mBinding.getViewModel() == null) {
-                mBinding.setViewModel(new ItemSellingViewModel(mContext, sellingList.get(position), position, sellingItemClick));
+                mBinding.setViewModel(new ItemSellingViewModel(mBinding, mContext, sellingList.get(position), position, sellingItemClick));
             } else {
                 mBinding.getViewModel().setSelling(sellingList.get(position));
             }

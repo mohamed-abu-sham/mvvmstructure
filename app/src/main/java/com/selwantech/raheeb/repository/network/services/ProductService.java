@@ -4,13 +4,16 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.selwantech.raheeb.helper.FilterTypeAdapter;
+import com.selwantech.raheeb.helper.FilterTypeGsonConverter;
+import com.selwantech.raheeb.helper.SetSoldGsonConverter;
 import com.selwantech.raheeb.model.BuyNow;
 import com.selwantech.raheeb.model.FilterProduct;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.model.PriceDetails;
 import com.selwantech.raheeb.model.Product;
 import com.selwantech.raheeb.model.Selling;
+import com.selwantech.raheeb.model.SetSold;
+import com.selwantech.raheeb.model.SoldTo;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.ApiClient;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
@@ -41,7 +44,7 @@ public class ProductService {
     private DataApi mDataApi;
     Gson gson;
     private ProductService() {
-        gson = new GsonBuilder().registerTypeAdapter(FilterProduct.class, new FilterTypeAdapter()).create();
+        gson = new GsonBuilder().registerTypeAdapter(FilterProduct.class, new FilterTypeGsonConverter()).create();
         mDataApi = ApiClient.getRetrofitClient(ApiConstants.BASE_URL).create(DataApi.class);
     }
 
@@ -144,6 +147,23 @@ public class ProductService {
                 .subscribe(new CustomObserverResponse<ArrayList<Product>>(mContext, enableLoading, apiCallBack));
     }
 
+    public void getInteractedPeople(Context mContext, boolean enableLoading, int productId, APICallBack<ArrayList<SoldTo>> apiCallBack) {
+        getDataApi().getInteractedPeople(productId)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<ArrayList<SoldTo>>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void setSold(Context mContext, boolean enableLoading, int productId, SetSold sold, APICallBack<String> apiCallBack) {
+        Gson gson = new GsonBuilder().registerTypeAdapter(FilterProduct.class, new SetSoldGsonConverter()).create();
+        getDataApi().setSold(productId, gson.toJson(sold))
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+
     public DataApi getDataApi() {
         return mDataApi;
     }
@@ -185,6 +205,13 @@ public class ProductService {
 
         @GET(ApiConstants.apiProductService.FAVORITE)
         Single<Response<GeneralResponse<ArrayList<Product>>>> getFavorite(@Query("skip") int skip);
+
+        @GET(ApiConstants.apiProductService.INTERACTIVE_PEOPLE)
+        Single<Response<GeneralResponse<ArrayList<SoldTo>>>> getInteractedPeople(@Path("product_id") int product_id);
+
+        @POST(ApiConstants.apiProductService.SET_SOLD)
+        Single<Response<GeneralResponse<String>>> setSold(@Path("product_id") int product_id,
+                                                          @Body String sold);
 
     }
 }

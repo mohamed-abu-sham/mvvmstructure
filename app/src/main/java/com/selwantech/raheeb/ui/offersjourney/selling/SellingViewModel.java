@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -12,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentSellingBinding;
+import com.selwantech.raheeb.enums.SellingItemClickTypes;
 import com.selwantech.raheeb.interfaces.OnLoadMoreListener;
 import com.selwantech.raheeb.interfaces.SellingItemClick;
 import com.selwantech.raheeb.model.Selling;
@@ -20,6 +22,7 @@ import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.adapter.SellingAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
+import com.selwantech.raheeb.ui.dialog.ConfirmSoldFragmentDialog;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
@@ -80,9 +83,29 @@ public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSe
     @Override
     public void onClick(Selling selling, int clickType, int position) {
         Bundle data = new Bundle();
-        data.putSerializable(AppConstants.BundleData.MY_OFFER, selling);
-//        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-//                .navigate(R.id.productDetailsFragment, data);
+        data.putSerializable(AppConstants.BundleData.SELLING_ITEM, selling);
+        SellingItemClickTypes sellingItemClickTypes = SellingItemClickTypes.fromInt(clickType);
+        switch (sellingItemClickTypes) {
+
+            case ITEM_CLICK:
+
+                break;
+            case MARK_SOLD_CLICK:
+                ConfirmSoldFragmentDialog dialog = new ConfirmSoldFragmentDialog.Builder().build();
+                dialog.setMethodCallBack(new ConfirmSoldFragmentDialog.ConfirmSoldCallBack() {
+                    @Override
+                    public void confirmed() {
+                        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                                .navigate(R.id.sellFragment, data);
+                    }
+                });
+                dialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
+                break;
+            case SELL_FASTER_CLICK:
+
+                break;
+        }
+
     }
 
     public void getData() {
@@ -103,14 +126,16 @@ public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSe
                 if (sellingAdapter.getItemCount() == 0) {
                     showNoDataFound();
                 }
-                showSnackBar(getMyContext().getString(R.string.error),
-                        error, getMyContext().getResources().getString(R.string.ok),
-                        new SnackViewBulider.SnackbarCallback() {
-                            @Override
-                            public void onActionClick(Snackbar snackbar) {
-                                snackbar.dismiss();
-                            }
-                        });
+                if (!isLoadMore) {
+                    showSnackBar(getMyContext().getString(R.string.error),
+                            error, getMyContext().getResources().getString(R.string.ok),
+                            new SnackViewBulider.SnackbarCallback() {
+                                @Override
+                                public void onActionClick(Snackbar snackbar) {
+                                    snackbar.dismiss();
+                                }
+                            });
+                }
                 checkIsLoadMoreAndRefreshing(false);
             }
         });

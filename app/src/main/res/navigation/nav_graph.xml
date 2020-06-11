@@ -14,10 +14,7 @@
         tools:layout="@layout/fragment_products_tabs_holder">
         <action
             android:id="@+id/action_productsHolderFragment_to_filterProductLocationFragment"
-            app:destination="@id/filterProductLocationFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/nav_home"
-            app:popUpToInclusive="true" />
+            app:destination="@id/filterProductLocationFragment" />
         <action
             android:id="@+id/action_homeFragment_to_homeFragment2"
             app:destination="@id/productFragment" />
@@ -95,5 +92,14 @@
         android:id="@+id/nav_offers"
         android:name="com.selwantech.raheeb.ui.offersjourney.offers.OffersFragment"
         android:label="OffersFragment" />
+    <fragment
+        android:id="@+id/sellFragment"
+        android:name="com.selwantech.raheeb.ui.offersjourney.sell.SellFragment"
+        android:label="SellFragment">
+        <action
+            android:id="@+id/action_sellFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:popUpTo="@id/nav_graph" />
+    </fragment>
 
 </navigation>

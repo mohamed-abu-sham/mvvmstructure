@@ -348,6 +348,15 @@
     <string name="favorite_txt">FAVORITE</string>
     <string name="selling_faster">Selling Faster</string>
     <string name="mark_sold">Mark Sold</string>
+    <string name="mark_item_as_sold">Mark item as sold</string>
+    <string name="rand_text_1">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a .</string>
+    <string name="are_you_sure_you_want_to_mark_the_item_as_sold">Are you sure you want to mark the item as sold?</string>
+    <string name="sold">Sold</string>
+    <string name="sold_it_somewhere_else">Sold it somewhere else</string>
+    <string name="i_dont_sell_it_on_raheeb">I don’t sell it on raheeb</string>
+    <string name="rate_the_buyer">Rate the buyer</string>
+    <string name="rate_your_recent_sale">Rate your recent sale</string>
+    <string name="positive_rating_improve_your_reputation_rate_and_get_rates">Positive rating improve your reputation .\n Rate and get rates .</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

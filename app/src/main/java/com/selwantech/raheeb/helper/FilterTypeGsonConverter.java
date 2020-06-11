@@ -7,7 +7,7 @@ import com.selwantech.raheeb.model.FilterProduct;
 
 import java.io.IOException;
 
-public class FilterTypeAdapter extends TypeAdapter<FilterProduct> {
+public class FilterTypeGsonConverter extends TypeAdapter<FilterProduct> {
 
     @Override
     public void write(JsonWriter out, FilterProduct value) throws IOException {

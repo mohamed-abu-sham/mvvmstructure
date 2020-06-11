@@ -45,7 +45,13 @@ public class CustomObserverResponse<T> extends CustomDialogUtils implements Obse
     public void onNext(Response<GeneralResponse<T>> generalResponseResponse) {
 
         if (generalResponseResponse.code() == 200 && !generalResponseResponse.body().getError()) {
-            this.apiCallBack.onSuccess(generalResponseResponse.body().getData());
+            if (generalResponseResponse.body().getData() != null &&
+                    !generalResponseResponse.body().getData().toString().equals("[]")) {
+                this.apiCallBack.onSuccess(generalResponseResponse.body().getData());
+            } else {
+                this.apiCallBack.onError(App.getInstance().getApplicationContext()
+                        .getResources().getString(R.string.no_data_available), 0);
+            }
         } else {
             int code = generalResponseResponse.code();
             GeneralResponse errorBody = null;

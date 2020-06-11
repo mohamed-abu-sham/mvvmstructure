@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.selwantech.raheeb.helper.FilterTypeAdapter;
+import com.selwantech.raheeb.helper.FilterTypeGsonConverter;
 import com.selwantech.raheeb.model.Condition;
 import com.selwantech.raheeb.model.Distance;
 import com.selwantech.raheeb.model.FilterProduct;
@@ -32,7 +32,7 @@ public class AppService {
     private DataApi mDataApi;
 
     private AppService() {
-        gson = new GsonBuilder().registerTypeAdapter(FilterProduct.class, new FilterTypeAdapter()).create();
+        gson = new GsonBuilder().registerTypeAdapter(FilterProduct.class, new FilterTypeGsonConverter()).create();
         mDataApi = ApiClient.getRetrofitClient(ApiConstants.BASE_URL).create(DataApi.class);
     }
 

@@ -193,7 +193,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:singleLine="true"
-                                android:text="kmvklfmvklfmnvkf"
+                                android:text="@{data.productOwner.name}"
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
 

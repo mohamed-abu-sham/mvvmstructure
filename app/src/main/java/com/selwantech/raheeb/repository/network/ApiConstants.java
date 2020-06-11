@@ -35,6 +35,8 @@ public class ApiConstants {
         public static final String SELLING = "user/post";
         public static final String BUYING = "user/post/buying";
         public static final String FAVORITE = "user/faverate";
+        public static final String INTERACTIVE_PEOPLE = "user/post/{product_id}/mark_sold";
+        public static final String SET_SOLD = "user/post/sold/{product_id}/set_sold";
     }
 
     public class apiCategoryService {

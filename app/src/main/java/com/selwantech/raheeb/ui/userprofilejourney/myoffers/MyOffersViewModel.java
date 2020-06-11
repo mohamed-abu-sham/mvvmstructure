@@ -96,14 +96,16 @@ public class MyOffersViewModel extends BaseViewModel<MyOffersNavigator, Fragment
                         if (myOffersAdapter.getItemCount() == 0) {
                             showNoDataFound();
                         }
-                        showSnackBar(getMyContext().getString(R.string.error),
-                                error, getMyContext().getResources().getString(R.string.ok),
-                                new SnackViewBulider.SnackbarCallback() {
-                                    @Override
-                                    public void onActionClick(Snackbar snackbar) {
-                                        snackbar.dismiss();
-                                    }
-                                });
+                        if (!isLoadMore) {
+                            showSnackBar(getMyContext().getString(R.string.error),
+                                    error, getMyContext().getResources().getString(R.string.ok),
+                                    new SnackViewBulider.SnackbarCallback() {
+                                        @Override
+                                        public void onActionClick(Snackbar snackbar) {
+                                            snackbar.dismiss();
+                                        }
+                                    });
+                        }
                         checkIsLoadMoreAndRefreshing(false);
                     }
                 });

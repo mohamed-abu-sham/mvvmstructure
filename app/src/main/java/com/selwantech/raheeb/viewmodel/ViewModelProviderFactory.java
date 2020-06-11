@@ -23,6 +23,7 @@ import com.selwantech.raheeb.ui.mappicker.MapPickerViewModel;
 import com.selwantech.raheeb.ui.offersjourney.buying.BuyingViewModel;
 import com.selwantech.raheeb.ui.offersjourney.favorite.FavoriteViewModel;
 import com.selwantech.raheeb.ui.offersjourney.offers.OffersViewModel;
+import com.selwantech.raheeb.ui.offersjourney.sell.SellViewModel;
 import com.selwantech.raheeb.ui.offersjourney.selling.SellingViewModel;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.add_product_holder.AddProductHolderViewModel;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.adddetails.AddDetailsViewModel;
@@ -163,6 +164,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(FavoriteViewModel.class)) {
             //noinspection unchecked
             return (T) new FavoriteViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(SellViewModel.class)) {
+            //noinspection unchecked
+            return (T) new SellViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

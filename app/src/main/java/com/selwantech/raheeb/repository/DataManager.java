@@ -7,6 +7,7 @@ import com.selwantech.raheeb.repository.network.services.AppService;
 import com.selwantech.raheeb.repository.network.services.AuthService;
 import com.selwantech.raheeb.repository.network.services.CategoryService;
 import com.selwantech.raheeb.repository.network.services.DataExampleService;
+import com.selwantech.raheeb.repository.network.services.MessagesService;
 import com.selwantech.raheeb.repository.network.services.ProductService;
 import com.selwantech.raheeb.repository.network.services.UserService;
 
@@ -59,5 +60,9 @@ public class DataManager {
 
     public UserService getUserService() {
         return UserService.getInstance();
+    }
+
+    public MessagesService getMessagesService() {
+        return MessagesService.getInstance();
     }
 }

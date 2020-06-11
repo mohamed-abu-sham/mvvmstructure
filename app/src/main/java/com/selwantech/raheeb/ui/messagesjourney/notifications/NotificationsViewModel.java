@@ -1,44 +1,40 @@
-package com.selwantech.raheeb.ui.productjourneys.viewproductjourney.product;
+package com.selwantech.raheeb.ui.messagesjourney.notifications;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.databinding.FragmentProductBinding;
+import com.selwantech.raheeb.databinding.FragmentNotificationsBinding;
 import com.selwantech.raheeb.interfaces.OnLoadMoreListener;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
-import com.selwantech.raheeb.model.FilterPrice;
-import com.selwantech.raheeb.model.FilterProduct;
-import com.selwantech.raheeb.model.Product;
+import com.selwantech.raheeb.model.notificationsdata.Notification;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.adapter.HomeAdapter;
+import com.selwantech.raheeb.ui.adapter.NotificationsAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
-import com.selwantech.raheeb.ui.dialog.FilterPriceFragmentDialog;
-import com.selwantech.raheeb.ui.dialog.OrderByFragmentDialog;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.util.ArrayList;
 
-public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentProductBinding> implements RecyclerClick<Product> {
+public class NotificationsViewModel extends BaseViewModel<NotificationsNavigator, FragmentNotificationsBinding> implements RecyclerClick<Notification> {
 
-    HomeAdapter homeAdapter;
+    NotificationsAdapter notificationsAdapter;
     boolean isRefreshing = false;
     boolean isRetry = false;
     boolean enableLoading = false;
     boolean isLoadMore = false;
-    public <V extends ViewDataBinding, N extends BaseNavigator> ProductViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (ProductNavigator) navigation, (FragmentProductBinding) viewDataBinding);
+
+    public <V extends ViewDataBinding, N extends BaseNavigator> NotificationsViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
+        super(mContext, dataManager, (NotificationsNavigator) navigation, (FragmentNotificationsBinding) viewDataBinding);
     }
 
     @Override
@@ -53,7 +49,6 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
             }
         });
 
-
     }
 
 
@@ -66,44 +61,41 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
             }
         });
 
-        getViewBinding().recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        getViewBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getMyContext(), LinearLayoutManager.VERTICAL, false));
         getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
-        homeAdapter = new HomeAdapter(getMyContext(), this,getViewBinding().recyclerView);
-        getViewBinding().recyclerView.setAdapter(homeAdapter);
-        homeAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+        notificationsAdapter = new NotificationsAdapter(getMyContext(), this, getViewBinding().recyclerView);
+        getViewBinding().recyclerView.setAdapter(notificationsAdapter);
+        notificationsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                homeAdapter.addItem(null);
-                homeAdapter.notifyItemInserted(homeAdapter.getItemCount() - 1);
-                getViewBinding().recyclerView.scrollToPosition(homeAdapter.getItemCount() - 1);
+                notificationsAdapter.addItem(null);
+                notificationsAdapter.notifyItemInserted(notificationsAdapter.getItemCount() - 1);
+                getViewBinding().recyclerView.scrollToPosition(notificationsAdapter.getItemCount() - 1);
                 setLoadMore(true);
                 getData();
             }
         });
-//        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
-//        getViewBinding().recyclerView.addItemDecoration(decoration);
-//        ItemTouchHelper ith = new ItemTouchHelper(new ItemTouchCallBack(homeAdapter,homeAdapter.getArrayList()));
-//        ith.attachToRecyclerView(getViewBinding().recyclerView);
     }
 
     public void getData() {
         if (!isLoadMore() && !isRefreshing() && !isRetry()) {
             enableLoading = true;
         }
-        getDataManager().getProductService().getProducts(getMyContext(), enableLoading,
-                isLoadMore ? homeAdapter.getItemCount() : 0, new APICallBack<ArrayList<Product>>() {
+        getDataManager().getMessagesService().getNotifications(getMyContext(), enableLoading, isRefreshing ? 0 :
+                notificationsAdapter.getItemCount(), new APICallBack<ArrayList<Notification>>() {
             @Override
-            public void onSuccess(ArrayList<Product> response) {
+            public void onSuccess(ArrayList<Notification> response) {
                 checkIsLoadMoreAndRefreshing(true);
-                homeAdapter.addItems(response);
+                notificationsAdapter.addItems(response);
                 notifyAdapter();
-                showNoDataFound(false);
             }
 
             @Override
             public void onError(String error, int errorCode) {
+                if (notificationsAdapter.getItemCount() == 0) {
+                    showNoDataFound();
+                }
                 if (!isLoadMore) {
-                    showNoDataFound(true);
                     showSnackBar(getMyContext().getString(R.string.error),
                             error, getMyContext().getResources().getString(R.string.ok),
                             new SnackViewBulider.SnackbarCallback() {
@@ -118,59 +110,29 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
         });
     }
 
-    private void showNoDataFound(boolean show) {
-        getViewBinding().swipeRefreshLayout.setEnabled(!show);
-        getViewBinding().layoutNoDataFound.relativeNoData.setVisibility(show ? View.VISIBLE : View.GONE);
+    private void showNoDataFound() {
+        getViewBinding().swipeRefreshLayout.setEnabled(false);
+        getViewBinding().layoutNoDataFound.relativeNoData.setVisibility(View.VISIBLE);
 
-    }
-
-    public void onFilterPriceClicked(){
-        FilterPriceFragmentDialog dialog = new FilterPriceFragmentDialog.Builder().build();
-        dialog.setMethodCallBack(new FilterPriceFragmentDialog.FilterPriceCallBack() {
-            @Override
-            public void callBack(FilterPrice filterPrice) {
-                FilterProduct.getInstance().setPrice_min(filterPrice.getMin());
-                FilterProduct.getInstance().setPrice_max(filterPrice.getMax());
-                applyFilter();
-            }
-        });
-        dialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
-    }
-
-    public void onFilterDateClicked(){
-        OrderByFragmentDialog dialog = new OrderByFragmentDialog.Builder().build();
-        dialog.setMethodCallBack(new OrderByFragmentDialog.OrderByCallBack() {
-            @Override
-            public void callBack(int filterId) {
-
-                applyFilter();
-            }
-        });
-        dialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
     }
 
     private void notifyAdapter() {
         getViewBinding().recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                homeAdapter.notifyDataSetChanged();
+                notificationsAdapter.notifyDataSetChanged();
             }
         });
     }
 
     @Override
-    public void onClick(Product product, int position) {
+    public void onClick(Notification notification, int position) {
         Bundle data = new Bundle();
-        data.putSerializable(AppConstants.BundleData.PRODUCT, product);
-        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                .navigate(R.id.productDetailsFragment, data);
+        data.putSerializable(AppConstants.BundleData.MY_OFFER, notification);
+//        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+//                .navigate(R.id.productDetailsFragment, data);
     }
 
-    public void applyFilter() {
-        getViewBinding().swipeRefreshLayout.setRefreshing(true);
-        setIsRefreshing(true);
-        getData();
-    }
 
     public boolean isRefreshing() {
         return isRefreshing;
@@ -209,9 +171,9 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
     }
 
     public void finishLoadMore() {
-        homeAdapter.remove(homeAdapter.getItemCount() - 1);
-        homeAdapter.notifyItemRemoved(homeAdapter.getItemCount() - 1);
-        homeAdapter.setLoaded();
+        notificationsAdapter.remove(notificationsAdapter.getItemCount() - 1);
+        notifyAdapter();
+        notificationsAdapter.setLoaded();
         setLoadMore(false);
     }
 
@@ -227,7 +189,7 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
         getViewBinding().layoutNoDataFound.btnRetry.setVisibility(View.VISIBLE);
         setRetry(false);
         if (isSuccess) {
-            homeAdapter.clearItems();
+            notificationsAdapter.clearItems();
             getViewBinding().layoutNoDataFound.relativeNoData.setVisibility(View.GONE);
             getViewBinding().swipeRefreshLayout.setEnabled(true);
         }
@@ -235,7 +197,7 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
 
     protected void finishRefreshing(boolean isSuccess) {
         if (isSuccess) {
-            homeAdapter.clearItems();
+            notificationsAdapter.clearItems();
         }
         getViewBinding().swipeRefreshLayout.setRefreshing(false);
         setIsRefreshing(false);

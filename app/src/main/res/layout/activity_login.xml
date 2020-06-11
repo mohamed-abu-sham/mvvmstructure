@@ -183,13 +183,13 @@
                         android:layout_marginEnd="@dimen/_23sdp"
                         android:layout_marginBottom="@dimen/_23sdp"
                         android:gravity="center"
-                        android:background="@drawable/shape_rounded_empty_gray"
+                        android:background="@drawable/shape_rounded_empty_blue"
                         android:onClick="@{() -> viewModel.loginClick()}">
 
                         <ImageView
                             android:id="@+id/btnLoginTwitter"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
+                            android:layout_width="@dimen/_23sdp"
+                            android:layout_height="@dimen/_23sdp"
                             android:text="@string/log_in"
                             app:srcCompat="@drawable/ic_twitter"
                             android:tint="@color/colorPrimaryDark" />

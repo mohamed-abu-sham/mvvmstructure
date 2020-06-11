@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.selwantech.raheeb.databinding.CellLoadMoreBinding;
+import com.selwantech.raheeb.databinding.CellLoadMoreGridBinding;
 import com.selwantech.raheeb.databinding.CellProductBinding;
 import com.selwantech.raheeb.interfaces.OnLoadMoreListener;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
@@ -26,7 +26,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private final List<Product> mProductList;
     Context mContext;
     RecyclerClick mRecyclerClick;
-    private int lastVisibleItem, totalItemCount;
+    private int lastVisibleItem, totalItemCount, visibleItem;
     private boolean loading;
     private OnLoadMoreListener loadMoreListener;
 
@@ -35,22 +35,29 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.mContext = mContext;
         this.mRecyclerClick = mRecyclerClick;
 
-        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+        if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
 
-            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
+            final StaggeredGridLayoutManager linearLayoutManager = (StaggeredGridLayoutManager) recyclerView
                     .getLayoutManager();
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView,
                                        int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    totalItemCount = linearLayoutManager.getItemCount();
-                    lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-                    if (!loading && totalItemCount - 1 == (lastVisibleItem)) {
-                        if (loadMoreListener != null) {
-                            loadMoreListener.onLoadMore();
+                    if (dy > 0) {
+                        visibleItem = linearLayoutManager.getChildCount();
+                        totalItemCount = linearLayoutManager.getItemCount();
+//                        lastVisibleItem = linearLayoutManager.findFirstCompletelyVisibleItemPositions(null)[0];
+
+//                        int[] lastPositions = new int[linearLayoutManager.getSpanCount()];
+                        int[] lastPositions = linearLayoutManager.findLastCompletelyVisibleItemPositions(null);
+                        lastVisibleItem = getLastVisibleItem(lastPositions);
+                        if (!loading && lastVisibleItem != RecyclerView.NO_POSITION && (lastVisibleItem) == (totalItemCount - 1)) {
+                            if (loadMoreListener != null) {
+                                loadMoreListener.onLoadMore();
+                            }
+                            loading = true;
                         }
-                        loading = true;
                     }
                 }
             });
@@ -62,6 +69,18 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 }
             });
         }
+    }
+
+    public int getLastVisibleItem(int[] lastVisibleItemPositions) {
+        int maxSize = 0;
+        for (int i = 0; i < lastVisibleItemPositions.length; i++) {
+            if (i == 0) {
+                maxSize = lastVisibleItemPositions[i];
+            } else if (lastVisibleItemPositions[i] > maxSize) {
+                maxSize = lastVisibleItemPositions[i];
+            }
+        }
+        return maxSize;
     }
 
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
@@ -98,7 +117,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     .inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new HomeCellViewHolder(cellBinding);
         } else {
-            CellLoadMoreBinding cellLoadMoreBinding = CellLoadMoreBinding
+            CellLoadMoreGridBinding cellLoadMoreBinding = CellLoadMoreGridBinding
                     .inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new ProgressCellViewHolder(cellLoadMoreBinding);
         }
@@ -148,9 +167,9 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ProgressCellViewHolder extends BaseViewHolder {
 
-        private final CellLoadMoreBinding mBinding;
+        private final CellLoadMoreGridBinding mBinding;
 
-        public ProgressCellViewHolder(CellLoadMoreBinding binding) {
+        public ProgressCellViewHolder(CellLoadMoreGridBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
         }

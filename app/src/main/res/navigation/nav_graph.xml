@@ -101,5 +101,9 @@
             app:destination="@id/nav_home"
             app:popUpTo="@id/nav_graph" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_messages"
+        android:name="com.selwantech.raheeb.ui.messagesjourney.messagestabholder.MessagesTabHolderFragment"
+        android:label="MessagesTabHolderFragment" />
 
 </navigation>

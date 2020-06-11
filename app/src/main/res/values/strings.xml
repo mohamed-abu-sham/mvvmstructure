@@ -357,6 +357,7 @@
     <string name="rate_the_buyer">Rate the buyer</string>
     <string name="rate_your_recent_sale">Rate your recent sale</string>
     <string name="positive_rating_improve_your_reputation_rate_and_get_rates">Positive rating improve your reputation .\n Rate and get rates .</string>
+    <string name="notifications">Notifications</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

@@ -2,8 +2,8 @@ package com.selwantech.raheeb.repository.network.services;
 
 import android.content.Context;
 
-import com.selwantech.raheeb.model.Condition;
-import com.selwantech.raheeb.model.Distance;
+import com.selwantech.raheeb.model.chatdata.Chat;
+import com.selwantech.raheeb.model.notificationsdata.Notification;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.ApiClient;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
@@ -17,40 +17,41 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 
-public class AppService {
+public class MessagesService {
 
-    private static AppService instance;
+    private static MessagesService instance;
     private static int timeOutDB = 10;
     Context mContext;
     private DataApi mDataApi;
 
-    private AppService() {
+    private MessagesService() {
         mDataApi = ApiClient.getRetrofitClient(ApiConstants.BASE_URL).create(DataApi.class);
     }
 
-    public static AppService getInstance() {
+    public static MessagesService getInstance() {
         if (instance == null) {
-            instance = new AppService();
+            instance = new MessagesService();
         }
         return instance;
     }
 
-    public void getDistances(Context mContext, boolean enableLoading, APICallBack<ArrayList<Distance>> apiCallBack) {
-        getDataApi().getDistances()
+    public void getChats(Context mContext, boolean enableLoading, int skip, APICallBack<ArrayList<Chat>> apiCallBack) {
+        getDataApi().getChats(skip)
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<ArrayList<Distance>>(mContext, enableLoading, apiCallBack));
+                .subscribe(new CustomObserverResponse<ArrayList<Chat>>(mContext, enableLoading, apiCallBack));
     }
 
-    public void getConditions(Context mContext, boolean enableLoading, APICallBack<ArrayList<Condition>> apiCallBack) {
-        getDataApi().getConditions()
+    public void getNotifications(Context mContext, boolean enableLoading, int skip, APICallBack<ArrayList<Notification>> apiCallBack) {
+        getDataApi().getNotifications(skip)
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<ArrayList<Condition>>(mContext, enableLoading, apiCallBack));
+                .subscribe(new CustomObserverResponse<ArrayList<Notification>>(mContext, enableLoading, apiCallBack));
     }
 
     public void getCurrency(Context mContext, boolean enableLoading, APICallBack<String> apiCallBack) {
@@ -68,16 +69,14 @@ public class AppService {
 
     public interface DataApi {
 
-        @GET(ApiConstants.apiAppService.DISTANCES)
-        Single<Response<GeneralResponse<ArrayList<Distance>>>> getDistances();
+        @GET(ApiConstants.apiMessagesService.CHATS)
+        Single<Response<GeneralResponse<ArrayList<Chat>>>> getChats(@Query("skip") int skip);
 
-        @GET(ApiConstants.apiAppService.CONDITION)
-        Single<Response<GeneralResponse<ArrayList<Condition>>>> getConditions();
+        @GET(ApiConstants.apiMessagesService.NOTIFICATIONS)
+        Single<Response<GeneralResponse<ArrayList<Notification>>>> getNotifications(@Query("skip") int skip);
 
         @GET(ApiConstants.apiAppService.CURRENCY)
         Single<Response<GeneralResponse<String>>> getCurrency();
-
-
 
 
     }

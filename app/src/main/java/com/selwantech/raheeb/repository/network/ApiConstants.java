@@ -77,4 +77,9 @@ public class ApiConstants {
 
     }
 
+    public class apiMessagesService {
+        public static final String CHATS = "user/chat";
+        public static final String NOTIFICATIONS = "user/notifications";
+    }
+
 }

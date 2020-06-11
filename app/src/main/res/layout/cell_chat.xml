@@ -6,16 +6,16 @@
 
         <variable
             name="viewModel"
-            type="com.selwantech.raheeb.viewmodel.ItemOfferViewModel" />
+            type="com.selwantech.raheeb.viewmodel.ItemChatViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardOfferCell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
         android:onClick="@{viewModel::onItemClick}"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/_5sdp"
         app:cardCornerRadius="@dimen/_5sdp">
 
         <LinearLayout
@@ -26,7 +26,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgUserPicture"
-                imageUrl="@{viewModel.myOffer.productOwner.avatar}"
+                imageUrl="@{viewModel.messages.user.avatar}"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:scaleType="centerCrop"
@@ -46,7 +46,7 @@
                     style="@style/poppins_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.myOffer.productOwner.name}"
+                    android:text="@{viewModel.messages.user.name}"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -55,7 +55,7 @@
                     style="@style/poppins_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.myOffer.date}"
+                    android:text="@{viewModel.messages.date}"
                     android:textColor="@color/text_gray"
                     android:textSize="10sp" />
 
@@ -63,7 +63,7 @@
 
             <ImageView
                 android:id="@+id/imgProductPicture"
-                imageUrl="@{viewModel.myOffer.images.get(0).image}"
+                imageUrl="@{viewModel.messages.post.images.get(0).image}"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/shape_rounded_empty_gray"

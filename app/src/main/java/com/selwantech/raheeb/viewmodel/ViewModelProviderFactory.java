@@ -20,6 +20,9 @@ import com.selwantech.raheeb.ui.emptyfragment.EmptyFragmentViewModel;
 import com.selwantech.raheeb.ui.filebox.FileBoxViewModel;
 import com.selwantech.raheeb.ui.main.MainActivityViewModel;
 import com.selwantech.raheeb.ui.mappicker.MapPickerViewModel;
+import com.selwantech.raheeb.ui.messagesjourney.chats.ChatsViewModel;
+import com.selwantech.raheeb.ui.messagesjourney.messagestabholder.MessagesTabHolderViewModel;
+import com.selwantech.raheeb.ui.messagesjourney.notifications.NotificationsViewModel;
 import com.selwantech.raheeb.ui.offersjourney.buying.BuyingViewModel;
 import com.selwantech.raheeb.ui.offersjourney.favorite.FavoriteViewModel;
 import com.selwantech.raheeb.ui.offersjourney.offers.OffersViewModel;
@@ -167,6 +170,15 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(SellViewModel.class)) {
             //noinspection unchecked
             return (T) new SellViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(MessagesTabHolderViewModel.class)) {
+            //noinspection unchecked
+            return (T) new MessagesTabHolderViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(ChatsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ChatsViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(NotificationsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new NotificationsViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

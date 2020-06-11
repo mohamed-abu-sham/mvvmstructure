@@ -79,19 +79,29 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
         if (Intent.ACTION_VIEW.equals(action)) {
             handleSendText(intent);
         }
+        mMainViewModel.setUp();
 
     }
 
     void handleSendText(Intent intent) {
+        Bundle data = new Bundle();
         String sharedText = intent.getData().toString();
         if (sharedText != null &&
                 sharedText.contains("product") &&
                 sharedText.contains("id")) {
-            Bundle data = new Bundle();
+
             int productId = Integer.valueOf(sharedText.substring(sharedText.indexOf("=") + 1));
             data.putInt(AppConstants.BundleData.PRODUCT_ID, productId);
             Navigation.findNavController(this, R.id.nav_host_fragment)
                     .navigate(R.id.productDetailsFragment, data);
+        } else if (sharedText != null &&
+                sharedText.contains("user") &&
+                sharedText.contains("id")) {
+
+            int userId = Integer.valueOf(sharedText.substring(sharedText.indexOf("=") + 1));
+            data.putInt(AppConstants.BundleData.USER_ID, userId);
+            Navigation.findNavController(this, R.id.nav_host_fragment)
+                    .navigate(R.id.userProfileFragment, data);
         }
     }
     public void onActivityResultFromFragment(int requestCode, int resultCode, @Nullable Intent data) {

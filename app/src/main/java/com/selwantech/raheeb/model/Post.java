@@ -1,9 +1,12 @@
 package com.selwantech.raheeb.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.selwantech.raheeb.helper.GeneralFunction;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import okhttp3.MultipartBody;
 
 public class Post implements Serializable {
 
@@ -25,8 +28,18 @@ public class Post implements Serializable {
     @SerializedName("price")
     double price;
 
-    @SerializedName("paths")
-    ArrayList<String> imagesPaths;
+    @SerializedName("lat")
+    double lat;
+
+    @SerializedName("lon")
+    double lon;
+
+    @SerializedName("is_ship_nationwide")
+    int is_ship_nationwide;
+
+    @SerializedName("category_box_size_id")
+    int category_box_size_id;
+
 
     public ArrayList<String> getImages() {
         return images;
@@ -76,11 +89,43 @@ public class Post implements Serializable {
         this.price = price;
     }
 
-    public ArrayList<String> getImagesPaths() {
-        return imagesPaths;
+    public double getLat() {
+        return lat;
     }
 
-    public void setImagesPaths(ArrayList<String> imagesPaths) {
-        this.imagesPaths = imagesPaths;
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public int getIs_ship_nationwide() {
+        return is_ship_nationwide;
+    }
+
+    public void setIs_ship_nationwide(int is_ship_nationwide) {
+        this.is_ship_nationwide = is_ship_nationwide;
+    }
+
+    public int getCategory_box_size_id() {
+        return category_box_size_id;
+    }
+
+    public void setCategory_box_size_id(int category_box_size_id) {
+        this.category_box_size_id = category_box_size_id;
+    }
+
+    public ArrayList<MultipartBody.Part> getImagesMultypart() {
+        ArrayList<MultipartBody.Part> partArrayList = new ArrayList<>();
+        for (String image : getImages()) {
+            partArrayList.add(GeneralFunction.getImageMultipart(image, "images[]"));
+        }
+        return partArrayList;
     }
 }

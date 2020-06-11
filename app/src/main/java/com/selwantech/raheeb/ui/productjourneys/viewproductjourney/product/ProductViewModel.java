@@ -23,11 +23,10 @@ import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.adapter.HomeAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
-import com.selwantech.raheeb.ui.dialog.FilterDateFragmentDialog;
 import com.selwantech.raheeb.ui.dialog.FilterPriceFragmentDialog;
+import com.selwantech.raheeb.ui.dialog.OrderByFragmentDialog;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
-import com.selwantech.raheeb.utils.SpacesItemDecoration;
 
 import java.util.ArrayList;
 
@@ -81,8 +80,8 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
                 getData();
             }
         });
-        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
-        getViewBinding().recyclerView.addItemDecoration(decoration);
+//        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
+//        getViewBinding().recyclerView.addItemDecoration(decoration);
 //        ItemTouchHelper ith = new ItemTouchHelper(new ItemTouchCallBack(homeAdapter,homeAdapter.getArrayList()));
 //        ith.attachToRecyclerView(getViewBinding().recyclerView);
     }
@@ -91,7 +90,8 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
         if (!isLoadMore() && !isRefreshing() && !isRetry()) {
             enableLoading = true;
         }
-        getDataManager().getProductService().getProducts(getMyContext(), enableLoading, new APICallBack<ArrayList<Product>>() {
+        getDataManager().getProductService().getProducts(getMyContext(), enableLoading,
+                isRefreshing ? 0 : homeAdapter.getItemCount(), new APICallBack<ArrayList<Product>>() {
             @Override
             public void onSuccess(ArrayList<Product> response) {
                 checkIsLoadMoreAndRefreshing(true);
@@ -137,8 +137,8 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
     }
 
     public void onFilterDateClicked(){
-        FilterDateFragmentDialog dialog = new FilterDateFragmentDialog.Builder().build();
-        dialog.setMethodCallBack(new FilterDateFragmentDialog.FilterDateCallBack() {
+        OrderByFragmentDialog dialog = new OrderByFragmentDialog.Builder().build();
+        dialog.setMethodCallBack(new OrderByFragmentDialog.OrderByCallBack() {
             @Override
             public void callBack(int filterId) {
 

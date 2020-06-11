@@ -7,18 +7,22 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductHolderBinding;
 import com.selwantech.raheeb.interfaces.BackPressed;
 import com.selwantech.raheeb.model.CreatePostProgress;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
+import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.adddetails.AddDetailsFragment;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addimage.AddImageFragment;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addprice.AddPriceFragment;
+import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addshipping.AddShippingFragment;
 import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.utils.SnackViewBulider;
 
 public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNavigator, FragmentAddProductHolderBinding>
         implements BackPressed {
@@ -28,6 +32,7 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
     AddImageFragment addImageFragment;
     AddDetailsFragment addDetailsFragment;
     AddPriceFragment addPriceFragment;
+    AddShippingFragment addShippingFragment;
     int currentFragment = 0;
 
     Post post;
@@ -47,6 +52,7 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
         addImageFragment = new AddImageFragment();
         addDetailsFragment = new AddDetailsFragment();
         addPriceFragment = new AddPriceFragment();
+        addShippingFragment = new AddShippingFragment();
         fragmentManager = getBaseActivity().getSupportFragmentManager().getFragments().get(0).getChildFragmentManager();
         moveFragment(0);
     }
@@ -68,8 +74,9 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
                 addPriceFragment.setArguments(bundle);
                 return addPriceFragment;
             default:
-
-                return addImageFragment;
+                addShippingFragment.setBackPressed(this::onBackPressed);
+                addShippingFragment.setArguments(bundle);
+                return addShippingFragment;
         }
     }
 
@@ -102,15 +109,39 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
                     this.post = post;
                     createPostProgress.setFinish(true);
                     currentFragment = 3;
-//                    moveFragment(3);
+                    moveFragment(3);
                 }
                 break;
             }
             case 3: {
-
+                post = addShippingFragment.onNextClicked();
+                if (post != null) {
+                    this.post = post;
+                    createProduct(post);
+                }
                 break;
             }
         }
+    }
+
+    private void createProduct(Post post) {
+        getDataManager().getProductService().createProduct(getMyContext(), true, post, new APICallBack<String>() {
+            @Override
+            public void onSuccess(String response) {
+                popUp();
+            }
+
+            @Override
+            public void onError(String error, int errorCode) {
+                showSnackBar(getMyContext().getResources().getString(R.string.error),
+                        error, getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
+                            @Override
+                            public void onActionClick(Snackbar snackbar) {
+                                snackbar.dismiss();
+                            }
+                        });
+            }
+        });
     }
 
     private void moveFragment(int position) {
@@ -143,4 +174,11 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
         }
     }
 
+    public void onResume() {
+        switch (currentFragment) {
+            case 3:
+                addShippingFragment.onResume();
+                break;
+        }
+    }
 }

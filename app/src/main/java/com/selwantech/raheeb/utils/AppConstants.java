@@ -98,6 +98,9 @@ public final class AppConstants {
         public static final String ADDRESS = "ADDRESS";
         public static final String PRODUCT_ID = "PRODUCT_ID";
         public static final String POST = "POST";
+        public static final String PRODUCT_OWNER = "PRODUCT_OWNER";
+        public static final String MY_OFFER = "MY_OFFER";
+        public static final String USER_ID = "USER_ID";
     }
 
     public class FILTER_BY_KEYS {

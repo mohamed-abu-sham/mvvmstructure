@@ -125,6 +125,11 @@ public class AddDetailsViewModel extends
             getViewBinding().edDescription.setError(getMyContext().getResources().getString(R.string.this_fieled_is_required));
             error++;
         }
+        if (getViewBinding().edDescription.getText().toString().trim().length() < 10) {
+            getViewBinding().edDescription.setError(getMyContext().getResources().getString(R.string.description_must_be_at_least_10_letters));
+            error++;
+        }
+
         return error == 0;
     }
 

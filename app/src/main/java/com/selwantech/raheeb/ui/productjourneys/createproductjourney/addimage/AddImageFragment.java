@@ -33,6 +33,7 @@ public class AddImageFragment extends BaseFragment<FragmentAddProductImagesBindi
     private AddImageViewModel mViewModel;
     private FragmentAddProductImagesBinding mViewBinding;
 
+    boolean enableCallback = true;
     @Override
     public int getBindingVariable() {
         return com.selwantech.raheeb.BR.viewModel;
@@ -75,21 +76,21 @@ public class AddImageFragment extends BaseFragment<FragmentAddProductImagesBindi
         mViewBinding = getViewDataBinding();
         setUpLocalToolbar();
         mViewModel.setUp();
-        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                backPressed.onBackPressed(0);
-            }
-        });
+        setupOnBackPressed();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        setupOnBackPressed();
+    }
+
+    private void setupOnBackPressed() {
         getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                backPressed.onBackPressed(1);
+                backPressed.onBackPressed(0);
+                this.setEnabled(false);
             }
         });
     }

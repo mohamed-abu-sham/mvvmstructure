@@ -56,8 +56,12 @@ public class FilterProduct implements Serializable {
     }
 
     public void clearData() {
+        boolean shipping = isShipping();
+        boolean pickup = isPick_up();
         setObj(null);
         getInstance();
+        getInstance().setShipping(shipping);
+        getInstance().setPick_up(pick_up);
     }
 
     public double getLat() {

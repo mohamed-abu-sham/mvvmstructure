@@ -1,37 +1,31 @@
 package com.selwantech.raheeb.ui.adapter;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.databinding.CellFilterDateBinding;
-import com.selwantech.raheeb.databinding.CellSettingItemBinding;
+import com.selwantech.raheeb.databinding.CellOrderByBinding;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
-import com.selwantech.raheeb.interfaces.RecyclerClickNoData;
 import com.selwantech.raheeb.model.FilterDate;
 import com.selwantech.raheeb.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterDateAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class OrderByAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     ArrayList<FilterDate> filterDateArrayList;
     Context mContext;
     RecyclerClick mRecyclerClick;
 
     int selectedItem = -1 ;
-    public FilterDateAdapter(Context mContext, RecyclerClick mRecyclerClick) {
+
+    public OrderByAdapter(Context mContext, RecyclerClick mRecyclerClick) {
         this.filterDateArrayList = new ArrayList<>();
         this.mContext = mContext;
         this.mRecyclerClick = mRecyclerClick;
@@ -53,9 +47,9 @@ public class FilterDateAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CellFilterDateBinding cellFilterDateBinding = CellFilterDateBinding
+        CellOrderByBinding cellFilterDateBinding = CellOrderByBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new FilterDateItemViewHolder(cellFilterDateBinding);
+        return new OrderByItemViewHolder(cellFilterDateBinding);
     }
 
     public void addItems(List<FilterDate> filterDateList) {
@@ -71,11 +65,11 @@ public class FilterDateAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return selectedItem;
     }
 
-    public class FilterDateItemViewHolder extends BaseViewHolder {
+    public class OrderByItemViewHolder extends BaseViewHolder {
 
-        private final CellFilterDateBinding mBinding;
+        private final CellOrderByBinding mBinding;
 
-        public FilterDateItemViewHolder(CellFilterDateBinding binding) {
+        public OrderByItemViewHolder(CellOrderByBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
         }

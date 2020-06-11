@@ -5,10 +5,10 @@
     android:id="@+id/nav_graph"
     app:defaultNavHost="true"
     tools:ignore="UnusedNavigation"
-    app:startDestination="@id/productsHolderFragment">
+    app:startDestination="@id/nav_home">
 
     <fragment
-        android:id="@+id/productsHolderFragment"
+        android:id="@+id/nav_home"
         android:name="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productstabsholder.ProductsHolderFragment"
         android:label="ProductsHolderFragment"
         tools:layout="@layout/fragment_products_tabs_holder">
@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_productDetailsFragment_to_reviewOfferFragment"
             app:destination="@id/reviewOfferFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/reviewOfferFragment"
@@ -66,7 +69,7 @@
             app:destination="@id/shippingInfoFragment" />
         <action
             android:id="@+id/action_reviewOfferFragment_to_productsHolderFragment"
-            app:destination="@id/productsHolderFragment"
+            app:destination="@id/nav_home"
             app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
@@ -76,6 +79,21 @@
     <fragment
         android:id="@+id/nav_post"
         android:name="com.selwantech.raheeb.ui.productjourneys.createproductjourney.add_product_holder.AddProductHolderFragment"
-        android:label="CreateProductHolderFragment" />
+        android:label="CreateProductHolderFragment"
+        app:popUpTo="@id/nav_graph">
+        <action
+            android:id="@+id/action_nav_post_to_productsHolderFragment"
+            app:destination="@id/nav_home"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.selwantech.raheeb.ui.userprofilejourney.user_profile.UserProfileFragment"
+        android:label="UserProfileFragment" />
+    <fragment
+        android:id="@+id/nav_offers"
+        android:name="com.selwantech.raheeb.ui.offersjourney.offers.OffersFragment"
+        android:label="OffersFragment" />
 
 </navigation>

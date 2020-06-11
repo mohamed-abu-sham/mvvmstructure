@@ -28,7 +28,7 @@
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:gravity="center"
-                android:text="@string/newest_first"
+                android:text="@string/order_by"
                 android:textColor="@color/black"
                 android:onClick="@{() -> viewModel.onFilterDateClicked()}"/>
 
@@ -40,7 +40,7 @@
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:gravity="center"
-                android:text="@string/price"
+                android:text="@string/filter_price"
                 android:textColor="@color/black"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:onClick="@{() -> viewModel.onFilterPriceClicked()}"/>

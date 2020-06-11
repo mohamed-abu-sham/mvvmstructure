@@ -284,6 +284,13 @@ public class ProductDetailsViewModel extends
 
     }
 
+    public void onViewProductOwnerClicked() {
+        Bundle data = new Bundle();
+        data.putSerializable(AppConstants.BundleData.PRODUCT_OWNER, product.getProductOwner());
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.action_productDetailsFragment_to_userProfileFragment, data);
+    }
+
     public void onMakeOfferClicked() {
         OfferFragmentDialog offerFragmentDialog = new OfferFragmentDialog.Builder().build();
         offerFragmentDialog.setMethodCallBack(new OfferFragmentDialog.OfferCallBack() {

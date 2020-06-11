@@ -71,21 +71,21 @@ public class AddPriceFragment extends BaseFragment<FragmentAddProductPriceBindin
         mViewBinding = getViewDataBinding();
         setUpLocalToolbar();
         mViewModel.setUp();
-        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                backPressed.onBackPressed(2);
-            }
-        });
+        setupOnBackPressed();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        setupOnBackPressed();
+    }
+
+    private void setupOnBackPressed() {
         getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 backPressed.onBackPressed(2);
+                this.setEnabled(false);
             }
         });
     }

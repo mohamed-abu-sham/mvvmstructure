@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.selwantech.raheeb.viewmodel.ItemOfferViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardOfferCell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{viewModel::onItemClick}"
+        android:orientation="vertical"
+        app:cardCornerRadius="@dimen/_5sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgUserPicture"
+                imageUrl="@{viewModel.myOffer.productOwner.avatar}"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:scaleType="centerCrop"
+                android:src="@color/colorPrimaryDark" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:gravity="center|start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/poppins_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.myOffer.productOwner.name}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    style="@style/poppins_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.myOffer.date}"
+                    android:textColor="@color/text_gray"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgProductPicture"
+                imageUrl="@{viewModel.myOffer.images.get(0).image}"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/shape_rounded_empty_gray"
+                android:padding="@dimen/_4sdp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

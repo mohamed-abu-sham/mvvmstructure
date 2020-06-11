@@ -12,29 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.databinding.ButtomSheetFilterDateBinding;
+import com.selwantech.raheeb.databinding.ButtomSheetOrderByBinding;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.FilterDate;
-import com.selwantech.raheeb.model.FilterPrice;
-import com.selwantech.raheeb.ui.adapter.FilterDateAdapter;
-import com.selwantech.raheeb.ui.adapter.HomeAdapter;
-import com.selwantech.raheeb.utils.ItemTouchCallBack;
-import com.selwantech.raheeb.utils.SpacesItemDecoration;
+import com.selwantech.raheeb.ui.adapter.OrderByAdapter;
 
-public class FilterDateFragmentDialog extends BottomSheetDialogFragment implements RecyclerClick<FilterDate> {
+public class OrderByFragmentDialog extends BottomSheetDialogFragment implements RecyclerClick<FilterDate> {
 
-    FilterDateCallBack filterDateCallBack;
-    ButtomSheetFilterDateBinding buttomSheetFilterDateBinding;
+    OrderByCallBack orderByCallBack;
+    ButtomSheetOrderByBinding buttomSheetOrderByBinding;
 
-    FilterDateAdapter filterDateAdapter ;
+    OrderByAdapter orderByAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,11 +43,11 @@ public class FilterDateFragmentDialog extends BottomSheetDialogFragment implemen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        buttomSheetFilterDateBinding = DataBindingUtil.inflate(inflater, R.layout.buttom_sheet_filter_date, null, false);
-        buttomSheetFilterDateBinding.setViewModel(this);
+        buttomSheetOrderByBinding = DataBindingUtil.inflate(inflater, R.layout.buttom_sheet_order_by, null, false);
+        buttomSheetOrderByBinding.setViewModel(this);
         setCancelable(false);
         setUp();
-        return buttomSheetFilterDateBinding.getRoot();
+        return buttomSheetOrderByBinding.getRoot();
     }
 
     private void setUp() {
@@ -62,18 +55,17 @@ public class FilterDateFragmentDialog extends BottomSheetDialogFragment implemen
     }
 
     private void setUpRecycler() {
-        buttomSheetFilterDateBinding.recyclerView.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        buttomSheetFilterDateBinding.recyclerView.recyclerView.setItemAnimator(new DefaultItemAnimator());
-        filterDateAdapter = new FilterDateAdapter(getContext(), this);
-        buttomSheetFilterDateBinding.recyclerView.recyclerView.setAdapter(filterDateAdapter);
+        buttomSheetOrderByBinding.recyclerView.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        buttomSheetOrderByBinding.recyclerView.recyclerView.setItemAnimator(new DefaultItemAnimator());
+        orderByAdapter = new OrderByAdapter(getContext(), this);
+        buttomSheetOrderByBinding.recyclerView.recyclerView.setAdapter(orderByAdapter);
         getData();
     }
 
     private void getData() {
-        filterDateAdapter.addItem(new FilterDate("saad",true));
-        filterDateAdapter.addItem(new FilterDate("saad",false));
-        filterDateAdapter.addItem(new FilterDate("saad",false));
-        filterDateAdapter.addItem(new FilterDate("saad",false));
+        orderByAdapter.addItem(new FilterDate(getContext().getResources().getString(R.string.newest), true));
+        orderByAdapter.addItem(new FilterDate(getContext().getResources().getString(R.string.closest), false));
+        orderByAdapter.addItem(new FilterDate(getContext().getResources().getString(R.string.low_to_high), false));
     }
 
     @Override
@@ -93,8 +85,8 @@ public class FilterDateFragmentDialog extends BottomSheetDialogFragment implemen
         super.onCancel(dialog);
     }
 
-    public BottomSheetDialogFragment setMethodCallBack(FilterDateCallBack pickDateCallBack) {
-        this.filterDateCallBack = pickDateCallBack;
+    public BottomSheetDialogFragment setMethodCallBack(OrderByCallBack pickDateCallBack) {
+        this.orderByCallBack = pickDateCallBack;
         return this;
     }
 
@@ -105,35 +97,34 @@ public class FilterDateFragmentDialog extends BottomSheetDialogFragment implemen
 
 
     private void notifyAdapter() {
-        buttomSheetFilterDateBinding.recyclerView.recyclerView.post(new Runnable() {
+        buttomSheetOrderByBinding.recyclerView.recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                filterDateAdapter.notifyDataSetChanged();
+                orderByAdapter.notifyDataSetChanged();
             }
         });
     }
 
-    public interface FilterDateCallBack {
-        void callBack(int filterId);
-    }
-
     public void onApplyClicked(){
         dismiss();
-        if(filterDateAdapter.getSelectedItem() > -1) {
-            filterDateCallBack.callBack(filterDateAdapter.getSelectedItem());
+        if (orderByAdapter.getSelectedItem() > -1) {
+            orderByCallBack.callBack(orderByAdapter.getSelectedItem());
         }
+    }
+
+    public interface OrderByCallBack {
+        void callBack(int filterId);
     }
 
     public void onCancleClicked(){
         dismiss();
     }
 
-
     public static class Builder {
 
-        public FilterDateFragmentDialog build() {
+        public OrderByFragmentDialog build() {
             Bundle args = new Bundle();
-            FilterDateFragmentDialog fragment = new FilterDateFragmentDialog();
+            OrderByFragmentDialog fragment = new OrderByFragmentDialog();
             fragment.setArguments(args);
             return fragment;
         }

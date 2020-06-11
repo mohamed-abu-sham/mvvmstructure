@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.selwantech.raheeb.ui.adapter.FilterDateAdapter.FilterDateItemViewHolder" />
+            type="com.selwantech.raheeb.ui.adapter.OrderByAdapter" />
     </data>
 
     <RelativeLayout
@@ -47,7 +47,7 @@
             android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            app:srcCompat="@drawable/ic_search"
+            app:srcCompat="@drawable/ic_check"
             android:tint="@color/black"/>
 
     </RelativeLayout>

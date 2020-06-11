@@ -297,6 +297,7 @@
     <string name="please_choose_shipping_address">Please choose shipping address</string>
     <string name="please_choose_payment_method">Please choose payment method</string>
     <string name="trusted_member">Trusted member</string>
+    <string name="trusted">Trusted</string>
     <string name="next">Next</string>
     <string name="photo">Photo</string>
     <string name="details">Details</string>
@@ -318,6 +319,35 @@
     <string name="please_choose_the_category">Please choose the category</string>
     <string name="amount_must_be_greater_than_0">Amount must be greater than 0</string>
     <string name="set_your_price">Set your price</string>
+    <string name="select_your_box_size">Select your box size</string>
+    <string name="set_location">Set Location</string>
+    <string name="sell_ship_nationwide"><![CDATA[Sell & ship nationwide]]></string>
+    <string name="sorry_cant">Sorry , can’t …</string>
+    <string name="shipping_policy">Shipping policy</string>
+    <string name="choose_box_size">Choose the closest box size , no side over 10 or weight over 20 Pounds .</string>
+    <string name="by_posting_nationwide">By posting nationwide , you agree to our shipping policy and terms of service</string>
+    <string name="you_must_mark_the_address">You must mark the address</string>
+    <string name="mark">Mark</string>
+    <string name="description_must_be_at_least_10_letters">Description must be at least 10 letters</string>
+    <string name="my_offers">My offers</string>
+    <string name="tru_you">Tru you</string>
+    <string name="twitter">Twitter</string>
+    <string name="phone">Phone</string>
+    <string name="verified_account_with">Verified account with</string>
+    <string name="connections">Connections</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="follow">Follow</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="newest">Newest</string>
+    <string name="closest">Closest</string>
+    <string name="low_to_high">Low To High</string>
+    <string name="filter_price">Filter price</string>
+    <string name="selling">SELLING</string>
+    <string name="buying">BUYING</string>
+    <string name="favorite_txt">FAVORITE</string>
+    <string name="selling_faster">Selling Faster</string>
+    <string name="mark_sold">Mark Sold</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

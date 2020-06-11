@@ -2,6 +2,7 @@ package com.selwantech.raheeb.repository.network.services;
 
 import android.content.Context;
 
+import com.selwantech.raheeb.model.BoxSize;
 import com.selwantech.raheeb.model.Category;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.ApiClient;
@@ -16,6 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 
 public class CategoryService {
@@ -45,6 +47,15 @@ public class CategoryService {
     }
 
 
+    public void getCategoryBoxSize(Context mContext, boolean enableLoading, int categoryId, APICallBack<ArrayList<BoxSize>> apiCallBack) {
+        getDataApi().getCategoryBoxSize(categoryId)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<ArrayList<BoxSize>>(mContext, enableLoading, apiCallBack));
+    }
+
+
     public DataApi getDataApi() {
         return mDataApi;
     }
@@ -53,6 +64,9 @@ public class CategoryService {
 
         @GET(ApiConstants.apiCategoryService.ALL_CATEGORIES)
         Single<Response<GeneralResponse<ArrayList<Category>>>> getAllCategories();
+
+        @GET(ApiConstants.apiCategoryService.CATEGORY_BOX_SIZE)
+        Single<Response<GeneralResponse<ArrayList<BoxSize>>>> getCategoryBoxSize(@Path("categoryId") int categoryId);
     }
 }
 

@@ -74,11 +74,21 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <action android:name="android.intent.action.VIEW" />
                 <data
                     android:host="raheeb.selwantech.tech"
                     android:pathPrefix="/product"
+                    android:scheme="http" />
+            </intent-filter>
+
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <data
+                    android:host="raheeb.selwantech.tech"
+                    android:pathPrefix="/user"
                     android:scheme="http" />
             </intent-filter>
         </activity>

@@ -31,16 +31,22 @@ public class ApiConstants {
         public static final String REMOVE_FAVORITE = "user/post/{productId}/unFaverate";
         public static final String MAKE_OFFER = "user/post/{productId}/offer";
         public static final String BUY_NOW = "user/post/sold/{productId}/buy_now";
+        public static final String CREATE_PRODUCT = "user/post";
+        public static final String SELLING = "user/post";
+        public static final String BUYING = "user/post/buying";
+        public static final String FAVORITE = "user/faverate";
     }
 
     public class apiCategoryService {
         public static final String ALL_CATEGORIES = "categories";
+        public static final String CATEGORY_BOX_SIZE = "categories/{categoryId}/boxsize";
     }
 
-    public class apiAddressService {
-        public static final String GET_ADDRESS = "user/customer/addresses";
-        public static final String DELETE_ADDRESS = "user/customer/addresses/destroy/{addressId}";
-        public static final String CREATE_ADDRESS = "user/customer/addresses/create";
+    public class apiUserService {
+        public static final String GET_USER = "users/{userId}/profile";
+        public static final String FOLLOW_USER = "user/follower/follow";
+        public static final String UNFOLLOW_USER = "user/follower/unfollow";
+        public static final String GET_MY_OFFERS = "users/{userId}/offers";
     }
 
     public class apiOrderService {

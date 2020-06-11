@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.selwantech.raheeb.ui.dialog.FilterDateFragmentDialog" />
+            type="com.selwantech.raheeb.ui.dialog.OrderByFragmentDialog" />
     </data>
 
     <LinearLayout
@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/date"
+                    android:text="@string/order_by"
                     android:textColor="@color/black"
                     android:layout_gravity="center"
                     android:textSize="24sp"

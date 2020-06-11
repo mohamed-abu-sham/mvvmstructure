@@ -16,6 +16,11 @@ public class AddProductHolderFragment extends BaseFragment<FragmentAddProductHol
 
     private static final String TAG = AddProductHolderFragment.class.getSimpleName();
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.onResume();
+    }
 
     @Inject
     ViewModelProviderFactory factory;
@@ -29,7 +34,7 @@ public class AddProductHolderFragment extends BaseFragment<FragmentAddProductHol
 
     @Override
     public boolean hideBottomSheet() {
-        return true;
+        return false;
     }
 
     @Override

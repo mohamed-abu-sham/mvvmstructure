@@ -102,6 +102,8 @@ public final class AppConstants {
         public static final String MY_OFFER = "MY_OFFER";
         public static final String USER_ID = "USER_ID";
         public static final String SELLING_ITEM = "SELLING_ITEM";
+        public static final String KEY_CHAT_ID = "KEY_CHAT_ID";
+        public static final String CHAT = "CHAT";
     }
 
     public class FILTER_BY_KEYS {
@@ -115,6 +117,12 @@ public final class AppConstants {
 
     public class PRODUCT_STATUS {
         public static final String AVAILABLE = "available";
+        public static final String SOLD_OTHER_APP = "sold_other_app";
+        public static final String SOLD = "sold";
+    }
+
+    public class MESSAGE_TYPE {
+        public static final String OFFER = "offer";
         public static final String SOLD_OTHER_APP = "sold_other_app";
         public static final String SOLD = "sold";
     }

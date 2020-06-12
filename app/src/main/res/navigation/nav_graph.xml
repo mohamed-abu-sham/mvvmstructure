@@ -105,5 +105,9 @@
         android:id="@+id/nav_messages"
         android:name="com.selwantech.raheeb.ui.messagesjourney.messagestabholder.MessagesTabHolderFragment"
         android:label="MessagesTabHolderFragment" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.selwantech.raheeb.ui.messagesjourney.chat.ChatFragment"
+        android:label="ChatFragment" />
 
 </navigation>

@@ -4,9 +4,10 @@ import com.google.gson.annotations.SerializedName;
 import com.selwantech.raheeb.model.ImagesItem;
 import com.selwantech.raheeb.model.Price;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Post {
+public class Post implements Serializable {
 
     @SerializedName("images")
     private List<ImagesItem> images;

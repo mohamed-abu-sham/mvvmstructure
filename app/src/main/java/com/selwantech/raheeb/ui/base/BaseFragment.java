@@ -144,6 +144,13 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         setUpToolbar(toolbar, TAG);
     }
 
+    protected void setUpToolbar(ToolbarBinding toolbar, String TAG, String title) {
+//        toolbar.toolbarTitle.setText(title);
+//        toolbar.toolbarTitle.setVisibility(View.VISIBLE);
+        toolbar.toolbar.setTitle(title);
+        setUpToolbar(toolbar, TAG);
+    }
+
     protected void setUpToolbar(ToolbarBinding toolbar, String TAG) {
         toolbar.toolbar.setNavigationIcon(getMyContext().getResources().getDrawable(R.drawable.ic_arrow_back));
         toolbar.toolbar.setNavigationOnClickListener(v -> {

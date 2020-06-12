@@ -9,25 +9,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_7sdp"
-        android:background="@android:color/transparent"
-        app:cardBackgroundColor="@color/color_blue"
         app:cardCornerRadius="@dimen/_3sdp"
         app:cardElevation="0dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_130sdp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-
+            android:layout_margin="@dimen/_7sdp"
+            android:background="@android:color/transparent"
+            app:cardBackgroundColor="@color/color_blue"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardElevation="0dp">
             <ProgressBar
                 android:id="@+id/progressBar"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_gravity="center"
                 android:indeterminateTint="@color/white" />
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
 </layout>

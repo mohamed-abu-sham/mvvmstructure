@@ -65,17 +65,19 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
                 getData();
             }
         });
-
-        getViewBinding().recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+//        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        getViewBinding().recyclerView.setLayoutManager(staggeredGridLayoutManager);
         getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
         homeAdapter = new HomeAdapter(getMyContext(), this,getViewBinding().recyclerView);
         getViewBinding().recyclerView.setAdapter(homeAdapter);
         homeAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                homeAdapter.addItem(null);
-                homeAdapter.notifyItemInserted(homeAdapter.getItemCount() - 1);
-                getViewBinding().recyclerView.scrollToPosition(homeAdapter.getItemCount() - 1);
+//                homeAdapter.addItem(null);
+//                homeAdapter.notifyItemInserted(homeAdapter.getItemCount() - 1);
+//                getViewBinding().recyclerView.scrollToPosition(homeAdapter.getItemCount() - 1);
+                getViewBinding().swipeRefreshLayout.setRefreshing(true);
                 setLoadMore(true);
                 getData();
             }
@@ -209,8 +211,9 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
     }
 
     public void finishLoadMore() {
-        homeAdapter.remove(homeAdapter.getItemCount() - 1);
-        homeAdapter.notifyItemRemoved(homeAdapter.getItemCount() - 1);
+//        homeAdapter.remove(homeAdapter.getItemCount() - 1);
+//        homeAdapter.notifyItemRemoved(homeAdapter.getItemCount() - 1);
+        getViewBinding().swipeRefreshLayout.setRefreshing(false);
         homeAdapter.setLoaded();
         setLoadMore(false);
     }

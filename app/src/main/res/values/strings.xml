@@ -358,6 +358,9 @@
     <string name="rate_your_recent_sale">Rate your recent sale</string>
     <string name="positive_rating_improve_your_reputation_rate_and_get_rates">Positive rating improve your reputation .\n Rate and get rates .</string>
     <string name="notifications">Notifications</string>
+    <string name="type_msg">Type a message ...</string>
+    <string name="accept">Accept</string>
+    <string name="are_you_sure_to_send_this_vois_message">Are you sure to send this voic message ?</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

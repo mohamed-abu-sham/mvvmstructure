@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -128,9 +129,9 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
     @Override
     public void onClick(Chat chat, int position) {
         Bundle data = new Bundle();
-        data.putSerializable(AppConstants.BundleData.MY_OFFER, chat);
-//        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-//                .navigate(R.id.productDetailsFragment, data);
+        data.putSerializable(AppConstants.BundleData.CHAT, chat);
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.chatFragment, data);
     }
 
 

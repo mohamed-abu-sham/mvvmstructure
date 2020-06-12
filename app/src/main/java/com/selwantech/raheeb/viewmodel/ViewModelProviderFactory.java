@@ -20,6 +20,7 @@ import com.selwantech.raheeb.ui.emptyfragment.EmptyFragmentViewModel;
 import com.selwantech.raheeb.ui.filebox.FileBoxViewModel;
 import com.selwantech.raheeb.ui.main.MainActivityViewModel;
 import com.selwantech.raheeb.ui.mappicker.MapPickerViewModel;
+import com.selwantech.raheeb.ui.messagesjourney.chat.ChatViewModel;
 import com.selwantech.raheeb.ui.messagesjourney.chats.ChatsViewModel;
 import com.selwantech.raheeb.ui.messagesjourney.messagestabholder.MessagesTabHolderViewModel;
 import com.selwantech.raheeb.ui.messagesjourney.notifications.NotificationsViewModel;
@@ -179,6 +180,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(NotificationsViewModel.class)) {
             //noinspection unchecked
             return (T) new NotificationsViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(ChatViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ChatViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

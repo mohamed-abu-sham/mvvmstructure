@@ -111,8 +111,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (getActivityResultCallBack() != null && requestCode != LocationHelper.LOCATION_REQUEST_CODE) {
             getActivityResultCallBack().callBack(requestCode, resultCode, data);
         }
+
     }
 }

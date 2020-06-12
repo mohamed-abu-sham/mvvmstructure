@@ -2,6 +2,7 @@ package com.selwantech.raheeb.repository.network.services;
 
 import android.content.Context;
 
+import com.selwantech.raheeb.model.ChatObject;
 import com.selwantech.raheeb.model.chatdata.Chat;
 import com.selwantech.raheeb.model.notificationsdata.Notification;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -17,6 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
@@ -63,6 +65,14 @@ public class MessagesService {
     }
 
 
+    public void getChatMessages(Context mContext, boolean enableLoading, int chatId, int skip, APICallBack<ArrayList<ChatObject>> apiCallBack) {
+        getDataApi().getChatMessages(chatId, skip)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<ArrayList<ChatObject>>(mContext, enableLoading, apiCallBack));
+    }
+
     public DataApi getDataApi() {
         return mDataApi;
     }
@@ -71,6 +81,11 @@ public class MessagesService {
 
         @GET(ApiConstants.apiMessagesService.CHATS)
         Single<Response<GeneralResponse<ArrayList<Chat>>>> getChats(@Query("skip") int skip);
+
+        @GET(ApiConstants.apiMessagesService.CHAT_MESSAGES)
+        Single<Response<GeneralResponse<ArrayList<ChatObject>>>> getChatMessages(@Path("chat_id") int chat_id,
+                                                                                 @Query("skip") int skip);
+
 
         @GET(ApiConstants.apiMessagesService.NOTIFICATIONS)
         Single<Response<GeneralResponse<ArrayList<Notification>>>> getNotifications(@Query("skip") int skip);

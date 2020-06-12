@@ -44,6 +44,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 public void onScrolled(RecyclerView recyclerView,
                                        int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
+//                    ((StaggeredGridLayoutManager)recyclerView.getLayoutManager()).invalidateSpanAssignments();
                     if (dy > 0) {
                         visibleItem = linearLayoutManager.getChildCount();
                         totalItemCount = linearLayoutManager.getItemCount();
@@ -176,6 +177,9 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) mBinding.cardFavoriteCell.getLayoutParams();
+            layoutParams.setFullSpan(true);
+            mBinding.cardFavoriteCell.setLayoutParams(layoutParams);
             mBinding.progressBar.setIndeterminate(true);
         }
     }

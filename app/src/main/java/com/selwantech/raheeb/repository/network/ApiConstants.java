@@ -6,6 +6,7 @@ public class ApiConstants {
     public static final String BASE_URL = "http://157.245.252.177/api/";
     public static final String GET_DATA = "user/1/categories";
     public static final String PLATFORM = "android";
+    public static final String SOCKET_URL = "";
 
     public class apiAuthService {
         public static final String VERIFY_PHONE = "auth/verifyPhone";
@@ -80,6 +81,7 @@ public class ApiConstants {
     public class apiMessagesService {
         public static final String CHATS = "user/chat";
         public static final String NOTIFICATIONS = "user/notifications";
+        public static final String CHAT_MESSAGES = "user/chat/{chat_id}/messages";
     }
 
 }

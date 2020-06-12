@@ -168,10 +168,12 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     mBinding.tvOutMessage.setText(chatObject.getMessage());
                     mBinding.tvOutDate.setText(chatObject.getDate());
                     mBinding.tvOutMessage.setVisibility(View.VISIBLE);
+                    mBinding.tvOutMessage.setVisibility(View.VISIBLE);
                 } else if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)) {
                     mBinding.tvOutMessage.setText(chatObject.getMessage());
                     mBinding.tvOutDate.setText(chatObject.getDate());
                     mBinding.linearOutMsg.setVisibility(View.VISIBLE);
+                    mBinding.tvOutMessage.setVisibility(View.VISIBLE);
                 }
                 GeneralFunction.loadImage(mContext, chatObject.getSender().getAvatar(), mBinding.imgMyAvatar);
                 mBinding.linearInMsgTxt.setVisibility(View.GONE);
@@ -179,10 +181,12 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 if (chatObject.getMessage_type().equals("text")) {
                     mBinding.tvInTxtDate.setText(chatObject.getDate());
                     mBinding.linearInMsgTxt.setVisibility(View.VISIBLE);
+                    mBinding.tvInMessage.setVisibility(View.VISIBLE);
                 } else if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)) {
                     mBinding.tvInTxtDate.setText(chatObject.getDate());
                     mBinding.tvInMessage.setText(chatObject.getMessage());
                     mBinding.linearInMsgTxt.setVisibility(View.VISIBLE);
+                    mBinding.tvInMessage.setVisibility(View.VISIBLE);
                 }
                 GeneralFunction.loadImage(mContext, chatObject.getSender().getAvatar(), mBinding.imgOtherSideAvatar);
                 mBinding.linearOutMsg.setVisibility(View.GONE);

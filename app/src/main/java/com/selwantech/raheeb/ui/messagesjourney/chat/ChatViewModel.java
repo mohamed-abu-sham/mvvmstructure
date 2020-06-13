@@ -201,7 +201,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
                 AudioPlayerDialog audioPlayerDialog = new AudioPlayerDialog(getMyContext(), chatObject);
                 audioPlayerDialog.show();
             } else if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)) {
-                acceptOffer(chatObject.getId());
+                acceptOffer(chatObject.getId(), position);
             }
         }
 
@@ -220,7 +220,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         getViewBinding().recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
     }
 
-    public void acceptOffer(int messageId) {
+    public void acceptOffer(int messageId, int position) {
         getDataManager().getMessagesService().acceptOffer(getMyContext(), true,
                 messageId, new APICallBack<String>() {
                     @Override

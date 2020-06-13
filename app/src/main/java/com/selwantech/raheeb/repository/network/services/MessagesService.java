@@ -2,6 +2,7 @@ package com.selwantech.raheeb.repository.network.services;
 
 import android.content.Context;
 
+import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.model.ChatObject;
 import com.selwantech.raheeb.model.chatdata.Chat;
 import com.selwantech.raheeb.model.notificationsdata.Notification;
@@ -16,8 +17,12 @@ import java.util.ArrayList;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -73,6 +78,33 @@ public class MessagesService {
                 .subscribe(new CustomObserverResponse<ArrayList<ChatObject>>(mContext, enableLoading, apiCallBack));
     }
 
+    public void sendTextMessage(Context mContext, boolean enableLoading, int chatId, String message,
+                                String messageType, APICallBack<ChatObject> apiCallBack) {
+        getDataApi().sendTextMessage(chatId, message, messageType)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<ChatObject>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void sendImageMessage(Context mContext, boolean enableLoading, int chatId, String image,
+                                 String messageType, APICallBack<ChatObject> apiCallBack) {
+        getDataApi().senImageMessage(chatId, GeneralFunction.getImageMultipart(image, "message"), messageType)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<ChatObject>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void acceptOffer(Context mContext, boolean enableLoading, int messageId, APICallBack<String> apiCallBack) {
+        getDataApi().acceptOffer(messageId)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+
+
     public DataApi getDataApi() {
         return mDataApi;
     }
@@ -93,6 +125,20 @@ public class MessagesService {
         @GET(ApiConstants.apiAppService.CURRENCY)
         Single<Response<GeneralResponse<String>>> getCurrency();
 
+
+        @POST(ApiConstants.apiMessagesService.SEND_MESSAGE)
+        Single<Response<GeneralResponse<ChatObject>>> sendTextMessage(@Path("chat_id") int chatId,
+                                                                      @Query("message") String message,
+                                                                      @Query("message_type") String messageType);
+
+        @Multipart
+        @POST(ApiConstants.apiMessagesService.SEND_MESSAGE)
+        Single<Response<GeneralResponse<ChatObject>>> senImageMessage(@Path("chat_id") int chatId,
+                                                                      @Part MultipartBody.Part message,
+                                                                      @Query("message_type") String messageType);
+
+        @POST(ApiConstants.apiMessagesService.ACCEPT_OFFER)
+        Single<Response<GeneralResponse<String>>> acceptOffer(@Path("messageId") int messageId);
 
     }
 }

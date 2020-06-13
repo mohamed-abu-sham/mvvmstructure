@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.adapter;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.selwantech.raheeb.databinding.CellChatItemBinding;
+import com.selwantech.raheeb.databinding.CellChatItemReceivedBinding;
+import com.selwantech.raheeb.databinding.CellChatItemSentBinding;
 import com.selwantech.raheeb.databinding.CellLoadMoreBinding;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.interfaces.ChatMessageRecyclerClick;
@@ -18,6 +20,8 @@ import com.selwantech.raheeb.model.ChatObject;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.ui.base.BaseViewHolder;
 import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.viewmodel.ItemChatMessageReceivedViewModel;
+import com.selwantech.raheeb.viewmodel.ItemChatMessageSentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +29,11 @@ import java.util.List;
 public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private final int VIEW_PROG = 0;
-    private final int VIEW_ITEM = 1;
-    private final int VIEW_TYPING = 2;
+    private final int VIEW_ITEM_SENT = 1;
+    private final int VIEW_ITEM_RECEIVED = 2;
     private Context mContext;
     private ArrayList<ChatObject> chatObjectArrayList;
+    MediaPlayer mediaPlayer;
     CountDownTimer countDownTimer = new CountDownTimer(30000, 30000) {
         @Override
         public void onTick(long millisUntilFinished) {
@@ -49,11 +54,12 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private OnLoadMoreListener loadMoreListener;
 
     public ChatMessageAdapter(Context mContext,
-                              ChatMessageRecyclerClick mRecyclerClick, RecyclerView recyclerView) {
+                              ChatMessageRecyclerClick mRecyclerClick, RecyclerView recyclerView,
+                              MediaPlayer mediaPlayer) {
         this.mContext = mContext;
         this.chatObjectArrayList = new ArrayList<>();
         this.mRecyclerClick = mRecyclerClick;
-
+        this.mediaPlayer = mediaPlayer;
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
 
             final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
@@ -116,16 +122,27 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return chatObjectArrayList.get(position) != null ? VIEW_ITEM : VIEW_PROG;
+        if (chatObjectArrayList.get(position) == null) {
+            return VIEW_PROG;
+        } else if (chatObjectArrayList.get(position).getSender().id != User.getInstance().getUserID()) {
+            return VIEW_ITEM_RECEIVED;
+        } else {
+            return VIEW_ITEM_SENT;
+        }
     }
 
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == VIEW_ITEM) {
-            CellChatItemBinding cellBinding = CellChatItemBinding
+        if (viewType == VIEW_ITEM_SENT) {
+            CellChatItemSentBinding cellBinding = CellChatItemSentBinding
                     .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-            return new ChatCellViewHolder(cellBinding);
+            return new ChatCellSentViewHolder(cellBinding);
+        }
+        if (viewType == VIEW_ITEM_RECEIVED) {
+            CellChatItemReceivedBinding cellBinding = CellChatItemReceivedBinding
+                    .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new ChatCellReceivedViewHolder(cellBinding);
         } else {
             CellLoadMoreBinding cellLoadMoreBinding = CellLoadMoreBinding
                     .inflate(LayoutInflater.from(parent.getContext()), parent, false);
@@ -147,11 +164,11 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         void onLoadMore();
     }
 
-    public class ChatCellViewHolder extends BaseViewHolder {
+    public class ChatCellSentViewHolder extends BaseViewHolder {
 
-        private final CellChatItemBinding mBinding;
+        private final CellChatItemSentBinding mBinding;
 
-        public ChatCellViewHolder(CellChatItemBinding binding) {
+        public ChatCellSentViewHolder(CellChatItemSentBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
         }
@@ -159,49 +176,45 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             ChatObject chatObject = chatObjectArrayList.get(position);
-            if (chatObject.getSender().id == User.getInstance().getUserID()) {
-                mBinding.cardResend.setVisibility(View.GONE);
-                if (!chatObject.isSent() && chatObject.getId() <= 0) {
-                    mBinding.cardResend.setVisibility(View.VISIBLE);
-                }
-                if (chatObject.getMessage_type().equals("text")) {
-                    mBinding.tvOutMessage.setText(chatObject.getMessage());
-                    mBinding.tvOutDate.setText(chatObject.getDate());
-                    mBinding.tvOutMessage.setVisibility(View.VISIBLE);
-                    mBinding.tvOutMessage.setVisibility(View.VISIBLE);
-                } else if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)) {
-                    mBinding.tvOutMessage.setText(chatObject.getMessage());
-                    mBinding.tvOutDate.setText(chatObject.getDate());
-                    mBinding.linearOutMsg.setVisibility(View.VISIBLE);
-                    mBinding.tvOutMessage.setVisibility(View.VISIBLE);
-                }
-                GeneralFunction.loadImage(mContext, chatObject.getSender().getAvatar(), mBinding.imgMyAvatar);
-                mBinding.linearInMsgTxt.setVisibility(View.GONE);
+            if (mBinding.getViewModel() == null) {
+                mBinding.setViewModel(new ItemChatMessageSentViewModel(mContext, chatObjectArrayList.get(position),
+                        position, mBinding, mRecyclerClick, mediaPlayer));
             } else {
-                if (chatObject.getMessage_type().equals("text")) {
-                    mBinding.tvInTxtDate.setText(chatObject.getDate());
-                    mBinding.linearInMsgTxt.setVisibility(View.VISIBLE);
-                    mBinding.tvInMessage.setVisibility(View.VISIBLE);
-                } else if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)) {
-                    mBinding.tvInTxtDate.setText(chatObject.getDate());
-                    mBinding.tvInMessage.setText(chatObject.getMessage());
-                    mBinding.linearInMsgTxt.setVisibility(View.VISIBLE);
-                    mBinding.tvInMessage.setVisibility(View.VISIBLE);
-                }
-                GeneralFunction.loadImage(mContext, chatObject.getSender().getAvatar(), mBinding.imgOtherSideAvatar);
-                mBinding.linearOutMsg.setVisibility(View.GONE);
+                mBinding.getViewModel().setMessages(chatObjectArrayList.get(position));
             }
+        }
+    }
 
-            mBinding.relativeCellChatItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!chatObject.isSent() && chatObject.getId() <= 0) {
-                        mRecyclerClick.onClick(chatObject, position, true);
-                    } else {
-                        mRecyclerClick.onClick(chatObject, position, false);
-                    }
-                }
-            });
+    public class ChatCellReceivedViewHolder extends BaseViewHolder {
+
+        private final CellChatItemReceivedBinding mBinding;
+
+        public ChatCellReceivedViewHolder(CellChatItemReceivedBinding binding) {
+            super(binding.getRoot());
+            this.mBinding = binding;
+        }
+
+        @Override
+        public void onBind(int position) {
+            ChatObject chatObject = chatObjectArrayList.get(position);
+            if (mBinding.getViewModel() == null) {
+                mBinding.setViewModel(new ItemChatMessageReceivedViewModel(mContext, chatObjectArrayList.get(position),
+                        position, mBinding, mRecyclerClick));
+            } else {
+                mBinding.getViewModel().setMessages(chatObjectArrayList.get(position));
+            }
+            if (chatObject.getMessage_type().equals("text")) {
+                mBinding.tvInTxtDate.setText(chatObject.getDate());
+                mBinding.linearInMsgTxt.setVisibility(View.VISIBLE);
+                mBinding.tvInMessage.setVisibility(View.VISIBLE);
+            } else if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)) {
+                mBinding.tvInTxtDate.setText(chatObject.getDate());
+                mBinding.tvInMessage.setText(chatObject.getMessage());
+                mBinding.linearInMsgTxt.setVisibility(View.VISIBLE);
+                mBinding.tvInMessage.setVisibility(View.VISIBLE);
+            }
+            GeneralFunction.loadImage(mContext, chatObject.getSender().getAvatar(), mBinding.imgOtherSideAvatar);
+
         }
     }
 

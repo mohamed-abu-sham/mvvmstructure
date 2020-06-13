@@ -82,6 +82,8 @@ public class ApiConstants {
         public static final String CHATS = "user/chat";
         public static final String NOTIFICATIONS = "user/notifications";
         public static final String CHAT_MESSAGES = "user/chat/{chat_id}/messages";
+        public static final String SEND_MESSAGE = "user/chat/{chat_id}/messages";
+        public static final String ACCEPT_OFFER = "user/post/offer/{messageId}/accept";
     }
 
 }

@@ -213,6 +213,10 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="AudioPlayerSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
     <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/poppins_medium</item>

@@ -13,6 +13,19 @@ import java.util.concurrent.TimeUnit;
 
 public class TimeUtils {
 
+
+    public static String formatTime(long millis) {
+        long seconds = Math.round((double) millis / 1000);
+        long hours = TimeUnit.SECONDS.toHours(seconds);
+        if (hours > 0)
+            seconds -= TimeUnit.HOURS.toSeconds(hours);
+        long minutes = seconds > 0 ? TimeUnit.SECONDS.toMinutes(seconds) : 0;
+        if (minutes > 0)
+            seconds -= TimeUnit.MINUTES.toSeconds(minutes);
+        return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
+    }
+
+
     public static String calculateTime(Context mContext, String date) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

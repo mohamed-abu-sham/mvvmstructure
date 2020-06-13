@@ -1,7 +1,8 @@
 package com.selwantech.raheeb.ui.messagesjourney.chat;
 
 import android.content.Context;
-import android.net.Uri;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
@@ -25,9 +26,9 @@ import com.selwantech.raheeb.repository.network.ApiConstants;
 import com.selwantech.raheeb.ui.adapter.ChatMessageAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
-import com.selwantech.raheeb.ui.dialog.PickImageFragmentDialog;
+import com.selwantech.raheeb.ui.dialog.AudioPlayerDialog;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.AudioRecorder;
-import com.selwantech.raheeb.utils.PickImageUtility;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import org.json.JSONException;
@@ -49,6 +50,9 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
     ChatMessageAdapter chatAdapter;
     Socket mSocket;
     int inSideMessageId = 0;
+
+    MediaPlayer mediaPlayer;
+
     AudioRecorder audioRecorder;
     private Emitter.Listener onConnect = args ->
             getBaseActivity().runOnUiThread(() -> {
@@ -80,20 +84,58 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     }
 
-    private void getData() {
-//        chatAdapter.addItem(new ChatObject(8, "text",
-//                "Hiiii", "now", new Sender(8, "", "")));
-//        chatAdapter.addItem(new ChatObject(8, "text",
-//                "Hiiii", "now", new Sender(8, "", "")));
-//        chatAdapter.addItem(new ChatObject(8, "text",
-//                "Hiiii", "now", new Sender(8, "", "")));
-//        chatAdapter.addItem(new ChatObject(8, "text",
-//                "Hiiii", "now", new Sender(8, "", "")));
-//        chatAdapter.addItem(new ChatObject(8, "text",
-//                "Hiiii", "now", new Sender(8, "", "")));
-//        chatAdapter.addItem(new ChatObject(8, "text",
-//                "Hiiii", "now", new Sender(8, "", "")));
+    @Override
+    protected void setUp() {
+        try {
+            mSocket = IO.socket(ApiConstants.SOCKET_URL);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        audioRecorder = new AudioRecorder(getBaseActivity(), this::callback);
+        audioRecorder.checkRecorderPermission();
+        setUpSendAction();
+        initiateSocket();
+        setUpRecycler();
+        getViewBinding().edMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().isEmpty()) {
+                    getViewBinding().btnSend.setImageResource(R.drawable.ic_microphone);
+                } else {
+                    getViewBinding().btnSend.setImageResource(R.drawable.ic_send);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        getData();
+    }
+
+    private void setUpRecycler() {
+        getViewBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getMyContext(), LinearLayoutManager.VERTICAL, false));
+        getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
+        chatAdapter = new ChatMessageAdapter(getMyContext(), this, getViewBinding().recyclerView, mediaPlayer);
+        getViewBinding().recyclerView.setAdapter(chatAdapter);
+        chatAdapter.setOnLoadMoreListener(new ChatMessageAdapter.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                chatAdapter.addItem(0, null);
+                chatAdapter.notifyItemInserted(0);
+                setLoadMore(true);
+                getData();
+            }
+        });
+    }
+
+    private void getData() {
         if (!isLoadMore()) {
             enableLoading = true;
         }
@@ -124,39 +166,6 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     }
 
-    @Override
-    protected void setUp() {
-        try {
-            mSocket = IO.socket(ApiConstants.SOCKET_URL);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        audioRecorder = new AudioRecorder(getBaseActivity(), this::callback);
-        audioRecorder.checkRecorderPermission();
-        setUpSendAction();
-        initiateSocket();
-        setUpRecycler();
-        getViewBinding().edMessage.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().isEmpty()) {
-                    getViewBinding().btnSend.setImageResource(R.drawable.ic_microphone);
-                } else {
-                    getViewBinding().btnSend.setImageResource(R.drawable.ic_send);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-        getData();
-    }
-
     private void setUpSendAction() {
         getViewBinding().btnSend.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -165,7 +174,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
                     audioRecorder.recordAction(event);
                 } else {
                     showChat(inSideMessageId, "text", getViewBinding().edMessage.getText().toString());
-                    sendTxtMessage(getViewBinding().edMessage.getText().toString());
+                    sendTxtMessage(getViewBinding().edMessage.getText().toString(), inSideMessageId);
                     getViewBinding().edMessage.setText("");
                     inSideMessageId = inSideMessageId - 1;
                 }
@@ -174,80 +183,10 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         });
     }
 
-    public boolean isLoadMore() {
-        return isLoadMore;
-    }
-
-    public void setLoadMore(boolean loadMore) {
-        isLoadMore = loadMore;
-    }
-
-    private void checkIsLoadMoreAndRefreshing(boolean isSuccess) {
-        if (isLoadMore()) {
-            finishLoadMore();
-        } else {
-            enableLoading = false;
-        }
-    }
-
-    public void finishLoadMore() {
-        chatAdapter.remove(chatAdapter.getItemCount() - 1);
-        notifyAdapter();
-        chatAdapter.setLoaded();
-        setLoadMore(false);
-    }
-
-    private void notifyAdapter() {
-        getViewBinding().recyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                chatAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    public void onSendClicked() {
-
-    }
-
-    private void record() {
-
-    }
-
-    private void setUpRecycler() {
-        getViewBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getMyContext(), LinearLayoutManager.VERTICAL, false));
-        getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
-        chatAdapter = new ChatMessageAdapter(getMyContext(), this, getViewBinding().recyclerView);
-        getViewBinding().recyclerView.setAdapter(chatAdapter);
-        chatAdapter.setOnLoadMoreListener(new ChatMessageAdapter.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                chatAdapter.addItem(0, null);
-                chatAdapter.notifyItemInserted(0);
-                setLoadMore(true);
-                getData();
-            }
-        });
-    }
-
-    public void openPickerDialog() {
-        PickImageFragmentDialog pickImageFragmentDialog = new PickImageFragmentDialog.Builder().build();
-        pickImageFragmentDialog.setMethodCallBack(new PickImageFragmentDialog.methodClick() {
-            @Override
-            public void onMethodBack(int type) {
-                if (type == 1) {
-                    PickImageUtility.selectImage(getBaseActivity());
-                } else {
-                    PickImageUtility.TakePictureIntent(getBaseActivity());
-                }
-            }
-        });
-        pickImageFragmentDialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
-    }
-
-    public void sendImage(Uri image) {
-        showChat(inSideMessageId, "file", image.toString());
-//        sendImageMessage(image, "file", inSideMessageId);
+    @Override
+    public void callback(String recordPath) {
+        showChat(inSideMessageId, "voice", recordPath);
+        sendImageMessage(recordPath, inSideMessageId);
         inSideMessageId = inSideMessageId - 1;
     }
 
@@ -256,37 +195,144 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         if (isResend) {
             chatAdapter.getItem(position).setSent(true);
             notifyAdapter();
-            sendTxtMessage(chatObject.getMessage());
+            sendTxtMessage(chatObject.getMessage(), chatObject.getId());
+        } else {
+            if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.VOICE)) {
+                AudioPlayerDialog audioPlayerDialog = new AudioPlayerDialog(getMyContext(), chatObject);
+                audioPlayerDialog.show();
+            } else if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)) {
+                acceptOffer(chatObject.getId());
+            }
         }
 
     }
 
     private void showChat(int position, String type, String message) {
-        ChatObject chatObject = new ChatObject(inSideMessageId, type, message, "now",
+        ChatObject chatObject = new ChatObject(position, type, message, "now",
                 new Sender((int) User.getInstance().getUserID(),
                         User.getInstance().getAvatar(),
                         User.getInstance().getName()));
-        if (type.equals("file")) {
+        if (type.equals("voice")) {
             chatObject.setShowProgress(true);
         }
         chatAdapter.addItem(chatObject);
         notifyAdapter();
         getViewBinding().recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+    }
 
+    public void acceptOffer(int messageId) {
+        getDataManager().getMessagesService().acceptOffer(getMyContext(), true,
+                messageId, new APICallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+
+                    }
+
+                    @Override
+                    public void onError(String error, int errorCode) {
+                        showSnackBar(getMyContext().getResources().getString(R.string.error),
+                                error, getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
+                                    @Override
+                                    public void onActionClick(Snackbar snackbar) {
+                                        snackbar.dismiss();
+                                    }
+                                });
+                    }
+                });
+    }
+
+    public void sendTxtMessage(String message, int inSideMessageId) {
+        getDataManager().getMessagesService().sendTextMessage(getMyContext(), false,
+                getNavigator().getChat().getId(), message, "text", new APICallBack<ChatObject>() {
+                    @Override
+                    public void onSuccess(ChatObject response) {
+                        onMessageSent(response, inSideMessageId);
+                    }
+
+                    @Override
+                    public void onError(String error, int errorCode) {
+                        onErrorSend("text", inSideMessageId);
+                    }
+                });
+    }
+
+    public void sendImageMessage(String image, int inSideMessageId) {
+        getDataManager().getMessagesService().sendImageMessage(getMyContext(), false,
+                getNavigator().getChat().getId(), image, "voice", new APICallBack<ChatObject>() {
+                    @Override
+                    public void onSuccess(ChatObject response) {
+                        onMessageSent(response, inSideMessageId);
+                    }
+
+                    @Override
+                    public void onError(String error, int errorCode) {
+                        onErrorSend("voice", inSideMessageId);
+                    }
+                });
 
     }
 
-    protected void sendTxtMessage(String text) {
-        if (mSocket.connected()) {
-            try {
-                JSONObject messageData = new JSONObject();
-                messageData.put("created_by", "parent");
-                messageData.put("message", text);
-                mSocket.emit("send_message", messageData);
-            } catch (JSONException e) {
-                e.printStackTrace();
+    public void onMessageSent(ChatObject chatObject, int inSideMessageId) {
+        if (chatObject.getMessage_type().equals("text")) {
+            updateMessageId(inSideMessageId, chatObject);
+        } else {
+            updateMessageIdAndImage(inSideMessageId, chatObject);
+        }
+        notifyAdapter();
+    }
+
+    public void onErrorSend(String messageType, int inSideMessageId) {
+        showResendInMessage(inSideMessageId);
+        if (messageType.equals("voice")) {
+            updateImageProgress(inSideMessageId, false);
+        }
+        notifyAdapter();
+    }
+
+    public void showResendInMessage(int inSideMessageId) {
+        for (int i = 0; i < chatAdapter.getItemCount(); i++) {
+            if (chatAdapter.getItem(i).getId() == inSideMessageId) {
+                chatAdapter.getItem(i).setSent(false);
+                notifyAdapter();
             }
         }
+    }
+
+    public void updateMessageId(int inSideMessageId, ChatObject chatObject) {
+        for (int i = 0; i < chatAdapter.getItemCount(); i++) {
+            if (chatAdapter.getItem(i).getId() == inSideMessageId) {
+                chatAdapter.getItem(i).setId(chatObject.getId());
+                chatAdapter.getItem(i).setDate(chatObject.getDate());
+                notifyAdapter();
+            }
+        }
+//        messages.get(position).setId(messageId);
+    }
+
+    public void updateMessageIdAndImage(int inSideMessageId,
+                                        ChatObject chatObject) {
+        for (int i = 0; i < chatAdapter.getItemCount(); i++) {
+            if (chatAdapter.getItem(i).getId() == inSideMessageId) {
+                updateImageProgress(inSideMessageId, false);
+                chatAdapter.getItem(i).setId(chatObject.getId());
+                chatAdapter.getItem(i).setMessage(chatObject.getMessage());
+                chatAdapter.getItem(i).setDate(chatObject.getDate());
+            }
+        }
+    }
+
+    public void updateImageProgress(int inSideMessageId, boolean showProgress) {
+        for (int i = 0; i < chatAdapter.getItemCount(); i++) {
+            if (chatAdapter.getItem(i).getId() == inSideMessageId) {
+                chatAdapter.getItem(i).setShowProgress(showProgress);
+                notifyAdapter();
+            }
+        }
+//        messages.get(position).setShowProgress(showProgress);
+    }
+
+    public boolean isLoadMore() {
+        return isLoadMore;
     }
 
     protected void initiateSocket() {
@@ -335,8 +381,31 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         }
     }
 
-    @Override
-    public void callback(String recordPath) {
+    public void setLoadMore(boolean loadMore) {
+        isLoadMore = loadMore;
+    }
 
+    private void checkIsLoadMoreAndRefreshing(boolean isSuccess) {
+        if (isLoadMore()) {
+            finishLoadMore();
+        } else {
+            enableLoading = false;
+        }
+    }
+
+    public void finishLoadMore() {
+        chatAdapter.remove(0);
+        notifyAdapter();
+        chatAdapter.setLoaded();
+        setLoadMore(false);
+    }
+
+    private void notifyAdapter() {
+        getViewBinding().recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                chatAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

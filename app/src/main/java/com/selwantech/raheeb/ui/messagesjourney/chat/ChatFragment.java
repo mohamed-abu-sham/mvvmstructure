@@ -1,9 +1,6 @@
 package com.selwantech.raheeb.ui.messagesjourney.chat;
 
 import android.content.Context;
-import android.content.Intent;
-
-import androidx.annotation.Nullable;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChatBinding;
@@ -12,13 +9,9 @@ import com.selwantech.raheeb.model.chatdata.Chat;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
 import com.selwantech.raheeb.utils.AppConstants;
-import com.selwantech.raheeb.utils.PickImageUtility;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import javax.inject.Inject;
-
-import static android.app.Activity.RESULT_OK;
 
 public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewModel>
         implements ChatNavigator {
@@ -91,34 +84,6 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
         setUpToolbar(mViewBinding.toolbar, "", getChat().getUser().getName());
         mViewModel.setUp();
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case PickImageUtility.PICK_IMAGE_GALLERY:
-                if (resultCode == RESULT_OK) {
-                    PickImageUtility.Crop(data.getData(), getBaseActivity(), false);
-                }
-                break;
-            case PickImageUtility.PICK_IMAGE_CAMERA:
-                if (resultCode == RESULT_OK) {
-                    PickImageUtility.Crop(PickImageUtility.getCameraImage(), getBaseActivity(), false);
-                }
-                break;
-            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE: {
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if (resultCode == RESULT_OK) {
-                    mViewModel.sendImage(result.getUri());
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    Exception error = result.getError();
-                }
-            }
-
-        }
-    }
-
-
     @Override
     public Chat getChat() {
         return (Chat) getArguments().getSerializable(AppConstants.BundleData.CHAT);

@@ -123,7 +123,7 @@ public final class AppConstants {
 
     public class MESSAGE_TYPE {
         public static final String OFFER = "offer";
-        public static final String SOLD_OTHER_APP = "sold_other_app";
-        public static final String SOLD = "sold";
+        public static final String TEXT = "text";
+        public static final String VOICE = "voice";
     }
 }

@@ -124,7 +124,6 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:background="@color/color_blue"
-                    android:onClick="@{() -> viewModel.onSendClicked()}"
                     android:padding="@dimen/_15sdp"
                     app:srcCompat="@drawable/ic_microphone" />
             </LinearLayout>

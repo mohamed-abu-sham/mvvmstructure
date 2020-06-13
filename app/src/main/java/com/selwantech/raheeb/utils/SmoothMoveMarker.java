@@ -63,6 +63,7 @@ public class SmoothMoveMarker {
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+
     }
 
 }

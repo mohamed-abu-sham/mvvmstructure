@@ -33,7 +33,7 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
     boolean isRetry = false;
     boolean enableLoading = false;
     boolean isLoadMore = false;
-
+    boolean canLoadMore = false ;
     public <V extends ViewDataBinding, N extends BaseNavigator> ChatsViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ChatsNavigator) navigation, (FragmentChatsBinding) viewDataBinding);
     }
@@ -69,11 +69,13 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
         messagesAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                messagesAdapter.addItem(null);
-                messagesAdapter.notifyItemInserted(messagesAdapter.getItemCount() - 1);
-                getViewBinding().recyclerView.scrollToPosition(messagesAdapter.getItemCount() - 1);
-                setLoadMore(true);
-                getData();
+                if(canLoadMore) {
+                    messagesAdapter.addItem(null);
+                    notifyAdapter();
+                    getViewBinding().recyclerView.scrollToPosition(messagesAdapter.getItemCount() - 1);
+                    setLoadMore(true);
+                    getData();
+                }
             }
         });
     }
@@ -89,10 +91,14 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
                 checkIsLoadMoreAndRefreshing(true);
                 messagesAdapter.addItems(response);
                 notifyAdapter();
+                canLoadMore = true;
             }
 
             @Override
             public void onError(String error, int errorCode) {
+                if(isLoadMore){
+                    canLoadMore = false;
+                }
                 if (messagesAdapter.getItemCount() == 0) {
                     showNoDataFound();
                 }

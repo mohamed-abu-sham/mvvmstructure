@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,15 @@ public class ChatsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private boolean loading;
     private OnLoadMoreListener loadMoreListener;
 
+    @Override
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position, @NonNull List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
+    }
+//
+//    DiffUtil.DiffResult<Chat> chatDiffResult = new DiffUtil.DiffResult()
+
+
+
     public ChatsAdapter(Context mContext, RecyclerClick mRecyclerClick, RecyclerView recyclerView) {
         this.chatList = new ArrayList<>();
         this.mContext = mContext;
@@ -44,14 +54,14 @@ public class ChatsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 public void onScrolled(RecyclerView recyclerView,
                                        int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    totalItemCount = linearLayoutManager.getItemCount();
-                    lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-                    if (!loading && totalItemCount - 1 == (lastVisibleItem)) {
-                        if (loadMoreListener != null) {
-                            loadMoreListener.onLoadMore();
-                        }
-                        loading = true;
-                    }
+//                    totalItemCount = linearLayoutManager.getItemCount();
+//                    lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
+//                    if (!loading && totalItemCount - 1 == (lastVisibleItem)) {
+//                        if (loadMoreListener != null) {
+//                            loadMoreListener.onLoadMore();
+//                        }
+//                        loading = true;
+//                    }
                 }
             });
 
@@ -106,12 +116,10 @@ public class ChatsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addItems(List<Chat> repoList) {
         chatList.addAll(repoList);
-        notifyDataSetChanged();
     }
 
     public void addItem(Chat messages) {
         chatList.add(messages);
-        notifyDataSetChanged();
     }
 
     public void clearItems() {
@@ -142,8 +150,15 @@ public class ChatsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             } else {
                 mBinding.getViewModel().setMessages(chatList.get(position));
             }
+            if (position >= getItemCount() - 3) {
+                if (!loading) {
+                    if (loadMoreListener != null) {
+                        loadMoreListener.onLoadMore();
+                    }
+                    loading = true;
+                }
+            }
         }
-
     }
 
     public class ProgressCellViewHolder extends BaseViewHolder {

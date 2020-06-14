@@ -2,14 +2,20 @@
 package com.selwantech.raheeb.viewmodel;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.view.View;
+import android.widget.SeekBar;
 
 import androidx.databinding.BaseObservable;
 
+import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.CellChatItemReceivedBinding;
 import com.selwantech.raheeb.interfaces.ChatMessageRecyclerClick;
 import com.selwantech.raheeb.model.ChatObject;
 import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.utils.TimeUtils;
+
+import java.io.IOException;
 
 
 public class ItemChatMessageReceivedViewModel extends BaseObservable {
@@ -19,9 +25,8 @@ public class ItemChatMessageReceivedViewModel extends BaseObservable {
     private ChatObject messages;
     private int position;
 
-
     CellChatItemReceivedBinding cellChatItemReceivedBinding;
-
+    MediaPlayer mMediaPlayer ;
     public ItemChatMessageReceivedViewModel(Context context, ChatObject messages,
                                             int position,
                                             CellChatItemReceivedBinding cellChatItemSentBinding,
@@ -32,15 +37,9 @@ public class ItemChatMessageReceivedViewModel extends BaseObservable {
         this.mRecyclerClick = mRecyclerClick;
         this.cellChatItemReceivedBinding = cellChatItemSentBinding;
         this.mRecyclerClick = mRecyclerClick;
+//        this.mMediaPlayer = mediaPlayer ;
 //        if(messages.getMessage_type().equals(AppConstants.MESSAGE_TYPE.VOICE)){
-//            try {
-//                MediaPlayer mMediaPlayer = new MediaPlayer();
-//                mMediaPlayer.setDataSource("https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3");
-//                mMediaPlayer.prepare();
-//                cellChatItemSentBinding.tvSeekDurationIn.setText(TimeUtils.formatTime(mMediaPlayer.getDuration()));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+//            setUpAudio();
 //
 //        }
     }
@@ -61,6 +60,72 @@ public class ItemChatMessageReceivedViewModel extends BaseObservable {
 
     public void onPlayClick() {
         mRecyclerClick.onClick(messages, position, false);
+
+//        if (!mMediaPlayer.isPlaying()) {
+//            play();
+//        } else {
+//            mMediaPlayer.pause();
+//            cellChatItemReceivedBinding.play.setImageResource(R.drawable.ic_play);
+//        }
+    }
+
+    private void play() {
+        cellChatItemReceivedBinding.play.setImageResource(R.drawable.ic_pause);
+       // cellChatItemReceivedBinding.seekAudioIn.removeCallbacks(moveSeekBarThread);
+//        seekHandler.postDelayed(moveSeekBarThread, 100);
+//
+//        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                if (seekHandler != null && moveSeekBarThread != null) {
+//                    seekHandler.removeCallbacks(moveSeekBarThread);
+//                }
+//                cellChatItemReceivedBinding.play.setImageResource(R.drawable.ic_play);
+//                cellChatItemReceivedBinding.seekAudioIn.setProgress(0);
+//            }
+//        });
+
+        mMediaPlayer.start();
+      //  mMediaPlayer
+    }
+
+
+    private void setUpAudio() {
+        cellChatItemReceivedBinding.seekAudioIn.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (mMediaPlayer != null) {
+                    if (fromUser) {
+                        mMediaPlayer.seekTo(progress);
+                    }
+                    if (progress == mMediaPlayer.getDuration()) {
+
+                    }
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        try {
+            mMediaPlayer.reset();
+            mMediaPlayer.stop();
+            mMediaPlayer.release();
+            mMediaPlayer.setDataSource(messages.getMessage());
+            mMediaPlayer.prepare();
+//            cellChatItemReceivedBinding.tvSeekDurationIn.setText(TimeUtils.formatTime(mMediaPlayer.getDuration()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void onAcceptOfferClick(View view) {
@@ -80,6 +145,7 @@ public class ItemChatMessageReceivedViewModel extends BaseObservable {
 
     public int isOffer() {
         return messages.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)
+                && messages.getOffer().getStatus().equals(AppConstants.OFFER_STATUS.WAITING)
                 ? View.VISIBLE : View.GONE;
     }
 

@@ -126,4 +126,10 @@ public final class AppConstants {
         public static final String TEXT = "text";
         public static final String VOICE = "voice";
     }
+
+    public class OFFER_STATUS {
+        public static final String APPROVED = "approved";
+        public static final String WAITING = "waiting";
+        public static final String REJECT = "reject";
+    }
 }

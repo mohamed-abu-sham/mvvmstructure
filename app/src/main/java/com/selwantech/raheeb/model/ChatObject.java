@@ -21,6 +21,10 @@ public class ChatObject implements Serializable {
     @SerializedName("chat_id")
     private int chat_id;
 
+    @SerializedName("offer_id")
+    private int offer_id;
+    @SerializedName("offer")
+    Offer offer ;
     public ChatObject(int id, String message_type, String message, String date, Sender sender) {
         this.id = id;
         this.message_type = message_type;
@@ -91,5 +95,21 @@ public class ChatObject implements Serializable {
 
     public void setShowProgress(boolean showProgress) {
         this.showProgress = showProgress;
+    }
+
+    public int getOffer_id() {
+        return offer_id;
+    }
+
+    public void setOffer_id(int offer_id) {
+        this.offer_id = offer_id;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 }

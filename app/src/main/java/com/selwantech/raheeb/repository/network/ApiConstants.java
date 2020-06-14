@@ -6,7 +6,7 @@ public class ApiConstants {
     public static final String BASE_URL = "http://157.245.252.177/api/";
     public static final String GET_DATA = "user/1/categories";
     public static final String PLATFORM = "android";
-    public static final String SOCKET_URL = "";
+    public static final String SOCKET_URL = "http://157.245.252.177:3000/";
 
     public class apiAuthService {
         public static final String VERIFY_PHONE = "auth/verifyPhone";

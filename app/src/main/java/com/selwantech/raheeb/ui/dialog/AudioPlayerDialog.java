@@ -34,6 +34,7 @@ public class AudioPlayerDialog extends Dialog {
     MediaPlayer mMediaPlayer;
     ChatObject chatObject;
     Handler seekHandler = new Handler();
+
     private Runnable moveSeekBarThread = new Runnable() {
         public void run() {
             if (mMediaPlayer != null) {
@@ -45,7 +46,7 @@ public class AudioPlayerDialog extends Dialog {
                 dialogAudioPlayerBinding.seekAudioIn.setMax(mediaMax_new);
                 dialogAudioPlayerBinding.tvSeekDurationIn.setText(TimeUtils.formatTime(mediaPos_new));
 //                dialogAudioPlayerBinding.tvVoiceDuration.setText(TimeUtils.formatTime(mediaMax_new));
-                seekHandler.postDelayed(this, 100); //Looping the thread after 0.1 second
+                seekHandler.postDelayed(this, 1000); //Looping the thread after 0.1 second
             }
         }
     };
@@ -116,7 +117,7 @@ public class AudioPlayerDialog extends Dialog {
 
         mMediaPlayer.reset();
         try {
-            mMediaPlayer.setDataSource("https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3");
+            mMediaPlayer.setDataSource(chatObject.getMessage());
             mMediaPlayer.prepare();
             dialogAudioPlayerBinding.tvSeekDurationIn.setText(TimeUtils.formatTime(mMediaPlayer.getDuration()));
         } catch (IOException e) {
@@ -127,7 +128,7 @@ public class AudioPlayerDialog extends Dialog {
 
     public void onDownloadClick(View view) {
         DownloadUtil downloadUtil = new DownloadUtil(getContext());
-        downloadUtil.downloadFile("https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3");
+        downloadUtil.downloadFile(chatObject.getMessage());
     }
 
     public void onPlayClick() {

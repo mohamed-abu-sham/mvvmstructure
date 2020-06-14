@@ -125,6 +125,7 @@
                     android:layout_gravity="center"
                     android:background="@color/color_blue"
                     android:padding="@dimen/_15sdp"
+                    android:onClick="@{()->viewModel.onSendClick()}"
                     app:srcCompat="@drawable/ic_microphone" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

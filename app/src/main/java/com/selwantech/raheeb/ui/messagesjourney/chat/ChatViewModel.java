@@ -47,6 +47,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     boolean enableLoading = false;
     boolean isLoadMore = false;
+    boolean canLoadMore = false ;
     ChatMessageAdapter chatAdapter;
     Socket mSocket;
     int inSideMessageId = 0;
@@ -71,9 +72,11 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
                 if (args != null && args.length > 0) {
                     ChatObject chatObject =
                             new Gson().fromJson(args[0].toString(), ChatObject.class);
-                    chatAdapter.addItem(chatObject);
-                    notifyAdapter();
-                    getViewBinding().recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+                    if(chatObject.getSender().getId() != User.getInstance().getUserID()){
+                        chatAdapter.addItem(chatObject);
+                        notifyAdapter();
+                        getViewBinding().recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+                    }
                 }
             });
         }
@@ -127,10 +130,12 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         chatAdapter.setOnLoadMoreListener(new ChatMessageAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                chatAdapter.addItem(0, null);
-                chatAdapter.notifyItemInserted(0);
-                setLoadMore(true);
-                getData();
+                if(canLoadMore){
+                    chatAdapter.addItem(0, null);
+                    notifyAdapter();
+                    setLoadMore(true);
+                    getData();
+                }
             }
         });
     }
@@ -145,11 +150,16 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
             public void onSuccess(ArrayList<ChatObject> response) {
                 checkIsLoadMoreAndRefreshing(true);
                 chatAdapter.addItems(response);
+                getViewBinding().recyclerView.scrollToPosition(response.size()-1);
                 notifyAdapter();
+                canLoadMore = true;
             }
 
             @Override
             public void onError(String error, int errorCode) {
+                if(isLoadMore){
+                    canLoadMore = false;
+                }
                 if (!isLoadMore) {
                     showSnackBar(getMyContext().getString(R.string.error),
                             error, getMyContext().getResources().getString(R.string.ok),
@@ -163,6 +173,10 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
                 checkIsLoadMoreAndRefreshing(false);
             }
         });
+
+    }
+
+    public void onSendClick(){
 
     }
 
@@ -201,7 +215,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
                 AudioPlayerDialog audioPlayerDialog = new AudioPlayerDialog(getMyContext(), chatObject);
                 audioPlayerDialog.show();
             } else if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)) {
-                acceptOffer(chatObject.getId(), position);
+                acceptOffer(chatObject.getOffer_id(), position);
             }
         }
 
@@ -358,7 +372,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         if (mSocket.connected()) {
             try {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("role", "parent");
+                jsonObject.put("chat_id", getNavigator().getChat().getId());
                 mSocket.emit("leave_room", jsonObject);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -374,7 +388,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         }
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("role", "parent");
+            jsonObject.put("chat_id", getNavigator().getChat().getId());
             mSocket.emit("join_room", jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();

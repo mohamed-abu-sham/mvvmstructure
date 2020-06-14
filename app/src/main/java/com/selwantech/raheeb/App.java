@@ -1,7 +1,9 @@
 package com.selwantech.raheeb;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.google.firebase.FirebaseApp;
 import com.selwantech.raheeb.utils.LanguageUtils;
 
 public class App extends Application {
@@ -25,7 +27,13 @@ public class App extends Application {
 //                .application(this)
 //                .build()
 //                .inject(this);
+
         LanguageUtils.setAppLanguage(this);
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        FirebaseApp.initializeApp(base);
+        super.attachBaseContext(base);
+    }
 }

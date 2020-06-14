@@ -69,13 +69,13 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 public void onScrolled(RecyclerView recyclerView,
                                        int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    firstVisiblesItems = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-                    if (!loading && (firstVisiblesItems == 0)) {
-                        if (loadMoreListener != null) {
-                            loadMoreListener.onLoadMore();
-                        }
-                        loading = true;
-                    }
+//                    firstVisiblesItems = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+//                    if (!loading && (firstVisiblesItems == 0 )) {
+//                        if (loadMoreListener != null) {
+//                            loadMoreListener.onLoadMore();
+//                        }
+//                        loading = true;
+//                    }
                 }
             });
         }
@@ -109,7 +109,6 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void addItem(int position, ChatObject chatObject) {
         chatObjectArrayList.add(position, chatObject);
-        notifyDataSetChanged();
     }
 
     public void clearItems() {
@@ -182,6 +181,15 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             } else {
                 mBinding.getViewModel().setMessages(chatObjectArrayList.get(position));
             }
+
+            if(position == 0 ){
+                if (!loading) {
+                    if (loadMoreListener != null) {
+                        loadMoreListener.onLoadMore();
+                    }
+                    loading = true;
+                }
+            }
         }
     }
 
@@ -215,6 +223,14 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             }
             GeneralFunction.loadImage(mContext, chatObject.getSender().getAvatar(), mBinding.imgOtherSideAvatar);
 
+            if(position == 0 ){
+                if (!loading) {
+                    if (loadMoreListener != null) {
+                        loadMoreListener.onLoadMore();
+                    }
+                    loading = true;
+                }
+            }
         }
     }
 

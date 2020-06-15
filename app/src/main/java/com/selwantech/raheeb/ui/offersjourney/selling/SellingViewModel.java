@@ -17,6 +17,7 @@ import com.selwantech.raheeb.enums.SellingItemClickTypes;
 import com.selwantech.raheeb.interfaces.OnLoadMoreListener;
 import com.selwantech.raheeb.interfaces.SellingItemClick;
 import com.selwantech.raheeb.model.Selling;
+import com.selwantech.raheeb.model.SetSold;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.adapter.SellingAdapter;
@@ -28,6 +29,8 @@ import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.util.ArrayList;
 
+import static com.selwantech.raheeb.utils.AppConstants.PRODUCT_STATUS.SOLD_OTHER_APP;
+
 public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSellingBinding> implements SellingItemClick<Selling> {
 
     SellingAdapter sellingAdapter;
@@ -35,7 +38,7 @@ public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSe
     boolean isRetry = false;
     boolean enableLoading = false;
     boolean isLoadMore = false;
-
+    boolean canLoadMore = false ;
     public <V extends ViewDataBinding, N extends BaseNavigator> SellingViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (SellingNavigator) navigation, (FragmentSellingBinding) viewDataBinding);
     }
@@ -71,11 +74,13 @@ public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSe
         sellingAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                sellingAdapter.addItem(null);
-                sellingAdapter.notifyItemInserted(sellingAdapter.getItemCount() - 1);
-                getViewBinding().recyclerView.scrollToPosition(sellingAdapter.getItemCount() - 1);
-                setLoadMore(true);
-                getData();
+                if(canLoadMore) {
+                    sellingAdapter.addItem(null);
+                    sellingAdapter.notifyItemInserted(sellingAdapter.getItemCount() - 1);
+                    getViewBinding().recyclerView.scrollToPosition(sellingAdapter.getItemCount() - 1);
+                    setLoadMore(true);
+                    getData();
+                }
             }
         });
     }
@@ -96,8 +101,12 @@ public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSe
                 dialog.setMethodCallBack(new ConfirmSoldFragmentDialog.ConfirmSoldCallBack() {
                     @Override
                     public void confirmed() {
-                        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                                .navigate(R.id.sellFragment, data);
+                        if(selling.getInteracted_people().size()>0){
+                            Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                                    .navigate(R.id.sellFragment, data);
+                        }else{
+                            setSold(selling,new SetSold(),position);
+                        }
                     }
                 });
                 dialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
@@ -109,6 +118,29 @@ public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSe
 
     }
 
+    public void setSold(Selling selling ,SetSold sold , int position) {
+        getDataManager().getProductService().setSold(getMyContext(), true,
+                selling.getId(), sold
+                , new APICallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        sellingAdapter.getItem(position).setStatus(SOLD_OTHER_APP);
+                        notifyAdapter();
+                    }
+
+                    @Override
+                    public void onError(String error, int errorCode) {
+                        showSnackBar(getMyContext().getResources().getString(R.string.error),
+                                error, getMyContext().getResources().getString(R.string.ok),
+                                new SnackViewBulider.SnackbarCallback() {
+                                    @Override
+                                    public void onActionClick(Snackbar snackbar) {
+                                        snackbar.dismiss();
+                                    }
+                                });
+                    }
+                });
+    }
     public void getData() {
         if (!isLoadMore() && !isRefreshing() && !isRetry()) {
             enableLoading = true;
@@ -120,12 +152,16 @@ public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSe
                 checkIsLoadMoreAndRefreshing(true);
                 sellingAdapter.addItems(response);
                 notifyAdapter();
+                canLoadMore = true;
             }
 
             @Override
             public void onError(String error, int errorCode) {
                 if (sellingAdapter.getItemCount() == 0) {
                     showNoDataFound();
+                }
+                if(isLoadMore){
+                    canLoadMore = false;
                 }
                 if (!isLoadMore) {
                     showSnackBar(getMyContext().getString(R.string.error),

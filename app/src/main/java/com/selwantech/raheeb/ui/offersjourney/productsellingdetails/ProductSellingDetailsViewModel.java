@@ -84,6 +84,10 @@ public class ProductSellingDetailsViewModel extends
         }
     }
 
+    public int canShare(){
+        return product.getStatus().equals(AppConstants.PRODUCT_STATUS.AVAILABLE) ? View.VISIBLE : View.GONE;
+    }
+
     public void onBackClicked() {
         popUp();
     }

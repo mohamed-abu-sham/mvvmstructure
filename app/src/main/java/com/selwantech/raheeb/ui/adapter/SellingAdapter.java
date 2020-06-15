@@ -126,6 +126,10 @@ public class SellingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return sellingList;
     }
 
+    public Selling getItem(int position) {
+        return sellingList.get(position);
+    }
+
     public class SellingCellViewHolder extends BaseViewHolder {
 
         private final CellSellingBinding mBinding;

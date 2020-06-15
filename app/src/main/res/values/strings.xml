@@ -363,6 +363,7 @@
     <string name="are_you_sure_to_send_this_vois_message">Are you sure to send this voic message ?</string>
     <string name="send_report">Send report</string>
     <string name="report_sent_successful">Report sent successful</string>
+    <string name="the_voice_message_too_short">The voice message too short</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

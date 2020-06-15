@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
@@ -74,25 +75,38 @@ public class AudioRecorder {
         }
     }
 
+    private static long getDuration(String recordPath) {
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(recordPath);
+        String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        return Long.parseLong(durationStr);
+    }
+
     private void stopRecording() {
         if (null != recorder) {
             try {
                 recorder.stop();
                 recorder.reset();
                 recorder.release();
-                new OnLineDialog(activity) {
-                    @Override
-                    public void onPositiveButtonClicked() {
-                        recordCallBack.callback(recordPath);
-                        dismiss();
-                    }
+                if(TimeUtils.millisecondSec(getDuration(recordPath)) >= 2){
+                    new OnLineDialog(activity) {
+                        @Override
+                        public void onPositiveButtonClicked() {
+                            recordCallBack.callback(recordPath);
+                            dismiss();
+                        }
 
-                    @Override
-                    public void onNegativeButtonClicked() {
-                        removeRecord();
-                        dismiss();
-                    }
-                }.showYesNoDialog(activity.getResources().getString(R.string.are_you_sure_to_send_this_vois_message));
+                        @Override
+                        public void onNegativeButtonClicked() {
+                            removeRecord();
+                            dismiss();
+                        }
+                    }.showYesNoDialog(activity.getResources().getString(R.string.are_you_sure_to_send_this_vois_message));
+                }else{
+                    removeRecord();
+                    recordCallBack.callback(null);
+                }
+
 
             } catch (RuntimeException stopException) {
                 removeRecord();

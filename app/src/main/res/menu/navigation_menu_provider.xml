@@ -8,20 +8,20 @@
 
     <item
         android:id="@+id/nav_messages"
-        android:icon="@drawable/ic_orders_nav"
+        android:icon="@drawable/ic_chat_nav"
         android:title="@string/messages" />
 
     <item
         android:id="@+id/nav_post"
-        android:icon="@drawable/ic_wallet_nav"
+        android:icon="@drawable/ic_post_nav"
         android:title="@string/post" />
     <item
         android:id="@+id/nav_offers"
-        android:icon="@drawable/ic_settings_light_nav"
+        android:icon="@drawable/ic_offers_nav"
         android:title="@string/offers" />
     <item
         android:id="@+id/nav_settings"
-        android:icon="@drawable/ic_settings_light_nav"
+        android:icon="@drawable/ic_account_nav"
         android:title="@string/account" />
 
 </menu>

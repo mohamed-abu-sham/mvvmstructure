@@ -58,21 +58,6 @@ public class ProductBuyingDetailsViewModel extends
 
     }
 
-
-    public void onShareClicked() {
-        try {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getMyContext().getResources().getString(R.string.app_name));
-            String shareMessage = "\n" + getMyContext().getResources().getString(R.string.share_this_product_with) + "\n\n";
-            shareMessage = shareMessage + "http://raheeb.selwantech.tech/product?id=" + product.getId() + "\n\n";
-            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-            getBaseActivity().startActivity(Intent.createChooser(shareIntent, "choose one"));
-        } catch (Exception e) {
-            //e.toString();
-        }
-    }
-
     public void onBackClicked() {
         popUp();
     }

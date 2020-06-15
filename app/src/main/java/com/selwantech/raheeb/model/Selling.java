@@ -1,6 +1,9 @@
 package com.selwantech.raheeb.model;
 
+import android.view.View;
+
 import com.google.gson.annotations.SerializedName;
+import com.selwantech.raheeb.utils.AppConstants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -151,5 +154,13 @@ public class Selling implements Serializable {
 
     public void setInteracted_people(ArrayList<String> interacted_people) {
         this.interacted_people = interacted_people;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int canShare(){
+        return getStatus().equals(AppConstants.PRODUCT_STATUS.AVAILABLE) ? View.VISIBLE : View.GONE;
     }
 }

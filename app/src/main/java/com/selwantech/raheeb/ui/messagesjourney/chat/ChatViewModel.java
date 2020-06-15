@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
@@ -60,32 +61,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     AudioRecorder audioRecorder;
     Chat chat;
-    private Emitter.Listener onConnect = args ->
-            getBaseActivity().runOnUiThread(() -> {
-//                joinRoom();
-            });
-    private Emitter.Listener onDisconnect = args ->
-            getBaseActivity().runOnUiThread(() -> {
-            });
-    private Emitter.Listener onConnectError = args ->
-            getBaseActivity().runOnUiThread(() -> {
-            });
-    private Emitter.Listener onNewMessage = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getBaseActivity().runOnUiThread(() -> {
-                if (args != null && args.length > 0) {
-                    ChatObject chatObject =
-                            new Gson().fromJson(args[0].toString(), ChatObject.class);
-                    if (chatObject.getSender().getId() != User.getInstance().getUserID()) {
-                        chatAdapter.addItem(chatObject);
-                        notifyAdapter();
-                        getViewBinding().recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
-                    }
-                }
-            });
-        }
-    };
+
 
     public <V extends ViewDataBinding, N extends BaseNavigator> ChatViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ChatNavigator) navigation, (FragmentChatBinding) viewDataBinding);
@@ -99,16 +75,16 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         if (getNavigator().getChatId() == -1) {
             chat = getNavigator().getChat();
             joinRoom(chat.getId());
-            init();
         } else {
             getChatById(getNavigator().getChatId());
         }
+
+        init();
 
     }
 
 
     private void init() {
-
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         audioRecorder = new AudioRecorder(getBaseActivity(), this::callback);
@@ -135,33 +111,6 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
             }
         });
         getData();
-    }
-
-    private void getChatById(int chatId) {
-        getDataManager().getMessagesService().getChatById(getMyContext(), true, chatId, new APICallBack<Chat>() {
-            @Override
-            public void onSuccess(Chat response) {
-                chat = response;
-                getViewBinding().setData(chat);
-                getNavigator().setUpToolbar(chat);
-//                init();
-                joinRoom(chat.getId());
-                init();
-            }
-
-            @Override
-            public void onError(String error, int errorCode) {
-                showSnackBar(getMyContext().getResources().getString(R.string.error),
-                        error, getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
-                            @Override
-                            public void onActionClick(Snackbar snackbar) {
-                                snackbar.dismiss();
-
-                            }
-                        });
-                popUp();
-            }
-        });
     }
 
     private void setUpRecycler() {
@@ -221,7 +170,23 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
     public void onSendClick() {
 
     }
+    public void onProfileClicked(){
+        if(chat!=null){
+            Bundle data = new Bundle();
+            data.putInt(AppConstants.BundleData.USER_ID,chat.getUser().getId());
+            Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
+                    .navigate(R.id.userProfileFragment,data);
+        }
+    }
 
+    public void onProductClicked(){
+        if(chat!=null){
+            Bundle data = new Bundle();
+            data.putInt(AppConstants.BundleData.PRODUCT_ID,chat.getPost().getId());
+            Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
+                    .navigate(R.id.productDetailsFragment,data);
+        }
+    }
     private void setUpSendAction() {
         getViewBinding().btnSend.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -231,8 +196,13 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
                 } else {
                     showChat(inSideMessageId, "text", getViewBinding().edMessage.getText().toString());
                     sendTxtMessage(getViewBinding().edMessage.getText().toString(), inSideMessageId);
-                    getViewBinding().edMessage.setText("");
                     inSideMessageId = inSideMessageId - 1;
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getViewBinding().edMessage.setText("");
+                        }
+                    }, 100);
                 }
                 return false;
             }
@@ -241,9 +211,20 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     @Override
     public void callback(String recordPath) {
-        showChat(inSideMessageId, "voice", recordPath);
-        sendImageMessage(recordPath, inSideMessageId);
-        inSideMessageId = inSideMessageId - 1;
+        if(recordPath!=null){
+            showChat(inSideMessageId, "voice", recordPath);
+            sendImageMessage(recordPath, inSideMessageId);
+            inSideMessageId = inSideMessageId - 1;
+        }else{
+            showSnackBar(getMyContext().getResources().getString(R.string.warning),
+                    getMyContext().getResources().getString(R.string.the_voice_message_too_short),
+                    getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
+                        @Override
+                        public void onActionClick(Snackbar snackbar) {
+                            snackbar.dismiss();
+                        }
+                    });
+        }
     }
 
     @Override
@@ -274,6 +255,33 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         chatAdapter.addItem(chatObject);
         notifyAdapter();
         getViewBinding().recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+    }
+
+    private void getChatById(int chatId) {
+        getDataManager().getMessagesService().getChatById(getMyContext(), true, chatId, new APICallBack<Chat>() {
+            @Override
+            public void onSuccess(Chat response) {
+                chat = response;
+                getViewBinding().setData(chat);
+                getNavigator().setUpToolbar(chat);
+//                init();
+                joinRoom(chat.getId());
+//                init();
+            }
+
+            @Override
+            public void onError(String error, int errorCode) {
+                showSnackBar(getMyContext().getResources().getString(R.string.error),
+                        error, getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
+                            @Override
+                            public void onActionClick(Snackbar snackbar) {
+                                snackbar.dismiss();
+
+                            }
+                        });
+                popUp();
+            }
+        });
     }
 
     public void acceptOffer(int messageId, int position) {
@@ -388,10 +396,6 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 //        messages.get(position).setShowProgress(showProgress);
     }
 
-    public boolean isLoadMore() {
-        return isLoadMore;
-    }
-
     protected void initiateSocket() {
 
         try {
@@ -458,6 +462,10 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         isLoadMore = loadMore;
     }
 
+    public boolean isLoadMore() {
+        return isLoadMore;
+    }
+
     private void checkIsLoadMoreAndRefreshing(boolean isSuccess) {
         if (isLoadMore()) {
             finishLoadMore();
@@ -482,22 +490,31 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         });
     }
 
-    public void onProfileClicked(){
-        if(chat!=null){
-            Bundle data = new Bundle();
-            data.putInt(AppConstants.BundleData.USER_ID,chat.getUser().getId());
-            Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
-                    .navigate(R.id.userProfileFragment,data);
+    private Emitter.Listener onConnect = args ->
+            getBaseActivity().runOnUiThread(() -> {
+//                joinRoom();
+            });
+    private Emitter.Listener onDisconnect = args ->
+            getBaseActivity().runOnUiThread(() -> {
+            });
+    private Emitter.Listener onConnectError = args ->
+            getBaseActivity().runOnUiThread(() -> {
+            });
+    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getBaseActivity().runOnUiThread(() -> {
+                if (args != null && args.length > 0) {
+                    ChatObject chatObject =
+                            new Gson().fromJson(args[0].toString(), ChatObject.class);
+                    if (chatObject.getSender().getId() != User.getInstance().getUserID()) {
+                        chatAdapter.addItem(chatObject);
+                        notifyAdapter();
+                        getViewBinding().recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+                    }
+                }
+            });
         }
-    }
-
-    public void onProductClicked(){
-        if(chat!=null){
-            Bundle data = new Bundle();
-            data.putInt(AppConstants.BundleData.PRODUCT_ID,chat.getPost().getId());
-            Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
-                    .navigate(R.id.productDetailsFragment,data);
-        }
-    }
+    };
 
 }

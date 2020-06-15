@@ -65,7 +65,8 @@
                             android:onClick="@{()->viewModel.onShareClicked()}"
                             app:srcCompat="@drawable/ic_share_white"
                             android:layout_marginStart="@dimen/_20sdp"
-                            android:layout_marginEnd="@dimen/_20sdp"/>
+                            android:layout_marginEnd="@dimen/_20sdp"
+                            android:visibility="@{data.canShare()}"/>
 
                     </RelativeLayout>
                 </RelativeLayout>

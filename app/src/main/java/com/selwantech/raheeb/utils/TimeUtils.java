@@ -104,6 +104,10 @@ public class TimeUtils {
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 
+    public static long millisecondSec(long millis) {
+        return millis/1000;
+    }
+
     public static String toTwoDigit(int number) {
         return String.format("%02d", number);
     }

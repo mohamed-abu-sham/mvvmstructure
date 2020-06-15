@@ -1,10 +1,12 @@
 package com.selwantech.raheeb.repository.network.services;
 
 import android.content.Context;
+import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.selwantech.raheeb.helper.FilterTypeGsonConverter;
+import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.helper.SetSoldGsonConverter;
 import com.selwantech.raheeb.model.BuyNow;
 import com.selwantech.raheeb.model.FilterProduct;
@@ -164,6 +166,22 @@ public class ProductService {
                 .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
     }
 
+    public void sendReport(Context mContext, boolean enableLoading, int productId, String message ,APICallBack<String> apiCallBack) {
+        getDataApi().sendReport(productId, message)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+    public void sendReportWithImage(Context mContext, boolean enableLoading, int productId , String message, Uri image, APICallBack<String> apiCallBack) {
+        getDataApi().sendReportWithImage(productId,message, GeneralFunction.getImageMultipart(image.getPath(),"image"))
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+
+
     public DataApi getDataApi() {
         return mDataApi;
     }
@@ -212,6 +230,15 @@ public class ProductService {
         @POST(ApiConstants.apiProductService.SET_SOLD)
         Single<Response<GeneralResponse<String>>> setSold(@Path("product_id") int product_id,
                                                           @Body String sold);
+
+        @Multipart
+        @POST(ApiConstants.apiProductService.SEND_REPORT)
+        Single<Response<GeneralResponse<String>>> sendReportWithImage(@Path("product_id") int product_id,
+                                                          @Query("message ") String message,@Part MultipartBody.Part image);
+
+        @POST(ApiConstants.apiProductService.SEND_REPORT)
+        Single<Response<GeneralResponse<String>>> sendReport(@Path("product_id") int product_id,
+                                                                      @Query("message ") String message);
 
     }
 }

@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_productDetailsFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_reportProductFragment"
+            app:destination="@id/reportProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/reviewOfferFragment"
@@ -87,7 +90,11 @@
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.selwantech.raheeb.ui.userprofilejourney.user_profile.UserProfileFragment"
-        android:label="UserProfileFragment" />
+        android:label="UserProfileFragment" >
+        <action
+            android:id="@+id/action_userProfileFragment_to_reportUserFragment"
+            app:destination="@id/reportUserFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_offers"
         android:name="com.selwantech.raheeb.ui.offersjourney.offers.OffersFragment"
@@ -109,5 +116,21 @@
         android:id="@+id/chatFragment"
         android:name="com.selwantech.raheeb.ui.messagesjourney.chat.ChatFragment"
         android:label="ChatFragment" />
+    <fragment
+        android:id="@+id/reportProductFragment"
+        android:name="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.reportproduct.ReportProductFragment"
+        android:label="ReportProductFragment" />
+    <fragment
+        android:id="@+id/reportUserFragment"
+        android:name="com.selwantech.raheeb.ui.userprofilejourney.reportuser.ReportUserFragment"
+        android:label="ReportUserFragment" />
+    <fragment
+        android:id="@+id/productSellingDetailsFragment"
+        android:name="com.selwantech.raheeb.ui.offersjourney.productsellingdetails.ProductSellingDetailsFragment"
+        android:label="ProductSellingDetailsFragment" />
+    <fragment
+        android:id="@+id/productBuyingDetailsFragment"
+        android:name="com.selwantech.raheeb.ui.offersjourney.productbuyingdetails.ProductBuyingDetailsFragment"
+        android:label="ProductBuyingDetailsFragment" />
 
 </navigation>

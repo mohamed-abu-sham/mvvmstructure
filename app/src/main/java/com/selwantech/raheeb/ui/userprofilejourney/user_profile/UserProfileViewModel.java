@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -131,7 +132,12 @@ public class UserProfileViewModel extends BaseViewModel<UserProfileNavigator, Fr
     }
 
     public void onReportClicked() {
-
+        if(productOwner!=null){
+            Bundle data = new Bundle();
+            data.putSerializable(AppConstants.BundleData.PRODUCT_OWNER,productOwner);
+            Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
+                    .navigate(R.id.action_userProfileFragment_to_reportUserFragment,data);
+        }
     }
 
 }

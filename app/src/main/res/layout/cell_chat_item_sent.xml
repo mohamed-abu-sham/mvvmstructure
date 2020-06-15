@@ -107,7 +107,7 @@
 
                         <SeekBar
                             android:id="@+id/seekAudioOut"
-                            android:layout_width="150dp"
+                            android:layout_width="@dimen/_170sdp"
                             android:layout_height="25dp"
                             android:focusable="false"
                             android:focusableInTouchMode="false" />

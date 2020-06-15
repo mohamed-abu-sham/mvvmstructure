@@ -519,17 +519,11 @@
                             android:textSize="12sp" />
 
                     </LinearLayout>
-                    <fragment
-                        android:id="@+id/search_place_map"
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_150sdp"
-                        android:layout_below="@id/mainLayout"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        tools:context=".ui.ui.menufragments.productdetails." />
-
+                        android:layout_margin="@dimen/_10sdp"
+                        android:id="@+id/imgMap"/>
                     <TextView
                         style="@style/poppins_regular"
                         android:layout_width="match_parent"
@@ -600,7 +594,8 @@
                     android:onClick="@{()->viewModel.onAskClicked()}"
                     android:text="@string/ask"
                     android:textColor="@color/color_blue"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:elevation="0dp"/>
 
                 <Button
                     style="@style/poppins_semi_bold"
@@ -613,7 +608,8 @@
                     android:backgroundTint="@color/color_blue"
                     android:onClick="@{()->viewModel.onMakeOfferClicked()}"
                     android:text="@string/make_offer"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:elevation="0dp" />
 
                 <Button
                     style="@style/poppins_semi_bold"
@@ -624,7 +620,8 @@
                     android:backgroundTint="@color/color_dark_gold"
                     android:onClick="@{()->viewModel.onBuyNowClicked()}"
                     android:text="@string/buy_now"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:elevation="0dp"/>
 
             </LinearLayout>
         </LinearLayout>

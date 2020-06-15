@@ -7,4 +7,6 @@ import com.selwantech.raheeb.ui.base.BaseNavigator;
 public interface ChatNavigator extends BaseNavigator {
 
     Chat getChat();
+    int getChatId();
+    void setUpToolbar(Chat chat);
 }

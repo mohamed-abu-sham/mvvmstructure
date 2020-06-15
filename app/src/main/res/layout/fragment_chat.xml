@@ -46,7 +46,9 @@
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:scaleType="centerCrop"
-                    android:src="@color/colorPrimaryDark" />
+                    android:src="@color/colorPrimaryDark"
+
+                    android:onClick="@{()->viewModel.onProfileClicked()}"/>
 
                 <TextView
                     android:id="@+id/tvName"
@@ -67,7 +69,8 @@
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:background="@drawable/shape_rounded_empty_gray"
-                    android:padding="@dimen/_4sdp" />
+                    android:padding="@dimen/_4sdp"
+                    android:onClick="@{()->viewModel.onProductClicked()}"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

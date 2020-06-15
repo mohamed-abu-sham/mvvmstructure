@@ -24,13 +24,16 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     @Override
     public void onPause() {
         super.onPause();
-        mViewModel.leaveRoom();
+        mViewModel.destroySocket();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mViewModel.joinRoom();
+        if(mViewModel.chat != null){
+            mViewModel.initiateSocket();
+            mViewModel.joinRoom(mViewModel.chat.getId());
+        }
     }
 
     @Override
@@ -80,13 +83,25 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     @Override
     protected void setUp() {
         mViewBinding = getViewDataBinding();
-        mViewBinding.setData(getChat());
-        setUpToolbar(mViewBinding.toolbar, "", getChat().getUser().getName());
+        if (getChatId() == -1) {
+            mViewBinding.setData(getChat());
+            setUpToolbar(getChat());
+        }
         mViewModel.setUp();
+    }
+
+    @Override
+    public void setUpToolbar(Chat chat){
+        setUpToolbar(mViewBinding.toolbar, "", chat.getUser().getName());
     }
     @Override
     public Chat getChat() {
         return (Chat) getArguments().getSerializable(AppConstants.BundleData.CHAT);
+    }
+
+    @Override
+    public int getChatId() {
+        return getArguments().getInt(AppConstants.BundleData.CHAT_ID, -1);
     }
 
 

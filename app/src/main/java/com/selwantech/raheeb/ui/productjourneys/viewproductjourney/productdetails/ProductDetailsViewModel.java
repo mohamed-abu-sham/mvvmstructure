@@ -27,6 +27,7 @@ import com.selwantech.raheeb.helper.GeoCoderAddress;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.ImagesItem;
 import com.selwantech.raheeb.model.Product;
+import com.selwantech.raheeb.model.chatdata.Chat;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.adapter.ProductImagesAdapter;
@@ -41,14 +42,11 @@ import java.io.IOException;
 
 public class ProductDetailsViewModel extends
         BaseViewModel<ProductDetailsNavigator, FragmentProductDetailsBinding>
-        implements OnMapReadyCallback, RecyclerClick<ImagesItem> {
+        implements RecyclerClick<ImagesItem> {
 
 
     Product product;
-    SupportMapFragment search_place_map;
     ProductImagesAdapter productImagesAdapter;
-    private GoogleMap googleMap;
-    private Marker PickUpMarker;
 
     public <V extends ViewDataBinding, N extends BaseNavigator> ProductDetailsViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ProductDetailsNavigator) navigation, (FragmentProductDetailsBinding) viewDataBinding);
@@ -56,7 +54,6 @@ public class ProductDetailsViewModel extends
 
     @Override
     protected void setUp() {
-        search_place_map = getNavigator().getChildManager();
         setUpRecycler();
         if (getNavigator().getProductId() == -1) {
             product = getNavigator().getProduct();
@@ -107,29 +104,12 @@ public class ProductDetailsViewModel extends
     }
 
     private void initMap() {
-        if (null != search_place_map) {
-            search_place_map.getMapAsync(this);
-        }
+        GeneralFunction.loadImage(getMyContext(),"https://maps.googleapis.com/maps/api/staticmap?zoom=13&size=600x300&maptype=roadmap\n" +
+                "&markers=color:red%7C"+product.getLat()+","+product.getLon()+"\n" +
+                "&key="+getMyContext().getResources().getString(R.string.map_key),getViewBinding().imgMap);
+
     }
 
-    @Override
-    public void onMapReady(GoogleMap gMap) {
-        this.googleMap = gMap;
-        if (googleMap != null) {
-            LatLng currentLatLan = new LatLng(product.getLat(), product.getLon());
-            googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-            googleMap.getUiSettings().setMapToolbarEnabled(false);
-            googleMap.getUiSettings().setAllGesturesEnabled(false);
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(currentLatLan)
-                    .zoom(21).build();
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            MarkerOptions markerOpt = new MarkerOptions();
-            markerOpt.position(currentLatLan);
-            markerOpt.icon(SmoothMoveMarker.bitmapDescriptorFromVector(getMyContext(), R.drawable.ic_pin));
-            PickUpMarker = googleMap.addMarker(markerOpt);
-        }
-    }
 
     public void setTexts() {
 
@@ -277,18 +257,47 @@ public class ProductDetailsViewModel extends
     }
 
     public void onReportClicked() {
-
+        Bundle data = new Bundle();
+        data.putSerializable(AppConstants.BundleData.PRODUCT,product);
+        Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
+                .navigate(R.id.action_productDetailsFragment_to_reportProductFragment,data);
     }
 
     public void onAskClicked() {
+        if (product.getChatId() == 0) {
+            generateProductChat();
+        } else {
+            Bundle data = new Bundle();
+            data.putSerializable(AppConstants.BundleData.CHAT_ID, product.getChatId());
+            Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                    .navigate(R.id.chatFragment, data);
+        }
+    }
 
+    private void generateProductChat() {
+        getDataManager().getMessagesService().generateChat(getMyContext(), true, product.getId(), new APICallBack<Chat>() {
+            @Override
+            public void onSuccess(Chat response) {
+                Bundle data = new Bundle();
+                data.putSerializable(AppConstants.BundleData.CHAT, response);
+                Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.chatFragment, data);
+            }
+
+            @Override
+            public void onError(String error, int errorCode) {
+                showSnackBar(getMyContext().getResources().getString(R.string.error),
+                        error,
+                        getMyContext().getResources().getString(R.string.ok), Snackbar::dismiss);
+            }
+        });
     }
 
     public void onViewProductOwnerClicked() {
         Bundle data = new Bundle();
         data.putSerializable(AppConstants.BundleData.PRODUCT_OWNER, product.getProductOwner());
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                .navigate(R.id.action_productDetailsFragment_to_userProfileFragment, data);
+                .navigate(R.id.userProfileFragment, data);
     }
 
     public void onMakeOfferClicked() {

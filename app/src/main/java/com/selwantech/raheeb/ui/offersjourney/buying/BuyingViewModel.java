@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -131,8 +132,8 @@ public class BuyingViewModel extends BaseViewModel<BuyingNavigator, FragmentBuyi
     public void onClick(Product product, int position) {
         Bundle data = new Bundle();
         data.putSerializable(AppConstants.BundleData.PRODUCT, product);
-//        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-//                .navigate(R.id.productDetailsFragment, data);
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.productBuyingDetailsFragment, data);
     }
 
     public boolean isRefreshing() {

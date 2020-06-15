@@ -88,7 +88,8 @@ public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSe
         switch (sellingItemClickTypes) {
 
             case ITEM_CLICK:
-
+                Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
+                        .navigate(R.id.productSellingDetailsFragment,data);
                 break;
             case MARK_SOLD_CLICK:
                 ConfirmSoldFragmentDialog dialog = new ConfirmSoldFragmentDialog.Builder().build();

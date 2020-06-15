@@ -38,6 +38,7 @@ public class ApiConstants {
         public static final String FAVORITE = "user/faverate";
         public static final String INTERACTIVE_PEOPLE = "user/post/{product_id}/mark_sold";
         public static final String SET_SOLD = "user/post/sold/{product_id}/set_sold";
+        public static final String SEND_REPORT = "user/post/{product_id}/report";
     }
 
     public class apiCategoryService {
@@ -50,6 +51,7 @@ public class ApiConstants {
         public static final String FOLLOW_USER = "user/follower/follow";
         public static final String UNFOLLOW_USER = "user/follower/unfollow";
         public static final String GET_MY_OFFERS = "users/{userId}/offers";
+        public static final String SEND_REPORT = "user/{user_id}/report";
     }
 
     public class apiOrderService {
@@ -84,6 +86,8 @@ public class ApiConstants {
         public static final String CHAT_MESSAGES = "user/chat/{chat_id}/messages";
         public static final String SEND_MESSAGE = "user/chat/{chat_id}/messages";
         public static final String ACCEPT_OFFER = "user/post/offer/{messageId}/accept";
+        public static final String GENERATE_CHAT = "user/chat/post/{product_id}/create";
+        public static final String GET_CHAT_BY_ID = "user/chat/{chat_id}/show";
     }
 
 }

@@ -104,6 +104,8 @@ public final class AppConstants {
         public static final String SELLING_ITEM = "SELLING_ITEM";
         public static final String KEY_CHAT_ID = "KEY_CHAT_ID";
         public static final String CHAT = "CHAT";
+        public static final String CHAT_ID = "CHAT_ID";
+        public static final String BUYING_ITEM = "BUYING_ITEM";
     }
 
     public class FILTER_BY_KEYS {

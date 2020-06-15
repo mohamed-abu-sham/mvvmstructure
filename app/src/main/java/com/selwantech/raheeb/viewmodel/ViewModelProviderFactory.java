@@ -27,6 +27,8 @@ import com.selwantech.raheeb.ui.messagesjourney.notifications.NotificationsViewM
 import com.selwantech.raheeb.ui.offersjourney.buying.BuyingViewModel;
 import com.selwantech.raheeb.ui.offersjourney.favorite.FavoriteViewModel;
 import com.selwantech.raheeb.ui.offersjourney.offers.OffersViewModel;
+import com.selwantech.raheeb.ui.offersjourney.productbuyingdetails.ProductBuyingDetailsViewModel;
+import com.selwantech.raheeb.ui.offersjourney.productsellingdetails.ProductSellingDetailsViewModel;
 import com.selwantech.raheeb.ui.offersjourney.sell.SellViewModel;
 import com.selwantech.raheeb.ui.offersjourney.selling.SellingViewModel;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.add_product_holder.AddProductHolderViewModel;
@@ -38,10 +40,12 @@ import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.filterproduct
 import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.product.ProductViewModel;
 import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productdetails.ProductDetailsViewModel;
 import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productstabsholder.ProductsHolderViewModel;
+import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.reportproduct.ReportProductViewModel;
 import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.reviewoffer.ReviewOfferViewModel;
 import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.shippinginfo.ShippingInfoViewModel;
 import com.selwantech.raheeb.ui.splashscreen.SplashScreenViewModel;
 import com.selwantech.raheeb.ui.userprofilejourney.myoffers.MyOffersViewModel;
+import com.selwantech.raheeb.ui.userprofilejourney.reportuser.ReportUserViewModel;
 import com.selwantech.raheeb.ui.userprofilejourney.user_profile.UserProfileViewModel;
 import com.selwantech.raheeb.ui.userprofilejourney.user_profile_details.UserProfileDetailsViewModel;
 
@@ -183,6 +187,18 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(ChatViewModel.class)) {
             //noinspection unchecked
             return (T) new ChatViewModel(mContext, dataManager, viewDataBinding, navigation);
+        }else if (modelClass.isAssignableFrom(ReportProductViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ReportProductViewModel(mContext, dataManager, viewDataBinding, navigation);
+        }else if (modelClass.isAssignableFrom(ReportUserViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ReportUserViewModel(mContext, dataManager, viewDataBinding, navigation);
+        }else if (modelClass.isAssignableFrom(ProductSellingDetailsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ProductSellingDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
+        }else if (modelClass.isAssignableFrom(ProductBuyingDetailsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ProductBuyingDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

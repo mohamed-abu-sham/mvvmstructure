@@ -1,7 +1,9 @@
 package com.selwantech.raheeb.repository.network.services;
 
 import android.content.Context;
+import android.net.Uri;
 
+import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.model.MyOffer;
 import com.selwantech.raheeb.model.ProductOwner;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -15,9 +17,12 @@ import java.util.ArrayList;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -75,6 +80,20 @@ public class UserService {
                 .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
     }
 
+    public void sendReport(Context mContext, boolean enableLoading, int productId, String message ,APICallBack<String> apiCallBack) {
+        getDataApi().sendReport(productId, message)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+    public void sendReportWithImage(Context mContext, boolean enableLoading, int productId , String message, Uri image, APICallBack<String> apiCallBack) {
+        getDataApi().sendReportWithImage(productId,message, GeneralFunction.getImageMultipart(image.getPath(),"image"))
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
 
     public DataApi getDataApi() {
         return mDataApi;
@@ -94,6 +113,14 @@ public class UserService {
         @POST(ApiConstants.apiUserService.UNFOLLOW_USER)
         Single<Response<GeneralResponse<String>>> unfollowUser(@Query("user_id") int productId);
 
+        @Multipart
+        @POST(ApiConstants.apiUserService.SEND_REPORT)
+        Single<Response<GeneralResponse<String>>> sendReportWithImage(@Path("user_id") int product_id,
+                                                                      @Query("message ") String message,@Part MultipartBody.Part image);
+
+        @POST(ApiConstants.apiUserService.SEND_REPORT)
+        Single<Response<GeneralResponse<String>>> sendReport(@Path("user_id") int product_id,
+                                                             @Query("message ") String message);
     }
 }
 

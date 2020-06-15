@@ -1,6 +1,6 @@
 <resources>
     <string name="client_api_google" translatable="false">308037804789-tc70rq3dgc419retpfvd1nsup02l8af5.apps.googleusercontent.com</string>
-    <string name="map_key" translatable="false">AIzaSyCN4oUW4GnAqWiZniinD1HEHidgJm4DtHo</string>
+    <string name="map_key" translatable="false">AIzaSyADWumOKZmJty-5SD81hown6kTLKQgAaU0</string>
     <string name="facebook_app_id" translatable="false">305302623766887</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb231516321368439</string>
     <string name="twitter_api_key" translatable="false">UVr8SSMi7JLm1YvL8vpRrjCOi</string>
@@ -361,6 +361,8 @@
     <string name="type_msg">Type a message ...</string>
     <string name="accept">Accept</string>
     <string name="are_you_sure_to_send_this_vois_message">Are you sure to send this voic message ?</string>
+    <string name="send_report">Send report</string>
+    <string name="report_sent_successful">Report sent successful</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

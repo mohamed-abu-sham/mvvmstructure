@@ -104,6 +104,22 @@ public class MessagesService {
                 .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
     }
 
+    public void generateChat(Context mContext, boolean enableLoading, int product_id, APICallBack<Chat> apiCallBack) {
+        getDataApi().generateChat(product_id)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<Chat>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void getChatById(Context mContext, boolean enableLoading, int chat_id, APICallBack<Chat> apiCallBack) {
+        getDataApi().getChatById(chat_id)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<Chat>(mContext, enableLoading, apiCallBack));
+    }
+
 
     public DataApi getDataApi() {
         return mDataApi;
@@ -139,6 +155,12 @@ public class MessagesService {
 
         @POST(ApiConstants.apiMessagesService.ACCEPT_OFFER)
         Single<Response<GeneralResponse<String>>> acceptOffer(@Path("messageId") int messageId);
+
+        @POST(ApiConstants.apiMessagesService.GENERATE_CHAT)
+        Single<Response<GeneralResponse<Chat>>> generateChat(@Query("product_id") int product_id);
+
+        @GET(ApiConstants.apiMessagesService.GET_CHAT_BY_ID)
+        Single<Response<GeneralResponse<Chat>>> getChatById(@Path("chat_id") int chat_id);
 
     }
 }

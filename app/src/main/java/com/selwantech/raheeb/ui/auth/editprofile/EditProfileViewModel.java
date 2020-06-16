@@ -115,9 +115,9 @@ public class EditProfileViewModel extends BaseViewModel<EditProfileNavigator, Fr
             GeneralFunction.loadImage(getMyContext(), User.getInstance().getAvatar(), getViewBinding().imgPicture);
         }
         customUploadingDialog = new CustomUploadingDialog(getMyContext());
-        if (User.getInstance().isSocial()) {
-            getViewBinding().edEmail.setEnabled(false);
-        }
+//        if (User.getInstance().isSocial()) {
+//            getViewBinding().edEmail.setEnabled(false);
+//        }
     }
 
     public void uploadProfilePicture(Uri uri) {

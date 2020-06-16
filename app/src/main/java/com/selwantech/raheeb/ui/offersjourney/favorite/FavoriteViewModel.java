@@ -64,7 +64,6 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator, Fragment
         });
 
         getViewBinding().recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-        getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
         homeAdapter = new HomeAdapter(getMyContext(), this, getViewBinding().recyclerView);
         getViewBinding().recyclerView.setAdapter(homeAdapter);
         homeAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -95,9 +94,13 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator, Fragment
 
                     @Override
                     public void onError(String error, int errorCode) {
+                        if(!isLoadMore && !isRetry()){
+                            homeAdapter.clearItems();
+                        }
                         if (homeAdapter.getItemCount() == 0) {
                             showNoDataFound();
                         }
+
                         if (!isLoadMore) {
                             showSnackBar(getMyContext().getString(R.string.error),
                                     error, getMyContext().getResources().getString(R.string.ok),
@@ -174,7 +177,7 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator, Fragment
 
     public void finishLoadMore() {
         homeAdapter.remove(homeAdapter.getItemCount() - 1);
-        notifyAdapter();
+        homeAdapter.notifyItemRemoved(homeAdapter.getItemCount());
         homeAdapter.setLoaded();
         setLoadMore(false);
     }

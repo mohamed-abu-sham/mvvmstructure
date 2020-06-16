@@ -71,7 +71,6 @@ public class SessionManager {
         editor.clear();
         editor.commit();
         saveFireBaseToken(oldToken);
-
     }
 
 

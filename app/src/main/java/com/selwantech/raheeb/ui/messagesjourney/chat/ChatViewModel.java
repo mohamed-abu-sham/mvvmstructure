@@ -75,11 +75,12 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         if (getNavigator().getChatId() == -1) {
             chat = getNavigator().getChat();
             joinRoom(chat.getId());
+            init();
         } else {
             getChatById(getNavigator().getChatId());
         }
 
-        init();
+
 
     }
 
@@ -115,7 +116,6 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     private void setUpRecycler() {
         getViewBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getMyContext(), LinearLayoutManager.VERTICAL, false));
-        getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
         chatAdapter = new ChatMessageAdapter(getMyContext(), this, getViewBinding().recyclerView, mediaPlayer);
         getViewBinding().recyclerView.setAdapter(chatAdapter);
         chatAdapter.setOnLoadMoreListener(new ChatMessageAdapter.OnLoadMoreListener() {
@@ -170,6 +170,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
     public void onSendClick() {
 
     }
+
     public void onProfileClicked(){
         if(chat!=null){
             Bundle data = new Bundle();
@@ -187,12 +188,13 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
                     .navigate(R.id.productDetailsFragment,data);
         }
     }
+
     private void setUpSendAction() {
         getViewBinding().btnSend.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (getViewBinding().edMessage.getText().toString().length() == 0) {
-                    audioRecorder.recordAction(event);
+                    audioRecorder.recordAction(event,getViewBinding().btnSend);
                 } else {
                     showChat(inSideMessageId, "text", getViewBinding().edMessage.getText().toString());
                     sendTxtMessage(getViewBinding().edMessage.getText().toString(), inSideMessageId);
@@ -264,9 +266,8 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
                 chat = response;
                 getViewBinding().setData(chat);
                 getNavigator().setUpToolbar(chat);
-//                init();
                 joinRoom(chat.getId());
-//                init();
+                init();
             }
 
             @Override
@@ -476,7 +477,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     public void finishLoadMore() {
         chatAdapter.remove(0);
-        notifyAdapter();
+        chatAdapter.notifyItemRemoved(-1);
         chatAdapter.setLoaded();
         setLoadMore(false);
     }

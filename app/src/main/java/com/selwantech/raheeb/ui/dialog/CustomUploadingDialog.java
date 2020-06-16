@@ -16,6 +16,7 @@ public class CustomUploadingDialog extends Dialog {
 
     public CustomUploadingDialog(Context context) {
         super(context);
+        setCancelable(false);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogUploadProgressBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
                 R.layout.dialog_upload_progress, null, false);

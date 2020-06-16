@@ -91,6 +91,8 @@ public class CustomObserverResponse<T> extends CustomDialogUtils implements Obse
             // file was not found, do something
             this.apiCallBack.onError(App.getInstance().getApplicationContext()
                     .getResources().getString(R.string.no_internet_connection), 0);
+        }else{
+            this.apiCallBack.onError(context.getResources().getString(R.string.error),0);
         }
     }
 

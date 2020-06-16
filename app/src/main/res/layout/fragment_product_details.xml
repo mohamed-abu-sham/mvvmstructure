@@ -104,7 +104,8 @@
                             android:singleLine="true"
                             android:text="@{data.title}"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:gravity="@{viewModel.gravity}" />
 
                         <TextView
                             style="@style/poppins_semi_bold"

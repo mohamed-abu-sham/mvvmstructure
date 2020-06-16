@@ -73,17 +73,7 @@ public class AuthService {
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<String>(mContext, true, new APICallBack<String>() {
-                    @Override
-                    public void onSuccess(String response) {
-                        apiCallBack.onSuccess(response);
-                    }
-
-                    @Override
-                    public void onError(String error, int errorCode) {
-                        apiCallBack.onError(error, errorCode);
-                    }
-                }));
+                .subscribe(new CustomObserverResponse<String>(mContext, true, apiCallBack));
     }
 
     public void login(Context mContext, boolean enableLoading, LoginObject loginObject, APICallBack<RegisterResponse> apiCallBack) {

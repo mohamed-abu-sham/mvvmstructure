@@ -132,5 +132,31 @@
         android:id="@+id/productBuyingDetailsFragment"
         android:name="com.selwantech.raheeb.ui.offersjourney.productbuyingdetails.ProductBuyingDetailsFragment"
         android:label="ProductBuyingDetailsFragment" />
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.selwantech.raheeb.ui.accountjourney.account.AccountFragment"
+        android:label="AccountFragment" >
+        <action
+            android:id="@+id/action_nav_account_to_helpFragment"
+            app:destination="@id/helpFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_followingFragment"
+            app:destination="@id/followingFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_followersFragment"
+            app:destination="@id/followersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.help.HelpFragment"
+        android:label="HelpFragment" />
+    <fragment
+        android:id="@+id/followingFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.following.FollowingFragment"
+        android:label="FollowingFragment" />
+    <fragment
+        android:id="@+id/followersFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.followers.FollowersFragment"
+        android:label="FollowersFragment" />
 
 </navigation>

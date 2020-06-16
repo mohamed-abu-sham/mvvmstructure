@@ -95,10 +95,12 @@ public class FilterPriceFragmentDialog extends BottomSheetDialogFragment {
             buttomSheetFilterPriceRangeBinding.edMaxPrice.setError(getContext().getResources().getString(R.string.this_fieled_is_required));
             error = +1 ;
         }
-        if (Double.valueOf(buttomSheetFilterPriceRangeBinding.edMaxPrice.getText().toString()) <=
-                Double.valueOf(buttomSheetFilterPriceRangeBinding.edMinPrice.getText().toString())) {
-            buttomSheetFilterPriceRangeBinding.edMaxPrice.setError(getContext().getResources().getString(R.string.the_max_must_be_grater_than_min));
-            error = +1;
+        if(error == 0){
+            if (Double.valueOf(buttomSheetFilterPriceRangeBinding.edMaxPrice.getText().toString()) <=
+                    Double.valueOf(buttomSheetFilterPriceRangeBinding.edMinPrice.getText().toString())) {
+                buttomSheetFilterPriceRangeBinding.edMaxPrice.setError(getContext().getResources().getString(R.string.the_max_must_be_grater_than_min));
+                error = +1;
+            }
         }
 
         return error == 0 ;

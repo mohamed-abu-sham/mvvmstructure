@@ -60,9 +60,6 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator, Fragment
         });
 
         getViewBinding().recyclerView.setLayoutManager(new GridLayoutManager(getMyContext(), 3));
-        getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
-        getViewBinding().recyclerView.addItemDecoration(decoration);
         categoryAdapter = new CategoryAdapter(getMyContext(), this);
         getViewBinding().recyclerView.setAdapter(categoryAdapter);
 

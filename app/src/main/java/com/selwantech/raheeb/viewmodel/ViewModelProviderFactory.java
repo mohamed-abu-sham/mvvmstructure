@@ -2,11 +2,16 @@ package com.selwantech.raheeb.viewmodel;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.selwantech.raheeb.repository.DataManager;
+import com.selwantech.raheeb.ui.accountjourney.account.AccountViewModel;
+import com.selwantech.raheeb.ui.accountjourney.followers.FollowersViewModel;
+import com.selwantech.raheeb.ui.accountjourney.following.FollowingViewModel;
+import com.selwantech.raheeb.ui.accountjourney.help.HelpViewModel;
 import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeViewModel;
 import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordViewModel;
 import com.selwantech.raheeb.ui.auth.login.LoginViewModel;
@@ -75,6 +80,13 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
     public ViewModelProviderFactory(DataManager dataManager, Context mContext) {
         this.dataManager = dataManager;
         this.mContext = mContext;
+    }
+
+
+    @NonNull
+    @Override
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+        return super.create(modelClass);
     }
 
     public <T extends ViewModel> T create(Class<T> modelClass, V viewDataBinding, N navigation) {
@@ -199,6 +211,18 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         }else if (modelClass.isAssignableFrom(ProductBuyingDetailsViewModel.class)) {
             //noinspection unchecked
             return (T) new ProductBuyingDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
+        }else if (modelClass.isAssignableFrom(AccountViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AccountViewModel(mContext, dataManager, viewDataBinding, navigation);
+        }else if (modelClass.isAssignableFrom(HelpViewModel.class)) {
+            //noinspection unchecked
+            return (T) new HelpViewModel(mContext, dataManager, viewDataBinding, navigation);
+        }else if (modelClass.isAssignableFrom(FollowingViewModel.class)) {
+            //noinspection unchecked
+            return (T) new FollowingViewModel(mContext, dataManager, viewDataBinding, navigation);
+        }else if (modelClass.isAssignableFrom(FollowersViewModel.class)) {
+            //noinspection unchecked
+            return (T) new FollowersViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

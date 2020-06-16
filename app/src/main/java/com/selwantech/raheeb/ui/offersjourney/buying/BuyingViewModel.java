@@ -174,7 +174,7 @@ public class BuyingViewModel extends BaseViewModel<BuyingNavigator, FragmentBuyi
 
     public void finishLoadMore() {
         homeAdapter.remove(homeAdapter.getItemCount() - 1);
-        notifyAdapter();
+        homeAdapter.notifyItemRemoved(homeAdapter.getItemCount());
         homeAdapter.setLoaded();
         setLoadMore(false);
     }

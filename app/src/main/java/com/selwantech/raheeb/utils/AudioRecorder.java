@@ -11,10 +11,12 @@ import android.os.Environment;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 
 import androidx.core.app.ActivityCompat;
 
 import com.selwantech.raheeb.R;
+import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 
 import java.io.File;
@@ -141,7 +143,7 @@ public class AudioRecorder {
         return true;
     }
 
-    public void recordAction(MotionEvent event) {
+    public void recordAction(MotionEvent event , ImageView imgRecord) {
         if (checkRecorderPermission())
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -151,6 +153,7 @@ public class AudioRecorder {
                     } else {
                         vibrator.vibrate(200);
                     }
+                    GeneralFunction.tintViewBackgroundTint(imgRecord,activity.getResources().getColor(R.color.color_green));
                     startRecording();
                     break;
                 case MotionEvent.ACTION_UP:
@@ -159,6 +162,7 @@ public class AudioRecorder {
                     } else {
                         vibrator.vibrate(200);
                     }
+                    GeneralFunction.tintViewBackgroundTint(imgRecord,activity.getResources().getColor(R.color.color_blue));
                     stopRecording();
                     break;
             }

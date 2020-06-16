@@ -3,6 +3,7 @@ package com.selwantech.raheeb.repository;
 
 import com.selwantech.raheeb.App;
 import com.selwantech.raheeb.repository.db.database.LogDatabase;
+import com.selwantech.raheeb.repository.network.services.AccountService;
 import com.selwantech.raheeb.repository.network.services.AppService;
 import com.selwantech.raheeb.repository.network.services.AuthService;
 import com.selwantech.raheeb.repository.network.services.CategoryService;
@@ -65,4 +66,9 @@ public class DataManager {
     public MessagesService getMessagesService() {
         return MessagesService.getInstance();
     }
+
+    public AccountService getAccountService() {
+        return AccountService.getInstance();
+    }
+
 }

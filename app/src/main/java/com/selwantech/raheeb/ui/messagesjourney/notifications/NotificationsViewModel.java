@@ -62,7 +62,6 @@ public class NotificationsViewModel extends BaseViewModel<NotificationsNavigator
         });
 
         getViewBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getMyContext(), LinearLayoutManager.VERTICAL, false));
-        getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
         notificationsAdapter = new NotificationsAdapter(getMyContext(), this, getViewBinding().recyclerView);
         getViewBinding().recyclerView.setAdapter(notificationsAdapter);
         notificationsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -172,7 +171,7 @@ public class NotificationsViewModel extends BaseViewModel<NotificationsNavigator
 
     public void finishLoadMore() {
         notificationsAdapter.remove(notificationsAdapter.getItemCount() - 1);
-        notifyAdapter();
+        notificationsAdapter.notifyItemRemoved(notificationsAdapter.getItemCount());
         notificationsAdapter.setLoaded();
         setLoadMore(false);
     }

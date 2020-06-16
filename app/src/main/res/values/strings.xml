@@ -364,6 +364,11 @@
     <string name="send_report">Send report</string>
     <string name="report_sent_successful">Report sent successful</string>
     <string name="the_voice_message_too_short">The voice message too short</string>
+    <string name="invite_friends_and_get">Invite friends and get 5 sar .</string>
+    <string name="transactions">Transactions</string>
+    <string name="payment_and_sales"><![CDATA[Payment & Sales]]></string>
+    <string name="account_settings">Account Settings</string>
+    <string name="please_try_again">please try again</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

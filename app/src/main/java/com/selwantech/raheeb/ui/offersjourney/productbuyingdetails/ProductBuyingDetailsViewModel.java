@@ -3,6 +3,7 @@ package com.selwantech.raheeb.ui.offersjourney.productbuyingdetails;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductBuyingDetailsBinding;
@@ -17,6 +18,7 @@ import com.selwantech.raheeb.ui.adapter.ProductImagesAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.utils.LanguageUtils;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.navigation.Navigation;
@@ -74,4 +76,8 @@ public class ProductBuyingDetailsViewModel extends
                 .navigate(R.id.userProfileFragment, data);
     }
 
+    public int getGravity() {
+        return LanguageUtils.getLanguage(getMyContext()).equals("ar")
+                ? Gravity.RIGHT : Gravity.LEFT;
+    }
 }

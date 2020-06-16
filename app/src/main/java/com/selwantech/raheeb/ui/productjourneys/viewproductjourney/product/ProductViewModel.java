@@ -68,7 +68,6 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 //        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         getViewBinding().recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
         homeAdapter = new HomeAdapter(getMyContext(), this,getViewBinding().recyclerView);
         getViewBinding().recyclerView.setAdapter(homeAdapter);
         homeAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {

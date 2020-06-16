@@ -58,7 +58,6 @@ public class ProductService {
     }
 
     public void getProducts(Context mContext, boolean enableLoading, int skip, APICallBack<ArrayList<Product>> apiCallBack) {
-
         getDataApi().getProducts(gson.toJson(FilterProduct.getInstance()), skip)
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())

@@ -43,7 +43,7 @@ public class ReportUserViewModel extends BaseViewModel<ReportUserNavigator, Frag
         this.reportImageUri = reportImageUri;
     }
 
-    public void updatePictureClick() {
+    public void pickPictureClick() {
         PickImageFragmentDialog pickImageFragmentDialog = new PickImageFragmentDialog.Builder().build();
         pickImageFragmentDialog.setMethodCallBack(new PickImageFragmentDialog.methodClick() {
             @Override

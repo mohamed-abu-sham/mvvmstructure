@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.selwantech.raheeb.databinding.CellLoadMoreBinding;
 import com.selwantech.raheeb.databinding.CellSellingBinding;
 import com.selwantech.raheeb.interfaces.OnLoadMoreListener;
-import com.selwantech.raheeb.interfaces.SellingItemClick;
+import com.selwantech.raheeb.interfaces.ItemClickWithType;
 import com.selwantech.raheeb.model.Selling;
 import com.selwantech.raheeb.ui.base.BaseViewHolder;
 import com.selwantech.raheeb.viewmodel.ItemSellingViewModel;
@@ -25,12 +25,12 @@ public class SellingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private final int VIEW_PROG = 0;
     private final List<Selling> sellingList;
     Context mContext;
-    SellingItemClick sellingItemClick;
+    ItemClickWithType sellingItemClick;
     private int lastVisibleItem, totalItemCount;
     private boolean loading;
     private OnLoadMoreListener loadMoreListener;
 
-    public SellingAdapter(Context mContext, SellingItemClick sellingItemClick, RecyclerView recyclerView) {
+    public SellingAdapter(Context mContext, ItemClickWithType sellingItemClick, RecyclerView recyclerView) {
         this.sellingList = new ArrayList<>();
         this.mContext = mContext;
         this.sellingItemClick = sellingItemClick;

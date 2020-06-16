@@ -93,19 +93,6 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
     }
 
     private void logout() {
-        getDataManager().getAuthService().logout(getMyContext(), new APICallBack() {
-            @Override
-            public void onSuccess(Object response) {
-                SessionManager.logoutUser();
-                getBaseActivity().finishAffinity();
-                getBaseActivity().startActivity(new Intent(getMyContext(),
-                        SplashScreenActivity.class));
-            }
 
-            @Override
-            public void onError(String error, int errorCode) {
-                showToast(error);
-            }
-        });
     }
 }

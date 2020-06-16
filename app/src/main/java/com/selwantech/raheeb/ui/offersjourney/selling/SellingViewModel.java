@@ -15,7 +15,7 @@ import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentSellingBinding;
 import com.selwantech.raheeb.enums.SellingItemClickTypes;
 import com.selwantech.raheeb.interfaces.OnLoadMoreListener;
-import com.selwantech.raheeb.interfaces.SellingItemClick;
+import com.selwantech.raheeb.interfaces.ItemClickWithType;
 import com.selwantech.raheeb.model.Selling;
 import com.selwantech.raheeb.model.SetSold;
 import com.selwantech.raheeb.repository.DataManager;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import static com.selwantech.raheeb.utils.AppConstants.PRODUCT_STATUS.SOLD_OTHER_APP;
 
-public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSellingBinding> implements SellingItemClick<Selling> {
+public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSellingBinding> implements ItemClickWithType<Selling> {
 
     SellingAdapter sellingAdapter;
     boolean isRefreshing = false;
@@ -232,7 +232,7 @@ public class SellingViewModel extends BaseViewModel<SellingNavigator, FragmentSe
 
     public void finishLoadMore() {
         sellingAdapter.remove(sellingAdapter.getItemCount() - 1);
-        notifyAdapter();
+        sellingAdapter.notifyItemRemoved(sellingAdapter.getItemCount());
         sellingAdapter.setLoaded();
         setLoadMore(false);
     }

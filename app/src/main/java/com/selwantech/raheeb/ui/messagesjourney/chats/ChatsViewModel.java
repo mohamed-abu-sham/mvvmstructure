@@ -63,7 +63,6 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
         });
 
         getViewBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getMyContext(), LinearLayoutManager.VERTICAL, false));
-        getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
         messagesAdapter = new ChatsAdapter(getMyContext(), this, getViewBinding().recyclerView);
         getViewBinding().recyclerView.setAdapter(messagesAdapter);
         messagesAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -179,7 +178,8 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
 
     public void finishLoadMore() {
         messagesAdapter.remove(messagesAdapter.getItemCount() - 1);
-        notifyAdapter();
+//        notifyAdapter();
+        messagesAdapter.notifyItemRemoved(messagesAdapter.getItemCount());
         messagesAdapter.setLoaded();
         setLoadMore(false);
     }

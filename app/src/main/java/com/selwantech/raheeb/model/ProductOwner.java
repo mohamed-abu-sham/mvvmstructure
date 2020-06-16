@@ -12,29 +12,8 @@ import java.io.Serializable;
 
 public class ProductOwner extends BaseObservable implements Serializable {
 
-	@SerializedName("count_followers")
-	private int countFollowers;
-
-	@SerializedName("is_follow")
-	private boolean isFollow;
-
-	@SerializedName("count_following")
-	private int countFollowing;
-
-	@SerializedName("login_with")
-	private String loginWith;
-
-	@SerializedName("avatar")
-	private String avatar;
-
-	@SerializedName("is_blocked")
-	private boolean isBlocked;
-
-	@SerializedName("rate")
-	private double rate;
-
-	@SerializedName("is_valid")
-	private boolean isValid;
+	@SerializedName("id")
+	private int id;
 
 	@SerializedName("name")
 	private String name;
@@ -42,14 +21,35 @@ public class ProductOwner extends BaseObservable implements Serializable {
 	@SerializedName("phone_number")
 	private String phoneNumber;
 
-	@SerializedName("id")
-	private int id;
+	@SerializedName("email")
+	private String email;
+
+	@SerializedName("avatar")
+	private String avatar;
 
 	@SerializedName("cover_image")
 	private String coverImage;
 
-	@SerializedName("email")
-	private String email;
+	@SerializedName("login_with")
+	private String loginWith;
+
+	@SerializedName("is_valid")
+	private boolean isValid;
+
+	@SerializedName("is_blocked")
+	private boolean isBlocked;
+
+	@SerializedName("is_follow")
+	private boolean isFollow;
+
+	@SerializedName("count_followers")
+	private int countFollowers;
+
+	@SerializedName("count_following")
+	private int countFollowing;
+
+	@SerializedName("rate")
+	private double rate;
 
 	public int getCountFollowers() {
 		return countFollowers;
@@ -68,6 +68,15 @@ public class ProductOwner extends BaseObservable implements Serializable {
 				App.getInstance().getApplicationContext().getResources().getString(R.string.unfollow);
 	}
 
+	public int getFollowColor() {
+		return !isFollow ? App.getInstance().getApplicationContext().getResources().getColor(R.color.color_blue) :
+				App.getInstance().getApplicationContext().getResources().getColor(R.color.text_gray);
+	}
+	public int getFollowBackground() {
+		return !isFollow ? R.drawable.shape_circuler_blue:
+				R.drawable.shape_circuler_gray;
+	}
+
 	public int getCountFollowing() {
 		return countFollowing;
 	}
@@ -82,7 +91,7 @@ public class ProductOwner extends BaseObservable implements Serializable {
 	}
 
 	public void plusFollower() {
-		this.countFollowers = +1;
+		this.countFollowers++;
 		notifyChange();
 	}
 

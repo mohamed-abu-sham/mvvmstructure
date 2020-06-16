@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.enums.OrderHiringStatus;
+import com.selwantech.raheeb.enums.FollowStatus;
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -25,44 +25,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (remoteMessage.getData().get("type") != null) {
             String type = remoteMessage.getData().get("type");
-            if (type.equals(AppConstants.NotificationTypes.ORDER_TAKEN)) {
-                showNotification(getApplicationContext(),
-                        getApplicationContext().getResources().getString(R.string.app_name),
-                        getApplicationContext().getResources().getString(R.string.order_taken), 1);
-                Log.e("@ReceivedCallback", "Order Taken From Firebase");
-                Intent intent = new Intent();
-                intent.setAction("ORDER");
-                intent.addCategory((Intent.CATEGORY_DEFAULT));
-                intent.putExtra("order_status", OrderHiringStatus.TAKEN.getStatus());
-                intent.putExtra("order_id", Integer.valueOf(remoteMessage.getData().get("type_id")));
-                sendBroadcast(intent);
-            } else if (type.equals(AppConstants.NotificationTypes.ORDER_EXPIRATION)) {
-                showNotification(getApplicationContext(),
-                        getApplicationContext().getResources().getString(R.string.app_name),
-                        getApplicationContext().getResources().getString(R.string.no_worker_available), 2);
-                Log.e("@ReceivedCallback", "Order Declined From Firebase");
-                Intent intent = new Intent();
-                intent.setAction("ORDER");
-                intent.addCategory((Intent.CATEGORY_DEFAULT));
-                intent.putExtra("order_status", OrderHiringStatus.DECLINED.getStatus());
-                intent.putExtra("order_id", remoteMessage.getData().get("type_id"));
-                sendBroadcast(intent);
-            } else if (type.equals("worker_tracking") && remoteMessage.getData().get("lat") != null) {
-                Intent intent = new Intent();
-                intent.setAction("WORKER_TRACKING");
-                intent.putExtra("order_id", remoteMessage.getData().get("type_id"));
-                intent.putExtra("Lat", remoteMessage.getData().get("lat"));
-                intent.putExtra("Lon", remoteMessage.getData().get("lon"));
-                sendBroadcast(intent);
-            } else if (type.equals(AppConstants.NotificationTypes.ORDER_COMPLEATED)) {
-                showNotification(getApplicationContext(),
-                        getApplicationContext().getResources().getString(R.string.app_name),
-                        getApplicationContext().getResources().getString(R.string.order_completed), 3);
-            } else {
-                showNotification(getApplicationContext(),
-                        remoteMessage.getNotification().getTitle(),
-                        remoteMessage.getNotification().getBody(), 0);
-            }
+
         }
         super.onMessageReceived(remoteMessage);
     }

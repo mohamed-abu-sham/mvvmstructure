@@ -54,29 +54,13 @@ public class ApiConstants {
         public static final String SEND_REPORT = "user/{user_id}/report";
     }
 
-    public class apiOrderService {
-        public static final String UPLOAD_ORDER_IMAGES = "user/customer/orders/up-image";
-        public static final String CANCELLATION_FEE = "user/customer/orders/wrongOrderCharge/{orderId}";
-        public static final String CANCEL_ORDER = "user/customer/orders/cancel/{orderId}";
-        public static final String SUBMIT_ORDER = "user/customer/orders/submit";
-        public static final String CALCULATE_PRICE = "user/customer/orders/calculatePrice/{serviceId}";
-        public static final String CALCULATE_OFFER_BUT_LIMITED = "user/customer/orders/calcPriceOfferButLimited/{serviceId}";
-        public static final String ACTIVE_ORDER = "user/customer/orders/active";
-        public static final String HISTORY_ORDER = "user/customer/orders/previous";
-        public static final String UNRATED_ORDER = "user/customer/orders/getOrdersNotRate";
-        public static final String ORDER_DETAILS = "user/customer/orders/{orderId}/show";
-        public static final String RATE_ORDERS = "user/customer/orders/orderRate/{orderId}";
-        public static final String OFFERS = "user/customer/orders/{orderId}/offers";
-        public static final String HIRE_WORKER = "user/customer/orders/hireWorker/{orderId}/{offerId}";
-
-    }
-
     public class apiAppService {
         public static final String PRIVACY_POLICY = "app/privacy-policy";
         public static final String TERMS_AND_CONDITION = "app/terms-and-condations";
         public static final String DISTANCES = "app/distance";
         public static final String CONDITION = "condition_type";
         public static final String CURRENCY = "app/currency";
+        public static final String TICKET = "user/ticket";
 
     }
 
@@ -88,6 +72,13 @@ public class ApiConstants {
         public static final String ACCEPT_OFFER = "user/post/offer/{messageId}/accept";
         public static final String GENERATE_CHAT = "user/chat/post/{product_id}/create";
         public static final String GET_CHAT_BY_ID = "user/chat/{chat_id}/show";
+    }
+
+    public class apiAccountService {
+        public static final String UPDATE_AVATAR = "user/update/avatar";
+        public static final String FOLLOWING = "user/follower/following";
+        public static final String FOLLOWERS = "user/follower/followers";
+        public static final String GET_PROFILE = "user/profile";
     }
 
 }

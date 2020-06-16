@@ -62,7 +62,11 @@
     <color name="text_gray">#A8A8A8</color>
     <color name="gray_button">#D1D1D1</color>
     <color name="color_green">#1DBF81</color>
-    rgba(85, 172, 238, 0.4)
+    <color name="color_blue_light">#59FFFFFF</color>
+    <color name="color_blue_invite">#DFF8F0</color>
+    <color name="color_blue_twitter">#F2F9FF</color>
+    <color name="color_red_logout">#EE5555</color>
+    <color name="color_red_note">#FF0000</color>
     <color name="received_message_bubble">#0A55ACEE</color>
     <color name="rsbColorSeekBarDefault">#c3c3c3</color>
     <color name="rsbColorThumbPressed">#FFE7E7E7</color>

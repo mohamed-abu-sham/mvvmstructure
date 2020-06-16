@@ -1,17 +1,18 @@
 package com.selwantech.raheeb.enums;
 
-public enum OrderHiringStatus {
-    TAKEN(1),
-    DECLINED(2);
+public enum FollowStatus {
+    FOLLOW(1),
+    UNFOLLOW(2),
+    NON(3);
 
     private int typeID;
 
-    OrderHiringStatus(int i) {
+    FollowStatus(int i) {
         this.typeID = i;
     }
 
-    public static OrderHiringStatus fromInt(int i) {
-        for (OrderHiringStatus type : OrderHiringStatus.values()) {
+    public static FollowStatus fromInt(int i) {
+        for (FollowStatus type : FollowStatus.values()) {
             if (type.getStatus() == i) {
                 return type;
             }

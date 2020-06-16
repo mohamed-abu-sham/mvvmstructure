@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
@@ -35,6 +36,7 @@ import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OfferFragmentDialog;
 import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.utils.LanguageUtils;
 import com.selwantech.raheeb.utils.SmoothMoveMarker;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
@@ -194,14 +196,16 @@ public class ProductDetailsViewModel extends
 
     public void onFavoriteClicked() {
         if (product.isIsFaverate()) {
+            product.setFaverate(false);
             removeFavorite();
         } else {
+            product.setFaverate(true);
             addFavorite();
         }
     }
 
     private void addFavorite() {
-        getDataManager().getProductService().addFavorite(getMyContext(), true, product.getId(), new APICallBack<String>() {
+        getDataManager().getProductService().addFavorite(getMyContext(), false, product.getId(), new APICallBack<String>() {
             @Override
             public void onSuccess(String response) {
                 product.setFaverate(true);
@@ -209,6 +213,7 @@ public class ProductDetailsViewModel extends
 
             @Override
             public void onError(String error, int errorCode) {
+                product.setFaverate(false);
                 showSnackBar(getMyContext().getResources().getString(R.string.error),
                         error,
                         getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
@@ -222,7 +227,7 @@ public class ProductDetailsViewModel extends
     }
 
     private void removeFavorite() {
-        getDataManager().getProductService().removeFavorite(getMyContext(), true, product.getId(), new APICallBack<String>() {
+        getDataManager().getProductService().removeFavorite(getMyContext(), false, product.getId(), new APICallBack<String>() {
             @Override
             public void onSuccess(String response) {
                 product.setFaverate(false);
@@ -230,6 +235,7 @@ public class ProductDetailsViewModel extends
 
             @Override
             public void onError(String error, int errorCode) {
+                product.setFaverate(true);
                 showSnackBar(getMyContext().getResources().getString(R.string.error),
                         error,
                         getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
@@ -349,6 +355,9 @@ public class ProductDetailsViewModel extends
     public void onClick(ImagesItem imagesItem, int position) {
         GeneralFunction.loadImage(getMyContext(), imagesItem.getImage(), getViewBinding().imgProduct);
     }
-
+    public int getGravity() {
+        return LanguageUtils.getLanguage(getMyContext()).equals("ar")
+                ? Gravity.RIGHT : Gravity.LEFT;
+    }
 
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -25,6 +26,7 @@ import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OfferFragmentDialog;
 import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.utils.LanguageUtils;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.io.IOException;
@@ -84,10 +86,6 @@ public class ProductSellingDetailsViewModel extends
         }
     }
 
-    public int canShare(){
-        return product.getStatus().equals(AppConstants.PRODUCT_STATUS.AVAILABLE) ? View.VISIBLE : View.GONE;
-    }
-
     public void onBackClicked() {
         popUp();
     }
@@ -97,5 +95,8 @@ public class ProductSellingDetailsViewModel extends
         GeneralFunction.loadImage(getMyContext(), imagesItem.getImage(), getViewBinding().imgProduct);
     }
 
-
+    public int getGravity() {
+        return LanguageUtils.getLanguage(getMyContext()).equals("ar")
+                ? Gravity.RIGHT : Gravity.LEFT;
+    }
 }

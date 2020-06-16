@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -62,7 +63,6 @@ public class MyOffersViewModel extends BaseViewModel<MyOffersNavigator, Fragment
         });
 
         getViewBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getMyContext(), LinearLayoutManager.VERTICAL, false));
-        getViewBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
         myOffersAdapter = new MyOffersAdapter(getMyContext(), this, getViewBinding().recyclerView);
         getViewBinding().recyclerView.setAdapter(myOffersAdapter);
         myOffersAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -129,9 +129,9 @@ public class MyOffersViewModel extends BaseViewModel<MyOffersNavigator, Fragment
     @Override
     public void onClick(MyOffer myOffer, int position) {
         Bundle data = new Bundle();
-        data.putSerializable(AppConstants.BundleData.MY_OFFER, myOffer);
-//        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-//                .navigate(R.id.productDetailsFragment, data);
+        data.putSerializable(AppConstants.BundleData.CHAT_ID, myOffer.getChatId());
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.chatFragment, data);
     }
 
 
@@ -173,7 +173,7 @@ public class MyOffersViewModel extends BaseViewModel<MyOffersNavigator, Fragment
 
     public void finishLoadMore() {
         myOffersAdapter.remove(myOffersAdapter.getItemCount() - 1);
-        notifyAdapter();
+        myOffersAdapter.notifyItemRemoved(myOffersAdapter.getItemCount());
         myOffersAdapter.setLoaded();
         setLoadMore(false);
     }

@@ -7,22 +7,37 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static User objUser = null;
 
-    @SerializedName("avatar")
-    String avatar = "";
-    @SerializedName("is_blocked")
-    boolean is_blocked;
-    @SerializedName("")
-    boolean isSocial;
     @SerializedName("id")
     private long userID;
-    @SerializedName("email")
-    private String email = "";
-    @SerializedName("social_id")
-    private String social_id;
-    @SerializedName("phone_number")
-    private String phone = "";
     @SerializedName("name")
     private String name = "";
+    @SerializedName("phone_number")
+    private String phone = "";
+    @SerializedName("email")
+    private String email = "";
+    @SerializedName("balance")
+    Price balance ;
+    @SerializedName("avatar")
+    String avatar = "";
+    @SerializedName("cover_image")
+    String cover_image;
+    @SerializedName("id_image")
+    String id_image;
+    @SerializedName("login_with")
+    String login_with;
+    @SerializedName("is_valid")
+    boolean is_valid;
+    @SerializedName("is_blocked")
+    boolean is_blocked;
+    @SerializedName("count_followers")
+    int count_followers;
+    @SerializedName("count_following")
+    int count_following;
+    @SerializedName("rate")
+    private double rate;
+
+    @SerializedName("social_id")
+    private String social_id;
     @SerializedName("password")
     private String password = "";
     @SerializedName("password_confirmation")
@@ -34,7 +49,7 @@ public class User implements Serializable {
     @SerializedName("platform")
     String platform = "android";
 
-    private User() {
+    public User() {
 
     }
 
@@ -62,6 +77,10 @@ public class User implements Serializable {
 
     public String getToken() {
         return token;
+    }
+
+    public String getRateString() {
+        return String.valueOf(rate);
     }
 
     public void setToken(String token) {
@@ -137,14 +156,6 @@ public class User implements Serializable {
         this.is_blocked = is_blocked;
     }
 
-    public boolean isSocial() {
-        return isSocial;
-    }
-
-    public void setSocial(boolean social) {
-        isSocial = social;
-    }
-
     public String getFirebase_token() {
         return firebase_token;
     }
@@ -159,5 +170,69 @@ public class User implements Serializable {
 
     public void setPlatform(String platform) {
         this.platform = platform;
+    }
+
+    public Price getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Price balance) {
+        this.balance = balance;
+    }
+
+    public String getCover_image() {
+        return cover_image;
+    }
+
+    public void setCover_image(String cover_image) {
+        this.cover_image = cover_image;
+    }
+
+    public String getId_image() {
+        return id_image;
+    }
+
+    public void setId_image(String id_image) {
+        this.id_image = id_image;
+    }
+
+    public String getLogin_with() {
+        return login_with;
+    }
+
+    public void setLogin_with(String login_with) {
+        this.login_with = login_with;
+    }
+
+    public boolean isIs_valid() {
+        return is_valid;
+    }
+
+    public void setIs_valid(boolean is_valid) {
+        this.is_valid = is_valid;
+    }
+
+    public int getCount_followers() {
+        return count_followers;
+    }
+
+    public void setCount_followers(int count_followers) {
+        this.count_followers = count_followers;
+    }
+
+    public int getCount_following() {
+        return count_following;
+    }
+
+    public void setCount_following(int count_following) {
+        this.count_following = count_following;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 }

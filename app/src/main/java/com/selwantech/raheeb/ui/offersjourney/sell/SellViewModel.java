@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.offersjourney.sell;
 
 import android.content.Context;
+import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.navigation.Navigation;
@@ -48,11 +49,13 @@ public class SellViewModel extends BaseViewModel<SellNavigator, FragmentSellBind
     @Override
     public void onClick(SoldTo soldTo, int position) {
         getViewBinding().radSoldElse.setChecked(false);
+        getViewBinding().rating.setVisibility(View.VISIBLE);
     }
 
     public void onSoldElseClicked() {
         getViewBinding().radSoldElse.setChecked(true);
         soldToAdapter.setSoldElse();
+        getViewBinding().rating.setVisibility(View.GONE);
     }
 
     private void getData() {

@@ -9,7 +9,7 @@ import androidx.databinding.BaseObservable;
 import com.selwantech.raheeb.databinding.CellSellingBinding;
 import com.selwantech.raheeb.enums.SellingItemClickTypes;
 import com.selwantech.raheeb.helper.GeneralFunction;
-import com.selwantech.raheeb.interfaces.SellingItemClick;
+import com.selwantech.raheeb.interfaces.ItemClickWithType;
 import com.selwantech.raheeb.model.Selling;
 import com.selwantech.raheeb.utils.AppConstants;
 
@@ -17,12 +17,12 @@ import com.selwantech.raheeb.utils.AppConstants;
 public class ItemSellingViewModel extends BaseObservable {
 
     private final Context context;
-    SellingItemClick sellingItemClick;
+    ItemClickWithType sellingItemClick;
     private Selling selling;
     private int position;
     CellSellingBinding cellSellingBinding;
 
-    public ItemSellingViewModel(CellSellingBinding cellSellingBinding, Context context, Selling selling, int position, SellingItemClick sellingItemClick) {
+    public ItemSellingViewModel(CellSellingBinding cellSellingBinding, Context context, Selling selling, int position, ItemClickWithType sellingItemClick) {
         this.cellSellingBinding = cellSellingBinding;
         this.context = context;
         this.selling = selling;

@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,7 +18,9 @@ import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.selwantech.raheeb.App;
 import com.selwantech.raheeb.R;
+import com.selwantech.raheeb.utils.LanguageUtils;
 import com.selwantech.raheeb.utils.ProgressRequestBody;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -42,6 +45,14 @@ public class GeneralFunction {
         requestOptions.placeholder(R.drawable.ic_loading);
         requestOptions.error(R.color.navigation_gray);
         Glide.with(imageView.getContext()).applyDefaultRequestOptions(requestOptions).load(url).into(imageView);
+    }
+
+    @BindingAdapter("circleImageUrl")
+    public static void setCircleImageUrl(ImageView imageView, String url) {
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.ic_loading);
+        requestOptions.error(R.color.navigation_gray);
+        Glide.with(imageView.getContext()).applyDefaultRequestOptions(requestOptions).load(url).circleCrop().into(imageView);
     }
 
     @BindingAdapter("imageResources")
@@ -80,6 +91,10 @@ public class GeneralFunction {
     @BindingAdapter("textviewColor")
     public static void textColor(TextView textView, int color) {
         textView.setTextColor(color);
+    }
+    @BindingAdapter("textviewBackground")
+    public static void textBackground(TextView textView, int res) {
+        textView.setBackgroundResource(res);
     }
 
     public static void tintImageView(Context mContext, ImageView imageView, int color) {

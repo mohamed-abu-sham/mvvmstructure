@@ -61,4 +61,9 @@ public class OtpVerifierActivity extends BaseActivity<ActivityOtpVerifierBinding
         mOtpViewModel.setUp();
     }
 
+
+    @Override
+    public String getToken() {
+        return getIntent().getStringExtra(AppConstants.BundleData.TOKEN);
+    }
 }

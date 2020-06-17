@@ -59,8 +59,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mLoginViewModel.setUp();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        mLoginViewModel.getTwitterAuthClient().onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -1,87 +1,71 @@
 package com.selwantech.raheeb.ui.auth.phonenumber;
 
 import android.content.Context;
+import android.os.Bundle;
 
-import androidx.databinding.ViewDataBinding;
-
+import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.databinding.ActivityPhoneNumberBinding;
+import com.selwantech.raheeb.databinding.FragmentUpdatePhoneBinding;
 import com.selwantech.raheeb.enums.PhoneNumberTypes;
+import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
-import com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
-import com.selwantech.raheeb.utils.DeviceUtils;
+import com.selwantech.raheeb.utils.AppConstants;
+import com.selwantech.raheeb.utils.SnackViewBulider;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 
-public class PhoneNumberViewModel extends BaseViewModel<PhoneNumberNavigator, ActivityPhoneNumberBinding> {
+public class PhoneNumberViewModel extends BaseViewModel<PhoneNumberNavigator, FragmentUpdatePhoneBinding> {
 
     int type;
 
     public <V extends ViewDataBinding, N extends BaseNavigator> PhoneNumberViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (PhoneNumberNavigator) navigation, (ActivityPhoneNumberBinding) viewDataBinding);
-        getViewBinding().ccp.setCountryForNameCode(DeviceUtils.getDeviceCountryCode(getMyContext()));
+        super(mContext, dataManager, (PhoneNumberNavigator) navigation, (FragmentUpdatePhoneBinding) viewDataBinding);
 
     }
 
-    public void loginClicked() {
-        ((PhoneNumberActivity) getMyContext()).finish();
+    @Override
+    protected void setUp() {
+
     }
 
     public void sendCode() {
         if (isValidate()) {
-            if (type == PhoneNumberTypes.REGISTER.getValue() || type == PhoneNumberTypes.REGISTER_SOCIAL.getValue()) {
-                checkPhoneForRegister();
-            } else if (type == PhoneNumberTypes.FORGET_PASSWORD.getValue()) {
-                checkPhoneForForgetPassword();
-            }
+            sendOtp();
         }
     }
 
-    public void checkPhoneForRegister() {
-        getDataManager().getAuthService().getDataApi().verifyPhone(getViewBinding().ccp.getSelectedCountryCode() + getViewBinding().edPhoneNumber.getText().toString().trim())
-                .toObservable()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(getMyContext(), true, new APICallBack<VerifyPhoneResponse>() {
-                    @Override
-                    public void onSuccess(VerifyPhoneResponse response) {
-//                        getMyContext().startActivity(OtpVerifierActivity.getStartIntent(getMyContext(),
-//                                getViewBinding().ccp.getSelectedCountryCode() +
-//                                        getViewBinding().edPhoneNumber.getText().toString().trim(),
-//                                type, response.getToken()));
-                    }
+    public void sendOtp() {
+        getDataManager().getAuthService().sendOtp(getMyContext(), true, getViewBinding().edPhoneNumber.getText().toString(), new APICallBack<VerifyPhoneResponse>() {
+            @Override
+            public void onSuccess(VerifyPhoneResponse response) {
 
-                    @Override
-                    public void onError(String error, int errorCode) {
-                        showToast(error);
-                    }
-                }));
-    }
+//                getMyContext().startActivity(OtpVerifierActivity.getStartIntent(getMyContext()
+//                        , PhoneNumberTypes.CHANGE_PHONE_NUMBER.getValue()));
 
-    public void checkPhoneForForgetPassword() {
-        getDataManager().getAuthService().getDataApi().forgetPassword(getViewBinding().ccp.getSelectedCountryCode() + getViewBinding().edPhoneNumber.getText().toString().trim())
-                .toObservable()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(getMyContext(), true, new APICallBack<VerifyPhoneResponse>() {
-                    @Override
-                    public void onSuccess(VerifyPhoneResponse response) {
-//                        getMyContext().startActivity(OtpVerifierActivity.getStartIntent(getMyContext(),
-//                                getViewBinding().ccp.getSelectedCountryCode() +
-//                                        getViewBinding().edPhoneNumber.getText().toString().trim(), type, response.getToken()));
-                    }
+                Bundle data = new Bundle();
+                data.putInt(AppConstants.BundleData.TYPE, PhoneNumberTypes.CHANGE_PHONE_NUMBER.getValue());
+                data.putString(AppConstants.BundleData.TOKEN, response.getToken());
+                Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.action_phoneNumberFragment_to_otpVerifierActivity, data);
+            }
 
-                    @Override
-                    public void onError(String error, int errorCode) {
-                        showToast(error);
-                    }
-                }));
+            @Override
+            public void onError(String error, int errorCode) {
+                showSnackBar(getMyContext().getString(R.string.error),
+                        error, getMyContext().getResources().getString(R.string.ok),
+                        new SnackViewBulider.SnackbarCallback() {
+                            @Override
+                            public void onActionClick(Snackbar snackbar) {
+                                snackbar.dismiss();
+                            }
+                        });
+            }
+        });
     }
 
     private boolean isValidate() {
@@ -96,8 +80,7 @@ public class PhoneNumberViewModel extends BaseViewModel<PhoneNumberNavigator, Ac
         this.type = type;
     }
 
-    @Override
-    protected void setUp() {
-
+    public String phoneNumber() {
+        return User.getInstance().getPhone().isEmpty() ? "" : User.getInstance().getPhone();
     }
 }

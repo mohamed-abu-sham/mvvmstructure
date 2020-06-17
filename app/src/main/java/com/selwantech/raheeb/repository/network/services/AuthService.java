@@ -100,6 +100,14 @@ public class AuthService {
                 .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
     }
 
+    public void verifyOtpToUpdate(Context mContext, boolean enableLoading, String token, String otp, APICallBack<User> apiCallBack) {
+        getDataApi().verifyOtpToUpdate(token, otp)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<User>(mContext, enableLoading, apiCallBack));
+    }
+
     public void registerUser(Context mContext, boolean enableLoading, User user, APICallBack<RegisterResponse> apiCallBack) {
         getDataApi().registerUser(user)
                 .toObservable()
@@ -114,6 +122,24 @@ public class AuthService {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void updateEmail(Context mContext, boolean enableLoading, String email, APICallBack<User> apiCallBack) {
+        getDataApi().updateEmail(email)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<User>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void updatePassword(Context mContext, boolean enableLoading, String password,
+                               String password_confirmation,
+                               String current_password, APICallBack<String> apiCallBack) {
+        getDataApi().updatePassword(password, password_confirmation, current_password)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
     }
 
     public DataApi getDataApi() {
@@ -132,6 +158,10 @@ public class AuthService {
         @POST(ApiConstants.apiAuthService.VERIFY_CODE)
         Single<Response<GeneralResponse<String>>> verifyCode(@Query("token") String token,
                                                              @Query("code") String code);
+
+        @POST(ApiConstants.apiAuthService.VERIFY_CODE_TO_UPDATE)
+        Single<Response<GeneralResponse<User>>> verifyOtpToUpdate(@Query("token") String token,
+                                                                  @Query("code") String code);
 
         @POST(ApiConstants.apiAuthService.RESEND_CODE)
         Single<Response<GeneralResponse<VerifyPhoneResponse>>> resendCode(@Query("token") String token);
@@ -160,7 +190,7 @@ public class AuthService {
         @POST(ApiConstants.apiAuthService.LOGOUT)
         Single<Response<GeneralResponse<String>>> logout(@Query("token") String token);
 
-        @PATCH(ApiConstants.apiAuthService.UPDATE_PASSWORD)
+        @POST(ApiConstants.apiAuthService.UPDATE_PASSWORD)
         Single<Response<GeneralResponse<String>>> updatePassword(@Query("password") String password,
                                                                  @Query("password_confirmation") String password_confirmation,
                                                                  @Query("current_password") String current_password);
@@ -172,6 +202,10 @@ public class AuthService {
         @Multipart
         @POST(ApiConstants.apiAuthService.UPDATE_PROFILE_PICTURE)
         Single<Response<GeneralResponse<ProfileResponse>>> updateProfilePicture(@Part MultipartBody.Part image);
+
+        @POST(ApiConstants.apiAuthService.UPDATE_EMAIL)
+        Single<Response<GeneralResponse<User>>> updateEmail(@Query("email") String email);
+
 
     }
 }

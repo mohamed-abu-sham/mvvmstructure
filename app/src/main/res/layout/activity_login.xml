@@ -184,7 +184,7 @@
                         android:layout_marginBottom="@dimen/_23sdp"
                         android:gravity="center"
                         android:background="@drawable/shape_rounded_empty_blue"
-                        android:onClick="@{() -> viewModel.loginClick()}">
+                        android:onClick="@{() -> viewModel.twitterClick()}">
 
                         <ImageView
                             android:id="@+id/btnLoginTwitter"

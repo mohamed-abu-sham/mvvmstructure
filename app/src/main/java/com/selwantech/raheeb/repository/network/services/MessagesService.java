@@ -157,7 +157,7 @@ public class MessagesService {
         Single<Response<GeneralResponse<String>>> acceptOffer(@Path("messageId") int messageId);
 
         @POST(ApiConstants.apiMessagesService.GENERATE_CHAT)
-        Single<Response<GeneralResponse<Chat>>> generateChat(@Query("product_id") int product_id);
+        Single<Response<GeneralResponse<Chat>>> generateChat(@Path("product_id") int product_id);
 
         @GET(ApiConstants.apiMessagesService.GET_CHAT_BY_ID)
         Single<Response<GeneralResponse<Chat>>> getChatById(@Path("chat_id") int chat_id);

@@ -1,7 +1,6 @@
 package com.selwantech.raheeb.ui.auth.changepassword;
 
 import android.content.Context;
-import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChangePasswordBinding;
@@ -22,13 +21,6 @@ public class ChangePasswordFragment extends BaseFragment<FragmentChangePasswordB
     private ChangePasswordViewModel mChangePasswordViewModel;
     private FragmentChangePasswordBinding mViewBinding;
 
-
-    public static ChangePasswordFragment newInstance() {
-        Bundle args = new Bundle();
-        ChangePasswordFragment fragment = new ChangePasswordFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public int getBindingVariable() {
@@ -71,7 +63,7 @@ public class ChangePasswordFragment extends BaseFragment<FragmentChangePasswordB
     @Override
     protected void setUp() {
         mViewBinding = getViewDataBinding();
-        mChangePasswordViewModel.setUp();
         setUpToolbar(mViewBinding.toolbar, TAG,R.string.change_password);
+        mChangePasswordViewModel.setUp();
     }
 }

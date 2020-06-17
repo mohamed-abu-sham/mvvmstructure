@@ -2,16 +2,16 @@ package com.selwantech.raheeb.viewmodel;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.selwantech.raheeb.repository.DataManager;
+import com.selwantech.raheeb.ui.accountjourney.about.AboutViewModel;
 import com.selwantech.raheeb.ui.accountjourney.account.AccountViewModel;
 import com.selwantech.raheeb.ui.accountjourney.followers.FollowersViewModel;
 import com.selwantech.raheeb.ui.accountjourney.following.FollowingViewModel;
 import com.selwantech.raheeb.ui.accountjourney.help.HelpViewModel;
+import com.selwantech.raheeb.ui.accountjourney.settings.SettingsViewModel;
+import com.selwantech.raheeb.ui.accountjourney.updateemail.UpdateEmailViewModel;
+import com.selwantech.raheeb.ui.accountjourney.updateid.UpdateIDViewModel;
+import com.selwantech.raheeb.ui.auth.changepassword.ChangePasswordViewModel;
 import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeViewModel;
 import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordViewModel;
 import com.selwantech.raheeb.ui.auth.login.LoginViewModel;
@@ -56,6 +56,11 @@ import com.selwantech.raheeb.ui.userprofilejourney.user_profile_details.UserProf
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * @ViewDataBinding : Base class for generated data binding classes
@@ -117,6 +122,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(OtpVerifierViewModel.class)) {
             //noinspection unchecked
             return (T) new OtpVerifierViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(ChangePasswordViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ChangePasswordViewModel(mContext, dataManager, viewDataBinding, navigation);
         } else if (modelClass.isAssignableFrom(CreatePasswordViewModel.class)) {
             //noinspection unchecked
             return (T) new CreatePasswordViewModel(mContext, dataManager, viewDataBinding, navigation);
@@ -223,6 +231,21 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         }else if (modelClass.isAssignableFrom(FollowersViewModel.class)) {
             //noinspection unchecked
             return (T) new FollowersViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new SettingsViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(AboutViewModel.class)) {
+            //noinspection unchecked
+            return (T) new AboutViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(PhoneNumberViewModel.class)) {
+            //noinspection unchecked
+            return (T) new PhoneNumberViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(UpdateEmailViewModel.class)) {
+            //noinspection unchecked
+            return (T) new UpdateEmailViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(UpdateIDViewModel.class)) {
+            //noinspection unchecked
+            return (T) new UpdateIDViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

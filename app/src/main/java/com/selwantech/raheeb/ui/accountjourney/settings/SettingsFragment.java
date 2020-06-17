@@ -1,11 +1,11 @@
-package com.selwantech.raheeb.ui.settings;
+package com.selwantech.raheeb.ui.accountjourney.settings;
 
 import android.content.Context;
-import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentSettingsBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
+import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
@@ -21,20 +21,6 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
     ViewModelProviderFactory factory;
     private SettingsViewModel mOffersViewModel;
     private FragmentSettingsBinding mViewBinding;
-
-
-    public static SettingsFragment newInstance() {
-        Bundle args = new Bundle();
-        SettingsFragment fragment = new SettingsFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        getViewModel().setUp();
-//    }
 
     @Override
     public int getBindingVariable() {
@@ -76,18 +62,9 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
     @Override
     protected void setUp() {
         mViewBinding = getViewDataBinding();
+        setUpToolbar(mViewBinding.toolbar, TAG, R.string.settings);
+        mViewBinding.setUser(
+                User.getInstance());
         mOffersViewModel.setUp();
     }
-
-    @Override
-    public void goBack() {
-        getBaseActivity().onFragmentDetached(TAG);
-    }
-
-    @Override
-    public void showToast(String message) {
-
-    }
-
-
 }

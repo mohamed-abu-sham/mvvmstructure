@@ -2,27 +2,27 @@ package com.selwantech.raheeb.ui.auth.phonenumber;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.databinding.ActivityPhoneNumberBinding;
+import com.selwantech.raheeb.databinding.FragmentUpdatePhoneBinding;
+import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.repository.DataManager;
-import com.selwantech.raheeb.ui.base.BaseActivity;
+import com.selwantech.raheeb.ui.base.BaseFragment;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
-public class PhoneNumberActivity extends BaseActivity<ActivityPhoneNumberBinding, PhoneNumberViewModel>
+public class PhoneNumberFragment extends BaseFragment<FragmentUpdatePhoneBinding, PhoneNumberViewModel>
         implements PhoneNumberNavigator {
 
     int type;
     @Inject
     ViewModelProviderFactory factory;
     private PhoneNumberViewModel mPhoneNumberViewModel;
-    private ActivityPhoneNumberBinding mViewBinding;
+    private FragmentUpdatePhoneBinding mViewBinding;
 
     public static Intent newIntent(Context context, int type) {
-        return new Intent(context, PhoneNumberActivity.class).putExtra("type", type);
+        return new Intent(context, PhoneNumberFragment.class).putExtra("type", type);
     }
 
     @Override
@@ -31,14 +31,23 @@ public class PhoneNumberActivity extends BaseActivity<ActivityPhoneNumberBinding
     }
 
     @Override
-    public void setUpToolbar() {
-        setUpToolbar(getViewDataBinding().toolbar.toolbar,
-                R.string.phone_number, true);
+    public boolean hideBottomSheet() {
+        return true;
+    }
+
+    @Override
+    public boolean isNeedActivityResult() {
+        return false;
+    }
+
+    @Override
+    public ActivityResultCallBack activityResultCallBack() {
+        return null;
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_phone_number;
+        return R.layout.fragment_update_phone;
     }
 
     @Override
@@ -50,16 +59,15 @@ public class PhoneNumberActivity extends BaseActivity<ActivityPhoneNumberBinding
 
     @Override
     public Context getMyContext() {
-        return this;
+        return getContext();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setUp() {
         mViewBinding = getViewDataBinding();
-        type = getIntent().getIntExtra("type", 0);
+        setUpToolbar(mViewBinding.toolbar, "", R.string.change_phone_number);
+        type = getArguments().getInt("type", 0);
         mPhoneNumberViewModel.setType(type);
-
     }
 
 }

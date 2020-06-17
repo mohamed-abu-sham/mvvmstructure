@@ -2,28 +2,25 @@ package com.selwantech.raheeb.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.CellSettingItemBinding;
 import com.selwantech.raheeb.interfaces.RecyclerClickNoData;
 import com.selwantech.raheeb.ui.base.BaseViewHolder;
+import com.selwantech.raheeb.viewmodel.ItemSettingViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 public class SettingsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    ArrayList<Integer> arrayListText;
-    ArrayList<Integer> arrayListImages;
+    ArrayList<String> arrayListText;
     Context mContext;
     RecyclerClickNoData mRecyclerClick;
 
-    public SettingsAdapter(Context mContext, RecyclerClickNoData mRecyclerClick, List<Integer> images, List<Integer> text) {
-        this.arrayListImages = new ArrayList<>(images);
+    public SettingsAdapter(Context mContext, RecyclerClickNoData mRecyclerClick, List<String> text) {
         this.arrayListText = new ArrayList<>(text);
         this.mContext = mContext;
         this.mRecyclerClick = mRecyclerClick;
@@ -31,8 +28,8 @@ public class SettingsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (!arrayListImages.isEmpty()) {
-            return arrayListImages.size();
+        if (!arrayListText.isEmpty()) {
+            return arrayListText.size();
         } else {
             return 0;
         }
@@ -50,8 +47,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return new SettingsItemViewHolder(cellSettingBinding);
     }
 
-    public void addItems(List<Integer> images, List<Integer> text) {
-        arrayListImages.addAll(images);
+    public void addItems(List<String> text) {
         arrayListText.addAll(text);
     }
 
@@ -67,12 +63,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            mBinding.textView.setText(arrayListText.get(position));
-            mBinding.imageView.setImageResource(arrayListImages.get(position));
-            mBinding.itemView.setOnClickListener(v -> mRecyclerClick.onClick(position));
-            if (position == arrayListImages.size() - 1) {
-                mBinding.imgArrow.setVisibility(View.GONE);
-                mBinding.textView.setTextColor(mContext.getResources().getColor(R.color.red));
+            if (mBinding.getViewModel() == null) {
+                mBinding.setViewModel(new ItemSettingViewModel(mContext, arrayListText.get(position), position, mRecyclerClick));
+            } else {
+                mBinding.getViewModel().setText(arrayListText.get(position));
             }
         }
 

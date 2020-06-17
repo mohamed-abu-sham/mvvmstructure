@@ -5,8 +5,6 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import androidx.databinding.ViewDataBinding;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityOtpVerifierBinding;
@@ -26,6 +24,8 @@ import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 import com.selwantech.raheeb.ui.main.MainActivity;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.TimeUtils;
+
+import androidx.databinding.ViewDataBinding;
 
 public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, ActivityOtpVerifierBinding> {
 
@@ -57,39 +57,73 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
 
     public void verifyCode() {
         if (isValidate()) {
-            getDataManager().getAuthService().verifyOtp(getMyContext(),
-                    true, User.getInstance().getToken(), getOtp(), new APICallBack<String>() {
-                        @Override
-                        public void onSuccess(String response) {
-                            if (type == PhoneNumberTypes.REGISTER.getValue()) {
-                                registerUser();
-                            }
-//                            else if (((OtpVerifierActivity) getMyContext()).getType() == PhoneNumberTypes.REGISTER_SOCIAL.getValue()) {
-//                                if (User.getObjUser() == null) {
-//                                    showErrorDialog();
-//                                } else {
-//                                    registerSocial();
-//                                }
-//                            } else if (((OtpVerifierActivity) getMyContext()).getType() == PhoneNumberTypes.FORGET_PASSWORD.getValue()) {
-//                                getMyContext().startActivity
-//                                        (CreatePasswordActivity.newIntent(getMyContext(), token));
-//                            }
-
-                        }
-
-                        @Override
-                        public void onError(String error, int errorCode) {
-                            showSnackBar(getMyContext().getString(R.string.error),
-                                    error, getMyContext().getResources().getString(R.string.ok),
-                                    new SnackViewBulider.SnackbarCallback() {
-                                        @Override
-                                        public void onActionClick(Snackbar snackbar) {
-                                            snackbar.dismiss();
-                                        }
-                                    });
-                        }
-                    });
+            if (type == PhoneNumberTypes.REGISTER.getValue()) {
+                verifyOtp();
+            } else if (type == PhoneNumberTypes.CHANGE_PHONE_NUMBER.getValue()) {
+                verifyOtpToUpdate();
+            }
         }
+    }
+
+    private void verifyOtpToUpdate() {
+        getDataManager().getAuthService().verifyOtpToUpdate(getMyContext(),
+                true, getNavigator().getToken(), getOtp(), new APICallBack<User>() {
+                    @Override
+                    public void onSuccess(User response) {
+                        showSuccessDialog();
+                    }
+
+                    @Override
+                    public void onError(String error, int errorCode) {
+                        showSnackBar(getMyContext().getString(R.string.error),
+                                error, getMyContext().getResources().getString(R.string.ok),
+                                new SnackViewBulider.SnackbarCallback() {
+                                    @Override
+                                    public void onActionClick(Snackbar snackbar) {
+                                        snackbar.dismiss();
+                                    }
+                                });
+                    }
+                });
+    }
+
+    private void verifyOtp() {
+        getDataManager().getAuthService().verifyOtp(getMyContext(),
+                true, User.getInstance().getToken(), getOtp(), new APICallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        registerUser();
+                    }
+
+                    @Override
+                    public void onError(String error, int errorCode) {
+                        showSnackBar(getMyContext().getString(R.string.error),
+                                error, getMyContext().getResources().getString(R.string.ok),
+                                new SnackViewBulider.SnackbarCallback() {
+                                    @Override
+                                    public void onActionClick(Snackbar snackbar) {
+                                        snackbar.dismiss();
+                                    }
+                                });
+                    }
+                });
+    }
+
+    private void showSuccessDialog() {
+        new OnLineDialog(getMyContext()) {
+            @Override
+            public void onPositiveButtonClicked() {
+                dismiss();
+                getBaseActivity().finishAffinity();
+                getBaseActivity().startActivity(MainActivity.newIntent(getMyContext()));
+            }
+
+            @Override
+            public void onNegativeButtonClicked() {
+                dismiss();
+            }
+        }.showConfirmationDialog(DialogTypes.OK, getMyContext().getResources().getString(R.string.success),
+                getMyContext().getResources().getString(R.string.update_successfully));
     }
 
     public void registerUser() {

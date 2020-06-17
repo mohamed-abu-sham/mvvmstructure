@@ -12,8 +12,9 @@ public class SessionManager {
     private static final String IS_LOGIN = "IsLoggedIn";
     private static final String KEY_OBJECT_USER = "objUser";
     private static final String KEY_LANGUAGE = "language";
-    private static final String KEY_ALLOW_NOTIFICATIONS = "allowNotifications";
     private static final String KEY_FIREBASE_TOKEN = "deviceToken";
+    private static final String KEY_ALLOW_EMAIL_NOTIFICATIONS = "allowEmailNotifications";
+    private static final String KEY_ALLOW_PUSH_NOTIFICATIONS = "allowPushNotifications";
     // Editor for Shared preferences
     static SharedPreferences.Editor editor;
     private static SharedPreferences mSharedPref;
@@ -73,7 +74,33 @@ public class SessionManager {
         saveFireBaseToken(oldToken);
     }
 
+    public static boolean ispUSHNotificationAllowed() {
+        return mSharedPref.getBoolean(KEY_ALLOW_PUSH_NOTIFICATIONS, true);
+    }
 
+    public static int isPushNotificationAllowedInt() {
+        return mSharedPref.getBoolean(KEY_ALLOW_PUSH_NOTIFICATIONS, true) ? 1 : 0;
+    }
+
+    public static void setPushNotificationAllowed(boolean NotificationAllowed) {
+        editor = mSharedPref.edit();
+        editor.putBoolean(KEY_ALLOW_PUSH_NOTIFICATIONS, NotificationAllowed);
+        editor.commit();
+    }
+
+    public static boolean isEmailNotificationAllowed() {
+        return mSharedPref.getBoolean(KEY_ALLOW_EMAIL_NOTIFICATIONS, true);
+    }
+
+    public static void setEmailNotificationAllowed(boolean NotificationAllowed) {
+        editor = mSharedPref.edit();
+        editor.putBoolean(KEY_ALLOW_EMAIL_NOTIFICATIONS, NotificationAllowed);
+        editor.commit();
+    }
+
+    public static int isEmailNotificationAllowedInt() {
+        return mSharedPref.getBoolean(KEY_ALLOW_EMAIL_NOTIFICATIONS, true) ? 1 : 0;
+    }
     public static boolean isLoggedIn() {
         return mSharedPref.getBoolean(IS_LOGIN, false);
     }
@@ -90,16 +117,6 @@ public class SessionManager {
 
     public static String getisSetLanguage() {
         return mSharedPref.getString(KEY_LANGUAGE, "");
-    }
-
-    public static boolean getIsNotificationAllowed() {
-        return mSharedPref.getBoolean(KEY_ALLOW_NOTIFICATIONS, true);
-    }
-
-    public static void setIsNotificationAllowed(boolean NotificationAllowed) {
-        editor = mSharedPref.edit();
-        editor.putBoolean(KEY_ALLOW_NOTIFICATIONS, NotificationAllowed);
-        editor.commit();
     }
 
     public static void saveFireBaseToken(String token) {

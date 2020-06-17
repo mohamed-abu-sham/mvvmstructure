@@ -23,7 +23,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
@@ -85,6 +84,13 @@ public class AppService {
                 .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
     }
 
+    public void getAbout(Context mContext, boolean enableLoading, APICallBack<String> apiCallBack) {
+        getDataApi().about()
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
     public DataApi getDataApi() {
         return mDataApi;
     }
@@ -107,6 +113,8 @@ public class AppService {
         @POST(ApiConstants.apiAppService.TICKET)
         Single<Response<GeneralResponse<String>>> sendHelp(@Query("message") String message);
 
+        @GET(ApiConstants.apiAppService.ABOUT)
+        Single<Response<GeneralResponse<String>>> about();
 
     }
 }

@@ -2,20 +2,14 @@ package com.selwantech.raheeb.ui.accountjourney.account;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.text.Html;
-import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAccountBinding;
-import com.selwantech.raheeb.databinding.FragmentUserProfileBinding;
 import com.selwantech.raheeb.enums.PickImageTypes;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.helper.SessionManager;
-import com.selwantech.raheeb.model.ProductOwner;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -24,16 +18,11 @@ import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.CustomUploadingDialog;
 import com.selwantech.raheeb.ui.dialog.PickImageFragmentDialog;
-import com.selwantech.raheeb.ui.userprofilejourney.myoffers.MyOffersFragment;
-import com.selwantech.raheeb.ui.userprofilejourney.user_profile_details.UserProfileDetailsFragment;
-import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.PickImageUtility;
 import com.selwantech.raheeb.utils.ProgressRequestBody;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.Navigation;
 
@@ -117,6 +106,11 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
     public void onFollowersClicked(){
         Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
                 .navigate(R.id.action_nav_account_to_followersFragment);
+    }
+
+    public void onAccountSettings() {
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.action_nav_account_to_settingsFragment);
     }
 
     public void onAddImageClicked() {

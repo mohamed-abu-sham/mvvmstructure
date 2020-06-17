@@ -11,6 +11,7 @@ public class ApiConstants {
     public class apiAuthService {
         public static final String VERIFY_PHONE = "auth/verifyPhone";
         public static final String VERIFY_CODE = "auth/verifyPhone/check-code";
+        public static final String VERIFY_CODE_TO_UPDATE = "user/update/phone_number";
         public static final String RESEND_CODE = "auth/verifyPhone/reset-code";
         public static final String REGISTER_USER = "auth/new_register";
         public static final String LOGIN_USER = "auth/login";
@@ -22,6 +23,7 @@ public class ApiConstants {
         public static final String UPDATE_PASSWORD = "user/update/password";
         public static final String UPDATE_PROFILE = "user/update/profile";
         public static final String UPDATE_PROFILE_PICTURE = "user/update/avatar";
+        public static final String UPDATE_EMAIL = "user/update/email";
     }
 
     public class apiProductService {
@@ -62,6 +64,7 @@ public class ApiConstants {
         public static final String CURRENCY = "app/currency";
         public static final String TICKET = "user/ticket";
 
+        public static final String ABOUT = "app/about-us";
     }
 
     public class apiMessagesService {
@@ -79,6 +82,9 @@ public class ApiConstants {
         public static final String FOLLOWING = "user/follower/following";
         public static final String FOLLOWERS = "user/follower/followers";
         public static final String GET_PROFILE = "user/profile";
+        public static final String PUSH_NOTIFICATIONS = "user/update/check_send_notification";
+        public static final String EMAIL_NOTIFICATIONS = "user/update/check_send_email";
+        public static final String UPDATE_ID = "user/validation";
     }
 
 }

@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.selwantech.raheeb.utils.AppConstants;
 
 import java.io.Serializable;
 
@@ -48,6 +49,11 @@ public class User implements Serializable {
     String firebase_token;
     @SerializedName("platform")
     String platform = "android";
+
+    @SerializedName("is_send_email")
+    boolean emailNotification;
+    @SerializedName("is_send_notifications")
+    boolean pushNotification;
 
     public User() {
 
@@ -200,6 +206,9 @@ public class User implements Serializable {
         return login_with;
     }
 
+    public boolean isLoggedInWithTwitter() {
+        return getLogin_with().equals(AppConstants.LOGGED_IN_TYPE.TWITTER);
+    }
     public void setLogin_with(String login_with) {
         this.login_with = login_with;
     }
@@ -234,5 +243,21 @@ public class User implements Serializable {
 
     public void setRate(double rate) {
         this.rate = rate;
+    }
+
+    public boolean isEmailNotification() {
+        return emailNotification;
+    }
+
+    public void setEmailNotification(boolean emailNotification) {
+        this.emailNotification = emailNotification;
+    }
+
+    public boolean isPushNotification() {
+        return pushNotification;
+    }
+
+    public void setPushNotification(boolean pushNotification) {
+        this.pushNotification = pushNotification;
     }
 }

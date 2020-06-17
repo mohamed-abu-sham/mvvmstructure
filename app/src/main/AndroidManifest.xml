@@ -69,7 +69,7 @@
         <activity android:name=".ui.auth.register.RegisterActivity"/>
         <activity android:name=".ui.auth.createpassword.CreatePasswordActivity"/>
         <activity android:name=".ui.auth.otpverifier.OtpVerifierActivity"/>
-        <activity android:name=".ui.auth.phonenumber.PhoneNumberActivity"/>
+        <activity android:name=".ui.auth.phonenumber.PhoneNumberFragment" />
         <activity android:name=".ui.filebox.FileBoxActivity"/>
 
         <activity android:name=".ui.main.MainActivity">

@@ -145,6 +145,9 @@
         <action
             android:id="@+id/action_nav_account_to_followersFragment"
             app:destination="@id/followersFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -158,5 +161,53 @@
         android:id="@+id/followersFragment"
         android:name="com.selwantech.raheeb.ui.accountjourney.followers.FollowersFragment"
         android:label="FollowersFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.settings.SettingsFragment"
+        android:label="SettingsFragment">
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_phoneNumberFragment"
+            app:destination="@id/phoneNumberFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_updateEmailFragment"
+            app:destination="@id/updateEmailFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_updateIDFragment"
+            app:destination="@id/updateIDFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.about.AboutFragment"
+        android:label="AboutFragment" />
+    <fragment
+        android:id="@+id/phoneNumberFragment"
+        android:name="com.selwantech.raheeb.ui.auth.phonenumber.PhoneNumberFragment"
+        android:label="PhoneNumberFragment">
+        <action
+            android:id="@+id/action_phoneNumberFragment_to_otpVerifierActivity"
+            app:destination="@id/otpVerifierActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateEmailFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.updateemail.UpdateEmailFragment"
+        android:label="UpdateEmailFragment" />
+    <fragment
+        android:id="@+id/updateIDFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.updateid.UpdateIDFragment"
+        android:label="UpdateIDFragment" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.selwantech.raheeb.ui.auth.changepassword.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
+    <activity
+        android:id="@+id/otpVerifierActivity"
+        android:name="com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierActivity"
+        android:label="OtpVerifierActivity" />
 
 </navigation>

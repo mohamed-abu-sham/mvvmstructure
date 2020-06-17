@@ -5,53 +5,51 @@
     <data>
 
         <variable
-            name="all"
-            type="com.selwantech.raheeb.ui.adapter.SettingsAdapter" />
+            name="viewModel"
+            type="com.selwantech.raheeb.viewmodel.ItemSettingViewModel" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/itemView"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:onClick="@{viewModel::onItemClick}"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_3sdp">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/itemView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/imgArrow"
-            android:gravity="center|start"
-            android:orientation="horizontal">
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
-                app:srcCompat="@drawable/ic_person" />
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
+                style="@style/poppins_regular"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/cardView"
-                android:layout_alignBottom="@id/cardView"
+                android:layout_width="match_parent"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_toEndOf="@+id/cardView"
-                android:text="orders"
+                android:layout_toStartOf="@id/imgArrow"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
-        </LinearLayout>
+                android:text="@{viewModel.text}"
+                android:textSize="13sp" />
 
-        <ImageView
-            android:id="@+id/imgArrow"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            app:srcCompat="@drawable/ic_arrow_right" />
+            <ImageView
+                android:id="@+id/imgArrow"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:srcCompat="@drawable/ic_arrow_forward" />
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </layout>

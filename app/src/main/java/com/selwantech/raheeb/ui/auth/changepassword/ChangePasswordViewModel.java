@@ -2,23 +2,18 @@ package com.selwantech.raheeb.ui.auth.changepassword;
 
 import android.content.Context;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChangePasswordBinding;
 import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import androidx.databinding.ViewDataBinding;
 
 public class ChangePasswordViewModel extends BaseViewModel<ChangePasswordNavigator, FragmentChangePasswordBinding> {
 
@@ -27,23 +22,24 @@ public class ChangePasswordViewModel extends BaseViewModel<ChangePasswordNavigat
 
     }
 
+    @Override
+    protected void setUp() {
+
+    }
+
     public void changePasswordClicked() {
         if (isValid()) {
-            getDataManager().getAuthService().getDataApi().updatePassword(
-                    getViewBinding().edNewPassword.getText().toString(), getViewBinding().edConfirmNewPassword.getText().toString(),
-                    getViewBinding().edOldPassword.getText().toString()
-            )
-                    .toObservable()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new CustomObserverResponse<String>(getMyContext(), true, new APICallBack<String>() {
+            getDataManager().getAuthService().updatePassword(getMyContext(), true,
+                    getViewBinding().edNewPassword.getText().toString(),
+                    getViewBinding().edConfirmNewPassword.getText().toString(),
+                    getViewBinding().edOldPassword.getText().toString(), new APICallBack<String>() {
                         @Override
                         public void onSuccess(String response) {
                             new OnLineDialog(getMyContext()) {
                                 @Override
                                 public void onPositiveButtonClicked() {
                                     dismiss();
-                                    Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment).popBackStack();
+                                    popUp();
                                 }
 
                                 @Override
@@ -65,7 +61,7 @@ public class ChangePasswordViewModel extends BaseViewModel<ChangePasswordNavigat
                                         }
                                     });
                         }
-                    }));
+                    });
         }
     }
 
@@ -90,8 +86,5 @@ public class ChangePasswordViewModel extends BaseViewModel<ChangePasswordNavigat
         return error == 0;
     }
 
-    @Override
-    protected void setUp() {
 
-    }
 }

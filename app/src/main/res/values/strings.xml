@@ -3,8 +3,8 @@
     <string name="map_key" translatable="false">AIzaSyADWumOKZmJty-5SD81hown6kTLKQgAaU0</string>
     <string name="facebook_app_id" translatable="false">305302623766887</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb231516321368439</string>
-    <string name="twitter_api_key" translatable="false">UVr8SSMi7JLm1YvL8vpRrjCOi</string>
-    <string name="twitter_api_secret" translatable="false">X5Smj0AZ6h314OnP9FqfIKYDjWRoe1J3GS3zo0WolS6c5P2c0U</string>
+    <string name="twitter_api_key" translatable="false">5KaQYELIrBucKAZssVTWRBhjV</string>
+    <string name="twitter_api_secret" translatable="false">qjBCRw9NjcSHdJaSevp6iaYfHmsDfxgY9hbnoQZEiNZ63UMKcC</string>
     <string name="app_name">Raheeb</string>
     <string name="Loading">Loading ...</string>
     <string name="log_in">Login</string>
@@ -369,6 +369,21 @@
     <string name="payment_and_sales"><![CDATA[Payment & Sales]]></string>
     <string name="account_settings">Account Settings</string>
     <string name="please_try_again">please try again</string>
+    <string name="last_password">Last password</string>
+    <string name="upload_id_image">Upload Identification image</string>
+    <string name="connected_with_twitter">Connected with twitter</string>
+    <string name="connect_with_twitter">Connect with twitter</string>
+    <string name="set_your_location">Set your location</string>
+    <string name="about_raheeb">About Raheeb</string>
+    <string name="info">Info</string>
+    <string name="push">Push</string>
+    <string name="change_email">Change Email</string>
+    <string name="enter_your_email">Enter Your Email</string>
+    <string name="please_enter_valid_email">Please enter valid email</string>
+    <string name="please_fill_your_email">Please fill your email</string>
+    <string name="official_id">Official id</string>
+    <string name="please_pick_the_id_picture">Please pick the id picture</string>
+    <string name="upload_successful">Upload successful</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

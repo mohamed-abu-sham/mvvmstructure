@@ -2,10 +2,6 @@ package com.selwantech.raheeb.repository.network.services;
 
 import android.content.Context;
 
-import com.selwantech.raheeb.helper.GeneralFunction;
-import com.selwantech.raheeb.model.Condition;
-import com.selwantech.raheeb.model.Distance;
-import com.selwantech.raheeb.model.Product;
 import com.selwantech.raheeb.model.ProductOwner;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -85,6 +81,30 @@ public class AccountService {
                 .subscribe(new CustomObserverResponse<User>(mContext, enableLoading, apiCallBack));
     }
 
+    public void updatePushNotifications(Context mContext, boolean enableLoading, APICallBack<User> apiCallBack) {
+        getDataApi().updatePushNotifications()
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<User>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void updateEmailNotifications(Context mContext, boolean enableLoading, APICallBack<User> apiCallBack) {
+        getDataApi().updateEmailNotifications()
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<User>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void updateID(Context mContext, boolean enableLoading, MultipartBody.Part image, APICallBack<User> apiCallBack) {
+        getDataApi().updateID(image)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<User>(mContext, enableLoading, apiCallBack));
+    }
+
     public DataApi getDataApi() {
         return mDataApi;
     }
@@ -107,7 +127,15 @@ public class AccountService {
         @GET(ApiConstants.apiAccountService.GET_PROFILE)
         Single<Response<GeneralResponse<User>>> getProfile();
 
+        @POST(ApiConstants.apiAccountService.PUSH_NOTIFICATIONS)
+        Single<Response<GeneralResponse<User>>> updatePushNotifications();
 
+        @POST(ApiConstants.apiAccountService.EMAIL_NOTIFICATIONS)
+        Single<Response<GeneralResponse<User>>> updateEmailNotifications();
+
+        @Multipart
+        @POST(ApiConstants.apiAccountService.UPDATE_ID)
+        Single<Response<GeneralResponse<User>>> updateID(@Part MultipartBody.Part avatar);
 
     }
 }

@@ -21,11 +21,11 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     private ChatViewModel mViewModel;
     private FragmentChatBinding mViewBinding;
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mViewModel.destroySocket();
-    }
+//    @Override
+//    public void onPause() {
+//        mViewModel.destroySocket();
+//        super.onPause();
+//    }
 
     @Override
     public void onResume() {
@@ -92,8 +92,10 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
 
     @Override
     public void setUpToolbar(Chat chat){
-        setUpToolbar(mViewBinding.toolbar, "", chat.getUser().getName());
+        mViewBinding.toolbar.toolbar.setNavigationIcon(getMyContext().getResources().getDrawable(R.drawable.ic_arrow_back));
+        mViewBinding.toolbar.toolbar.setTitle(chat.getUser().getName());
     }
+
     @Override
     public Chat getChat() {
         return (Chat) getArguments().getSerializable(AppConstants.BundleData.CHAT);

@@ -34,7 +34,7 @@
                         android:layout_height="@dimen/_15sdp"
                         android:layout_centerInParent="true"
                         android:layout_toStartOf="@id/imgShare"
-                        android:onClick="@{()->viewModel.onReportClicked()}"
+                        android:onClick="@{()->viewModel.onValidateItemsClicked()}"
                         app:srcCompat="@drawable/ic_trusted_with_dot" />
 
                     <ImageView
@@ -146,12 +146,14 @@
                                 android:orientation="horizontal"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:gravity="center|start"
-                                android:background="@color/color_blue_twitter">
+                                android:background="@color/color_blue_twitter"
+                                android:onClick="@{()-> viewModel.onTwitterFriendsClicked()}"
+                                android:visibility="@{viewModel.user.isTwitterFriends()}">
 
                                 <ImageView
                                     android:layout_width="@dimen/_30sdp"
                                     android:layout_height="@dimen/_30sdp"
-                                    circleImageUrl="@{viewModel.user.avatar}"
+                                    circleImageUrl="@{viewModel.user.getFirstTwitterFriend()}"
                                     android:layout_marginStart="@dimen/_15sdp"/>
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="@dimen/_30sdp"
@@ -175,7 +177,7 @@
                                     android:textColor="@color/black"
                                     style="@style/poppins_regular"
                                     android:textSize="13sp"
-                                    android:text="@string/invite_friends_and_get"/>
+                                    android:text="@{viewModel.user.getTwitterFriendsNumber()}" />
 
                             </LinearLayout>
 
@@ -184,7 +186,9 @@
                                 android:layout_height="@dimen/_40sdp"
                                 android:orientation="horizontal"
                                 android:gravity="center|start"
-                                android:background="@color/color_blue_invite">
+                                android:background="@color/color_blue_invite"
+                                android:onClick="@{()->viewModel.onInviteClicked()}"
+                                android:visibility="@{viewModel.user.isShow_rate_invite()}">
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="@dimen/_30sdp"
@@ -208,7 +212,7 @@
                                     android:textColor="@color/black"
                                     style="@style/poppins_regular"
                                     android:textSize="13sp"
-                                    android:text="@string/invite_friends_and_get"/>
+                                    android:text="@{viewModel.user.getRateInvite}" />
 
                             </LinearLayout>
 

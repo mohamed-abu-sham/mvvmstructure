@@ -3,7 +3,6 @@ package com.selwantech.raheeb.ui.accountjourney.settings;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
@@ -12,6 +11,7 @@ import com.selwantech.raheeb.enums.PhoneNumberTypes;
 import com.selwantech.raheeb.enums.SettingsTypes;
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.interfaces.RecyclerClickNoData;
+import com.selwantech.raheeb.model.RegisterResponse;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -20,6 +20,7 @@ import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
+import com.selwantech.raheeb.utils.TwitterUtils;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ import androidx.databinding.ViewDataBinding;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class SettingsViewModel extends BaseViewModel<SettingsNavigator, FragmentSettingsBinding> implements RecyclerClickNoData {
+public class SettingsViewModel extends BaseViewModel<SettingsNavigator, FragmentSettingsBinding> implements RecyclerClickNoData, TwitterUtils.TwitterCallback {
 
 
     public <V extends ViewDataBinding, N extends BaseNavigator> SettingsViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
@@ -37,26 +38,11 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
     @Override
     protected void setUp() {
         setUpRecycler();
-        setNotificationSwitches();
+        getViewBinding().setUser(User.getInstance());
     }
 
-    private void setNotificationSwitches() {
-        getViewBinding().switchPush.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updatePushNotifications();
-            }
-        });
 
-        getViewBinding().switchEmail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateEmailNotifications();
-            }
-        });
-    }
-
-    private void updateEmailNotifications() {
+    public void updateEmailNotifications() {
         getDataManager().getAccountService().updateEmailNotifications(getMyContext(), true, new APICallBack<User>() {
             @Override
             public void onSuccess(User response) {
@@ -79,7 +65,7 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
         });
     }
 
-    private void updatePushNotifications() {
+    public void updatePushNotifications() {
         getDataManager().getAccountService().updatePushNotifications(getMyContext(), true, new APICallBack<User>() {
             @Override
             public void onSuccess(User response) {
@@ -149,16 +135,49 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
                 }
                 break;
             case TWITTER:
-
+                if (!User.getInstance().getLogin_with().equals(AppConstants.LOGGED_IN_TYPE.TWITTER)) {
+                    connectWithTwitter();
+                }
                 break;
             case PASSWORD:
                 Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
                         .navigate(R.id.action_settingsFragment_to_changePasswordFragment);
                 break;
             case LOCATION:
-
+                Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.action_settingsFragment_to_setLocationFragment);
                 break;
         }
     }
 
+    private void connectWithTwitter() {
+        TwitterUtils twitterUtils = new TwitterUtils(getBaseActivity(), this::twitterUser);
+        twitterUtils.twitterClick();
+    }
+
+    @Override
+    public void twitterUser(User user) {
+        getDataManager().getAuthService().connectTwitterUser(getMyContext(),
+                true, user.getSocial_id(), new APICallBack<RegisterResponse>() {
+                    @Override
+                    public void onSuccess(RegisterResponse response) {
+                        User user = response.getUser();
+                        user.setToken(response.getJwt_token());
+                        User.getInstance().setObjUser(user);
+                        SessionManager.createUserLoginSession();
+                    }
+
+                    @Override
+                    public void onError(String error, int errorCode) {
+                        showSnackBar(getMyContext().getString(R.string.error),
+                                error, getMyContext().getResources().getString(R.string.ok),
+                                new SnackViewBulider.SnackbarCallback() {
+                                    @Override
+                                    public void onActionClick(Snackbar snackbar) {
+                                        snackbar.dismiss();
+                                    }
+                                });
+                    }
+                });
+    }
 }

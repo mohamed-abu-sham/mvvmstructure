@@ -98,6 +98,7 @@
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:checked="@{user.emailNotification}"
                             android:thumb="@drawable/switch_color"
+                            android:onClick="@{()->viewModel.updateEmailNotifications()}"
                             android:track="@drawable/switch_track_color" />
                     </RelativeLayout>
 
@@ -137,6 +138,7 @@
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:checked="@{user.pushNotification}"
                             android:thumb="@drawable/switch_color"
+                            android:onClick="@{()->viewModel.updatePushNotifications()}"
                             android:track="@drawable/switch_track_color" />
                     </RelativeLayout>
 

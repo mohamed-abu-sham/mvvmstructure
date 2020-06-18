@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.selwantech.raheeb.viewmodel.ItemValidateViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:gravity="center"
+        android:onClick="@{viewModel::onItemClick}"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            cardviewBackgroundColor="@{viewModel.validateItem.color}"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                imageResources="@{viewModel.validateItem.image}"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_gravity="center" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            style="@style/poppins_regular"
+            textResources="@{viewModel.validateItem.text}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="9sp" />
+
+    </LinearLayout>
+
+</layout>

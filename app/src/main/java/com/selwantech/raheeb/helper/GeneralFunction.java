@@ -6,21 +6,15 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.databinding.BindingAdapter;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.selwantech.raheeb.App;
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.utils.LanguageUtils;
 import com.selwantech.raheeb.utils.ProgressRequestBody;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -31,6 +25,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.databinding.BindingAdapter;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -45,6 +43,11 @@ public class GeneralFunction {
         requestOptions.placeholder(R.drawable.ic_loading);
         requestOptions.error(R.color.navigation_gray);
         Glide.with(imageView.getContext()).applyDefaultRequestOptions(requestOptions).load(url).into(imageView);
+    }
+
+    @BindingAdapter("cardviewBackgroundColor")
+    public static void setCardBackgroundColor(CardView cardView, int color) {
+        cardView.setCardBackgroundColor(App.getInstance().getResources().getColor(color));
     }
 
     @BindingAdapter("circleImageUrl")

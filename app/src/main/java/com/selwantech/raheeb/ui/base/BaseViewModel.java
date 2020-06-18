@@ -4,15 +4,15 @@ package com.selwantech.raheeb.ui.base;
 import android.content.Context;
 import android.widget.Toast;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModel;
-import androidx.navigation.Navigation;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.lang.ref.WeakReference;
+
+import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.navigation.Navigation;
 
 
 public abstract class BaseViewModel<N, T extends ViewDataBinding> extends ViewModel {
@@ -80,7 +80,8 @@ public abstract class BaseViewModel<N, T extends ViewDataBinding> extends ViewMo
     }
 
     protected void popUp() {
-        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment).popBackStack();
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment).popBackStack(Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment).
+                getCurrentDestination().getId(), true);
     }
 
 }

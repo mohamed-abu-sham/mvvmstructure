@@ -1,9 +1,14 @@
 package com.selwantech.raheeb.model;
 
+import android.view.View;
+
 import com.google.gson.annotations.SerializedName;
+import com.selwantech.raheeb.App;
+import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.utils.AppConstants;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     private static User objUser = null;
@@ -54,6 +59,16 @@ public class User implements Serializable {
     boolean emailNotification;
     @SerializedName("is_send_notifications")
     boolean pushNotification;
+
+    @SerializedName("show_rate_invite")
+    boolean show_rate_invite;
+
+    @SerializedName("rate_invite")
+    Price rateInvite;
+
+
+    @SerializedName("twitter_frinds")
+    ArrayList<String> twitter_frinds;
 
     public User() {
 
@@ -259,5 +274,44 @@ public class User implements Serializable {
 
     public void setPushNotification(boolean pushNotification) {
         this.pushNotification = pushNotification;
+    }
+
+    public int isShow_rate_invite() {
+        return show_rate_invite ? View.VISIBLE : View.GONE;
+    }
+
+    public void setShow_rate_invite(boolean show_rate_invite) {
+        this.show_rate_invite = show_rate_invite;
+    }
+
+    public String getRateInvite() {
+        return App.getInstance().getResources().getString(R.string.invite_friends_and_get) + " " + rateInvite.getFormatted();
+    }
+
+    public void setRateInvite(Price rateInvite) {
+        this.rateInvite = rateInvite;
+    }
+
+    public ArrayList<String> getTwitter_frinds() {
+        return twitter_frinds;
+    }
+
+    public void setTwitter_frinds(ArrayList<String> twitter_frinds) {
+        this.twitter_frinds = twitter_frinds;
+    }
+
+    public int isTwitterFriends() {
+        return twitter_frinds != null && twitter_frinds.size() > 0 ? View.VISIBLE : View.GONE;
+    }
+
+    public String getFirstTwitterFriend() {
+        return twitter_frinds != null && twitter_frinds.size() > 0 ? twitter_frinds.get(0) : "";
+    }
+
+    public String getTwitterFriendsNumber() {
+        return twitter_frinds != null && twitter_frinds.size() > 0 ?
+                twitter_frinds.size() + " " +
+                        App.getInstance().getResources().getString(R.string.of_your_twitter_friends_are_on_Raheeb)
+                : "";
     }
 }

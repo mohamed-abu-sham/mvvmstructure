@@ -40,6 +40,7 @@ public class Post implements Serializable {
     @SerializedName("category_box_size_id")
     int category_box_size_id;
 
+    Category category;
 
     public ArrayList<String> getImages() {
         return images;
@@ -127,5 +128,13 @@ public class Post implements Serializable {
             partArrayList.add(GeneralFunction.getImageMultipart(image, "images[]"));
         }
         return partArrayList;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

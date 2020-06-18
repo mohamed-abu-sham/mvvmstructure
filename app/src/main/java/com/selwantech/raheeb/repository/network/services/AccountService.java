@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.selwantech.raheeb.model.ProductOwner;
 import com.selwantech.raheeb.model.User;
+import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.ApiClient;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
@@ -65,12 +66,12 @@ public class AccountService {
                 .subscribe(new CustomObserverResponse<ArrayList<ProductOwner>>(mContext, enableLoading, apiCallBack));
     }
 
-    public void getCurrency(Context mContext, boolean enableLoading, APICallBack<String> apiCallBack) {
-        getDataApi().getCurrency()
+    public void getTwitterFriends(Context mContext, boolean enableLoading, int skip, APICallBack<ArrayList<ProductOwner>> apiCallBack) {
+        getDataApi().getTwitterFriends(skip)
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+                .subscribe(new CustomObserverResponse<ArrayList<ProductOwner>>(mContext, enableLoading, apiCallBack));
     }
 
     public void getProfile(Context mContext, boolean enableLoading , APICallBack<User> apiCallBack) {
@@ -105,6 +106,22 @@ public class AccountService {
                 .subscribe(new CustomObserverResponse<User>(mContext, enableLoading, apiCallBack));
     }
 
+    public void updateLocation(Context mContext, boolean enableLoading, double lat, double lon, APICallBack<Object> apiCallBack) {
+        getDataApi().updateLocation(lat, lon)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<Object>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void getInviteToken(Context mContext, boolean enableLoading, APICallBack<VerifyPhoneResponse> apiCallBack) {
+        getDataApi().getInviteToken()
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(mContext, enableLoading, apiCallBack));
+    }
+
     public DataApi getDataApi() {
         return mDataApi;
     }
@@ -120,6 +137,9 @@ public class AccountService {
 
         @GET(ApiConstants.apiAccountService.FOLLOWERS)
         Single<Response<GeneralResponse<ArrayList<ProductOwner>>>> getFollowers(@Query("skip") int skip);
+
+        @GET(ApiConstants.apiAccountService.TWITTER_FRIENDS)
+        Single<Response<GeneralResponse<ArrayList<ProductOwner>>>> getTwitterFriends(@Query("skip") int skip);
 
         @GET(ApiConstants.apiAppService.CURRENCY)
         Single<Response<GeneralResponse<String>>> getCurrency();
@@ -137,6 +157,11 @@ public class AccountService {
         @POST(ApiConstants.apiAccountService.UPDATE_ID)
         Single<Response<GeneralResponse<User>>> updateID(@Part MultipartBody.Part avatar);
 
+        @POST(ApiConstants.apiAccountService.UPDATE_LOCATION)
+        Single<Response<GeneralResponse<Object>>> updateLocation(@Query("lat") double lat, @Query("lon") double lon);
+
+        @POST(ApiConstants.apiAccountService.INVITE_TOKEN)
+        Single<Response<GeneralResponse<VerifyPhoneResponse>>> getInviteToken();
     }
 }
 

@@ -4,28 +4,20 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.selwantech.raheeb.BR;
-import com.selwantech.raheeb.BuildConfig;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivitySplashScreenBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -37,6 +29,7 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     private SplashScreenViewModel mSplashViewModel;
     private ActivitySplashScreenBinding mViewBinding;
 
+    String inviteToken = "";
     public static Intent newIntent(Context context) {
         return new Intent(context, SplashScreenActivity.class);
     }
@@ -72,26 +65,26 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewBinding = getViewDataBinding();
-        printHash();
-    }
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
 
-    private void printHash() {
-        try {
-            PackageInfo p = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID, PackageManager.GET_SIGNATURES);
-            for (Signature s : p.signatures) {
-
-                MessageDigest m = MessageDigest.getInstance("SHA");
-                m.update(s.toByteArray());
-                Log.d("Hashkey", Base64.encodeToString(m.digest(), Base64.DEFAULT));
-            }
-
-
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        if (Intent.ACTION_VIEW.equals(action)) {
+            handleSendText(intent);
         }
     }
+
+    void handleSendText(Intent intent) {
+        Bundle data = new Bundle();
+        String sharedText = intent.getData().toString();
+        if (sharedText != null &&
+                sharedText.contains("invite") &&
+                sharedText.contains("token")) {
+
+            inviteToken = sharedText.substring(sharedText.indexOf("=") + 1);
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -126,4 +119,8 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
         }
     }
 
+    @Override
+    public String getInviteToken() {
+        return inviteToken;
+    }
 }

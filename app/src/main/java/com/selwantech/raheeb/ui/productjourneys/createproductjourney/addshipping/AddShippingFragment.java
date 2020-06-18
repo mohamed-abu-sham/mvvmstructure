@@ -3,8 +3,6 @@ package com.selwantech.raheeb.ui.productjourneys.createproductjourney.addshippin
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.activity.OnBackPressedCallback;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductShippingBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
@@ -16,6 +14,8 @@ import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
+
+import androidx.activity.OnBackPressedCallback;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -71,6 +71,7 @@ public class AddShippingFragment extends BaseFragment<FragmentAddProductShipping
     @Override
     protected void setUp() {
         mViewBinding = getViewDataBinding();
+        mViewBinding.setCategory(getPost().getCategory());
         setUpLocalToolbar();
         mViewModel.setUp();
         setupOnBackPressed();

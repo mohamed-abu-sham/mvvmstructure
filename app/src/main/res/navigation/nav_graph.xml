@@ -75,7 +75,11 @@
     <fragment
         android:id="@+id/shippingInfoFragment"
         android:name="com.selwantech.raheeb.ui.productjourneys.viewproductjourney.shippinginfo.ShippingInfoFragment"
-        android:label="ShippingInfoFragment" />
+        android:label="ShippingInfoFragment">
+        <action
+            android:id="@+id/action_shippingInfoFragment_to_mapPickerFragment"
+            app:destination="@id/mapPickerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_post"
         android:name="com.selwantech.raheeb.ui.productjourneys.createproductjourney.add_product_holder.AddProductHolderFragment"
@@ -148,6 +152,12 @@
         <action
             android:id="@+id/action_nav_account_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_validateItemsFragment"
+            app:destination="@id/validateItemsFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_twitterFriendsFragment"
+            app:destination="@id/twitterFriendsFragment" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -180,6 +190,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_setLocationFragment"
+            app:destination="@id/setLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -209,5 +222,17 @@
         android:id="@+id/otpVerifierActivity"
         android:name="com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierActivity"
         android:label="OtpVerifierActivity" />
+    <fragment
+        android:id="@+id/setLocationFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.setlocation.SetLocationFragment"
+        android:label="SetLocationFragment" />
+    <fragment
+        android:id="@+id/validateItemsFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.validateitems.ValidateItemsFragment"
+        android:label="ValidateItemsFragment" />
+    <fragment
+        android:id="@+id/twitterFriendsFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.twitterfriends.TwitterFriendsFragment"
+        android:label="TwitterFriendsFragment" />
 
 </navigation>

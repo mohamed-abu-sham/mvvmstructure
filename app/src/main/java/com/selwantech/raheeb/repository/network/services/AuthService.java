@@ -108,8 +108,24 @@ public class AuthService {
                 .subscribe(new CustomObserverResponse<User>(mContext, enableLoading, apiCallBack));
     }
 
-    public void registerUser(Context mContext, boolean enableLoading, User user, APICallBack<RegisterResponse> apiCallBack) {
-        getDataApi().registerUser(user)
+    public void registerUser(Context mContext, boolean enableLoading, User user, String token_invite, APICallBack<RegisterResponse> apiCallBack) {
+        getDataApi().registerUser(user, token_invite)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<RegisterResponse>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void registerTwitterUser(Context mContext, boolean enableLoading, User user, String token_invite, APICallBack<RegisterResponse> apiCallBack) {
+        getDataApi().registerTwitterUser(user, token_invite)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<RegisterResponse>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void connectTwitterUser(Context mContext, boolean enableLoading, String userId, APICallBack<RegisterResponse> apiCallBack) {
+        getDataApi().connectTwitterUser(userId)
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -167,7 +183,13 @@ public class AuthService {
         Single<Response<GeneralResponse<VerifyPhoneResponse>>> resendCode(@Query("token") String token);
 
         @POST(ApiConstants.apiAuthService.REGISTER_USER)
-        Single<Response<GeneralResponse<RegisterResponse>>> registerUser(@Body User user);
+        Single<Response<GeneralResponse<RegisterResponse>>> registerUser(@Body User user, @Query("token_invite") String token_invite);
+
+        @POST(ApiConstants.apiAuthService.REGISTER_TWITTER_USER)
+        Single<Response<GeneralResponse<RegisterResponse>>> registerTwitterUser(@Body User user, @Query("token_invite") String token_invite);
+
+        @POST(ApiConstants.apiAuthService.CONNECT_TWITTER_USER)
+        Single<Response<GeneralResponse<RegisterResponse>>> connectTwitterUser(@Query("social_id") String userID);
 
         @POST(ApiConstants.apiAuthService.LOGIN_USER)
         Single<Response<GeneralResponse<RegisterResponse>>> loginUser(@Body LoginObject loginObject);

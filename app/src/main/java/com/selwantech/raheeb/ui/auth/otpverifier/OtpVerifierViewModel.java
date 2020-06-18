@@ -129,7 +129,7 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
     public void registerUser() {
         if (isValidate()) {
             getDataManager().getAuthService().registerUser(getMyContext(),
-                    true, User.getInstance(), new APICallBack<RegisterResponse>() {
+                    true, User.getInstance(), getNavigator().getInviteToken(), new APICallBack<RegisterResponse>() {
                         @Override
                         public void onSuccess(RegisterResponse response) {
                             User user = response.getUser();
@@ -163,7 +163,7 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
                 SessionManager.logoutUser();
                 dismiss();
                 getBaseActivity().finishAffinity();
-                getBaseActivity().startActivity(LoginActivity.newIntent(getMyContext()));
+                getBaseActivity().startActivity(LoginActivity.newIntent(getMyContext(), ""));
             }
 
             @Override

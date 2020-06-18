@@ -29,6 +29,7 @@ public final class AppConstants {
         public static final String CHAT_ID = "CHAT_ID";
         public static final String BUYING_ITEM = "BUYING_ITEM";
         public static final String TOKEN = "TOKEN";
+        public static final String INVITE_TOKEN = "INVITE_TOKEN";
     }
 
     public class FILTER_BY_KEYS {

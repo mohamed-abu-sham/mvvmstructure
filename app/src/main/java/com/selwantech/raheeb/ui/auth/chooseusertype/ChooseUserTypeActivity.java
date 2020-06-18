@@ -8,6 +8,7 @@ import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityChooseUserTypeBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -20,8 +21,8 @@ public class ChooseUserTypeActivity extends BaseActivity<ActivityChooseUserTypeB
     private ChooseUserTypeViewModel mViewModel;
     private ActivityChooseUserTypeBinding mViewBinding;
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, ChooseUserTypeActivity.class);
+    public static Intent newIntent(Context context, String inviteToken) {
+        return new Intent(context, ChooseUserTypeActivity.class).putExtra(AppConstants.BundleData.INVITE_TOKEN, inviteToken);
     }
 
     @Override
@@ -56,4 +57,10 @@ public class ChooseUserTypeActivity extends BaseActivity<ActivityChooseUserTypeB
         super.onCreate(savedInstanceState);
         mViewBinding = getViewDataBinding();
     }
+
+    @Override
+    public String getInviteToken() {
+        return getIntent().getStringExtra(AppConstants.BundleData.INVITE_TOKEN);
+    }
+
 }

@@ -66,13 +66,6 @@
                     android:textSize="10sp" />
 
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imgProductPicture"
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/shape_rounded_empty_gray"
-                android:padding="@dimen/_4sdp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

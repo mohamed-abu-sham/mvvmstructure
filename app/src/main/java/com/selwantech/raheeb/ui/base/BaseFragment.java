@@ -6,16 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.selwantech.raheeb.R;
+import com.selwantech.raheeb.databinding.ToolbarBinding;
+import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
+
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
-
-import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.databinding.ToolbarBinding;
-import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
-
 import dagger.android.support.AndroidSupportInjection;
 
 
@@ -143,6 +142,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         toolbar.toolbar.setTitle(title);
         setUpToolbar(toolbar, TAG);
     }
+
 
     protected void setUpToolbar(ToolbarBinding toolbar, String TAG, String title) {
 //        toolbar.toolbarTitle.setText(title);

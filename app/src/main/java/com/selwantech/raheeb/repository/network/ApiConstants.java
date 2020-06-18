@@ -14,6 +14,8 @@ public class ApiConstants {
         public static final String VERIFY_CODE_TO_UPDATE = "user/update/phone_number";
         public static final String RESEND_CODE = "auth/verifyPhone/reset-code";
         public static final String REGISTER_USER = "auth/new_register";
+        public static final String REGISTER_TWITTER_USER = "auth/login/socialMedia";
+        public static final String CONNECT_TWITTER_USER = "user/verify_twitter";
         public static final String LOGIN_USER = "auth/login";
         public static final String LOGIN_SOCIAL = "auth/login/socialMedia";
         public static final String FORGET_PASSWORD = "auth/forgotPassword/verifyPhone";
@@ -63,7 +65,6 @@ public class ApiConstants {
         public static final String CONDITION = "condition_type";
         public static final String CURRENCY = "app/currency";
         public static final String TICKET = "user/ticket";
-
         public static final String ABOUT = "app/about-us";
     }
 
@@ -81,10 +82,13 @@ public class ApiConstants {
         public static final String UPDATE_AVATAR = "user/update/avatar";
         public static final String FOLLOWING = "user/follower/following";
         public static final String FOLLOWERS = "user/follower/followers";
+        public static final String TWITTER_FRIENDS = "user/twitter_frinds";
         public static final String GET_PROFILE = "user/profile";
         public static final String PUSH_NOTIFICATIONS = "user/update/check_send_notification";
         public static final String EMAIL_NOTIFICATIONS = "user/update/check_send_email";
         public static final String UPDATE_ID = "user/validation";
+        public static final String UPDATE_LOCATION = "user/address";
+        public static final String INVITE_TOKEN = "user/invite_user";
     }
 
 }

@@ -3,13 +3,10 @@ package com.selwantech.raheeb.ui.productjourneys.createproductjourney.add_produc
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductHolderBinding;
+import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.interfaces.BackPressed;
 import com.selwantech.raheeb.model.CreatePostProgress;
 import com.selwantech.raheeb.model.Post;
@@ -17,12 +14,18 @@ import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
+import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.adddetails.AddDetailsFragment;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addimage.AddImageFragment;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addprice.AddPriceFragment;
 import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addshipping.AddShippingFragment;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
+
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNavigator, FragmentAddProductHolderBinding>
         implements BackPressed {
@@ -128,7 +131,20 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
         getDataManager().getProductService().createProduct(getMyContext(), true, post, new APICallBack<String>() {
             @Override
             public void onSuccess(String response) {
-                popUp();
+                new OnLineDialog(getMyContext()) {
+                    @Override
+                    public void onPositiveButtonClicked() {
+                        dismiss();
+                        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                                .navigate(R.id.action_nav_post_to_productsHolderFragment);
+                    }
+
+                    @Override
+                    public void onNegativeButtonClicked() {
+
+                    }
+                }.showConfirmationDialog(DialogTypes.OK, getMyContext().getResources().getString(R.string.success)
+                        , getMyContext().getResources().getString(R.string.product_created_successful));
             }
 
             @Override

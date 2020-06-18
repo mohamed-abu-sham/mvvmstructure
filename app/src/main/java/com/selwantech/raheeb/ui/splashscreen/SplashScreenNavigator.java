@@ -5,4 +5,5 @@ import com.selwantech.raheeb.ui.base.BaseNavigator;
 
 public interface SplashScreenNavigator extends BaseNavigator {
 
+    String getInviteToken();
 }

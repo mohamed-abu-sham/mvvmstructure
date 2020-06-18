@@ -4,14 +4,14 @@ package com.selwantech.raheeb.viewmodel;
 import android.content.Context;
 import android.view.View;
 
-import androidx.databinding.BaseObservable;
-
 import com.selwantech.raheeb.databinding.CellSellingBinding;
 import com.selwantech.raheeb.enums.SellingItemClickTypes;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.interfaces.ItemClickWithType;
 import com.selwantech.raheeb.model.Selling;
 import com.selwantech.raheeb.utils.AppConstants;
+
+import androidx.databinding.BaseObservable;
 
 
 public class ItemSellingViewModel extends BaseObservable {
@@ -46,6 +46,11 @@ public class ItemSellingViewModel extends BaseObservable {
         setData();
     }
 
+    public int isInteractedPeople() {
+        return (selling.getStatus().equals(AppConstants.PRODUCT_STATUS.AVAILABLE)
+                && selling.getInteracted_people() != null &&
+                selling.getInteracted_people().size() > 0) ? View.VISIBLE : View.GONE;
+    }
     private void setData() {
         if (selling.getStatus().equals(AppConstants.PRODUCT_STATUS.AVAILABLE)
                 && selling.getInteracted_people() != null &&
@@ -60,7 +65,6 @@ public class ItemSellingViewModel extends BaseObservable {
                 cellSellingBinding.tvMoreCount.setText("+ " + (selling.getInteracted_people().size() - 2));
                 cellSellingBinding.linearMoreCount.setVisibility(View.VISIBLE);
             }
-            cellSellingBinding.relativeInteracted.setVisibility(View.VISIBLE);
         }
     }
 

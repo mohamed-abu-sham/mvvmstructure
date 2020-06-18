@@ -8,9 +8,12 @@ import com.selwantech.raheeb.ui.accountjourney.account.AccountViewModel;
 import com.selwantech.raheeb.ui.accountjourney.followers.FollowersViewModel;
 import com.selwantech.raheeb.ui.accountjourney.following.FollowingViewModel;
 import com.selwantech.raheeb.ui.accountjourney.help.HelpViewModel;
+import com.selwantech.raheeb.ui.accountjourney.setlocation.SetLocationViewModel;
 import com.selwantech.raheeb.ui.accountjourney.settings.SettingsViewModel;
+import com.selwantech.raheeb.ui.accountjourney.twitterfriends.TwitterFriendsViewModel;
 import com.selwantech.raheeb.ui.accountjourney.updateemail.UpdateEmailViewModel;
 import com.selwantech.raheeb.ui.accountjourney.updateid.UpdateIDViewModel;
+import com.selwantech.raheeb.ui.accountjourney.validateitems.ValidateItemsViewModel;
 import com.selwantech.raheeb.ui.auth.changepassword.ChangePasswordViewModel;
 import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeViewModel;
 import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordViewModel;
@@ -246,6 +249,15 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(UpdateIDViewModel.class)) {
             //noinspection unchecked
             return (T) new UpdateIDViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(SetLocationViewModel.class)) {
+            //noinspection unchecked
+            return (T) new SetLocationViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(ValidateItemsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ValidateItemsViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(TwitterFriendsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new TwitterFriendsViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

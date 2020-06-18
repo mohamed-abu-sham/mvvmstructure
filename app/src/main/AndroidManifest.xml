@@ -59,9 +59,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <data
+                    android:host="raheeb.selwantech.tech"
+                    android:pathPrefix="/invite"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.auth.login.LoginActivity"/>

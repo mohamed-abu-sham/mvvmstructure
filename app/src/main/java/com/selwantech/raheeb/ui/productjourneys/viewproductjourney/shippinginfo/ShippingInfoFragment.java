@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.productjourneys.viewproductjourney.shippinginfo;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.selwantech.raheeb.R;
@@ -8,12 +9,16 @@ import com.selwantech.raheeb.databinding.FragmentShippingInfoBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
+import static android.app.Activity.RESULT_OK;
 
-public class ShippingInfoFragment extends BaseFragment<FragmentShippingInfoBinding, ShippingInfoViewModel> implements ShippingInfoNavigator {
+
+public class ShippingInfoFragment extends BaseFragment<FragmentShippingInfoBinding, ShippingInfoViewModel>
+        implements ShippingInfoNavigator, ActivityResultCallBack {
 
     private static final String TAG = ShippingInfoFragment.class.getSimpleName();
 
@@ -40,12 +45,12 @@ public class ShippingInfoFragment extends BaseFragment<FragmentShippingInfoBindi
 
     @Override
     public boolean isNeedActivityResult() {
-        return false;
+        return true;
     }
 
     @Override
     public ActivityResultCallBack activityResultCallBack() {
-        return null;
+        return this::callBack;
     }
 
     @Override
@@ -75,6 +80,15 @@ public class ShippingInfoFragment extends BaseFragment<FragmentShippingInfoBindi
     @Override
     public SupportMapFragment getChildManager() {
         return (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.search_place_map);
+    }
+
+    @Override
+    public void callBack(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 100) {
+                mViewModel.setLocation(data.getParcelableExtra(AppConstants.BundleData.ADDRESS));
+            }
+        }
     }
 
 }

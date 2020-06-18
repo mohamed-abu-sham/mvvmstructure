@@ -5,12 +5,12 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.view.View;
 
-import androidx.databinding.BaseObservable;
-
 import com.selwantech.raheeb.databinding.CellChatItemSentBinding;
 import com.selwantech.raheeb.interfaces.ChatMessageRecyclerClick;
 import com.selwantech.raheeb.model.ChatObject;
 import com.selwantech.raheeb.utils.AppConstants;
+
+import androidx.databinding.BaseObservable;
 
 
 public class ItemChatMessageSentViewModel extends BaseObservable {
@@ -61,8 +61,6 @@ public class ItemChatMessageSentViewModel extends BaseObservable {
     public void onItemClick(View view) {
         if (!messages.isSent() && messages.getId() <= 0) {
             mRecyclerClick.onClick(messages, position, true);
-        } else {
-            mRecyclerClick.onClick(messages, position, false);
         }
     }
 

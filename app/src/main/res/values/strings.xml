@@ -3,8 +3,8 @@
     <string name="map_key" translatable="false">AIzaSyADWumOKZmJty-5SD81hown6kTLKQgAaU0</string>
     <string name="facebook_app_id" translatable="false">305302623766887</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb231516321368439</string>
-    <string name="twitter_api_key" translatable="false">5KaQYELIrBucKAZssVTWRBhjV</string>
-    <string name="twitter_api_secret" translatable="false">qjBCRw9NjcSHdJaSevp6iaYfHmsDfxgY9hbnoQZEiNZ63UMKcC</string>
+    <string name="twitter_api_key" translatable="false">SxJkaUb4SrxHQlBR9DnTNd2ea</string>
+    <string name="twitter_api_secret" translatable="false">BYN3PogKFnx0KwJJkoMJhBCK9QsooWGVInzSX9LD1GEl5S1UW9</string>
     <string name="app_name">Raheeb</string>
     <string name="Loading">Loading ...</string>
     <string name="log_in">Login</string>
@@ -384,6 +384,14 @@
     <string name="official_id">Official id</string>
     <string name="please_pick_the_id_picture">Please pick the id picture</string>
     <string name="upload_successful">Upload successful</string>
+    <string name="product_created_successful">Product created successful</string>
+    <string name="select">Select</string>
+    <string name="verify_account">Verify account</string>
+    <string name="image">Image</string>
+    <string name="go_to_login">Go To Login ?</string>
+    <string name="login_is_required">Login is required</string>
+    <string name="of_your_twitter_friends_are_on_Raheeb">of your twitter friends are on Raheeb</string>
+    <string name="twitter_friends">Twitter friends</string>
 
     <string-array name="KmArray">
         <item>@string/km5</item>

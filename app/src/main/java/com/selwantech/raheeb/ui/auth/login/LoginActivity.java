@@ -8,6 +8,7 @@ import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityLoginBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -20,8 +21,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     private LoginViewModel mLoginViewModel;
     private ActivityLoginBinding mViewBinding;
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, LoginActivity.class);
+    public static Intent newIntent(Context context, String inviteToken) {
+        return new Intent(context, LoginActivity.class).putExtra(AppConstants.BundleData.INVITE_TOKEN, inviteToken);
     }
 
     @Override
@@ -64,5 +65,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mLoginViewModel.getTwitterAuthClient().onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public String getInviteToken() {
+        return getIntent().getStringExtra(AppConstants.BundleData.INVITE_TOKEN);
     }
 }

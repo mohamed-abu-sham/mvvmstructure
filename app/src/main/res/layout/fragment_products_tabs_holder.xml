@@ -119,8 +119,10 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_15sdp"
-            android:backgroundTint="@color/color_blue"
+            android:elevation="0dp"
             android:onClick="@{()->viewModel.onFilterByClicked()}"
+            app:backgroundTint="@color/color_blue"
+            app:elevation="0dp"
             app:srcCompat="@drawable/ic_filter" />
 
     </RelativeLayout>

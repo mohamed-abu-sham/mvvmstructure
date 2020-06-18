@@ -63,22 +63,48 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    style="@style/poppins_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:singleLine="true"
-                    android:text="@string/name"
+                    style="@style/poppins_regular"
                     android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/location"
                     android:textSize="14sp" />
 
-                <fragment
-                    android:id="@+id/search_place_map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                <RelativeLayout
+                    android:id="@+id/itemView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_135sdp"
-                    android:layout_below="@id/mainLayout"
-                    android:layout_marginTop="@dimen/_5sdp" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp">
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        style="@style/poppins_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/imgArrow"
+                        android:layout_toEndOf="@+id/cardView"
+                        android:gravity="center|start"
+                        android:singleLine="true"
+                        android:text="@string/select"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/imgArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:onClick="@{()->viewModel.onEditLocationClick()}"
+                        android:text="@string/edit"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
 
                 <TextView
                     style="@style/poppins_regular"
@@ -99,7 +125,8 @@
                     android:layout_marginTop="@dimen/_7sdp"
                     android:background="@drawable/extras_background"
                     android:hint="@string/building_number"
-                    android:inputType="textMultiLine"
+                    android:digits="0123456789"
+                    android:inputType="number"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_5sdp"
@@ -127,7 +154,8 @@
                     android:layout_marginBottom="@dimen/_40sdp"
                     android:background="@drawable/extras_background"
                     android:hint="@string/floor_number"
-                    android:inputType="textMultiLine"
+                    android:digits="0123456789"
+                    android:inputType="number"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_5sdp"

@@ -5,4 +5,5 @@ package com.selwantech.raheeb.ui.base;
  * Android component
  */
 public interface BaseNavigator {
+
 }

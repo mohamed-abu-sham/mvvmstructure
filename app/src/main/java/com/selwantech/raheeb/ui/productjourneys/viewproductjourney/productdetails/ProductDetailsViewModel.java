@@ -7,24 +7,13 @@ import android.text.Html;
 import android.view.Gravity;
 import android.view.View;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductDetailsBinding;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.helper.GeoCoderAddress;
+import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.ImagesItem;
 import com.selwantech.raheeb.model.Product;
@@ -37,10 +26,14 @@ import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OfferFragmentDialog;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.LanguageUtils;
-import com.selwantech.raheeb.utils.SmoothMoveMarker;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.io.IOException;
+
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class ProductDetailsViewModel extends
         BaseViewModel<ProductDetailsNavigator, FragmentProductDetailsBinding>
@@ -195,13 +188,19 @@ public class ProductDetailsViewModel extends
     }
 
     public void onFavoriteClicked() {
-        if (product.isIsFaverate()) {
-            product.setFaverate(false);
-            removeFavorite();
-        } else {
-            product.setFaverate(true);
-            addFavorite();
+        if (isLoggedIn()) {
+            if (product.isIsFaverate()) {
+                product.setFaverate(false);
+                removeFavorite();
+            } else {
+                product.setFaverate(true);
+                addFavorite();
+            }
         }
+    }
+
+    private boolean isLoggedIn() {
+        return SessionManager.isLoggedInAndLogin(getBaseActivity());
     }
 
     private void addFavorite() {
@@ -263,20 +262,24 @@ public class ProductDetailsViewModel extends
     }
 
     public void onReportClicked() {
-        Bundle data = new Bundle();
-        data.putSerializable(AppConstants.BundleData.PRODUCT,product);
-        Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
-                .navigate(R.id.action_productDetailsFragment_to_reportProductFragment,data);
+        if (isLoggedIn()) {
+            Bundle data = new Bundle();
+            data.putSerializable(AppConstants.BundleData.PRODUCT, product);
+            Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                    .navigate(R.id.action_productDetailsFragment_to_reportProductFragment, data);
+        }
     }
 
     public void onAskClicked() {
-        if (product.getChatId() == 0) {
-            generateProductChat();
-        } else {
-            Bundle data = new Bundle();
-            data.putSerializable(AppConstants.BundleData.CHAT_ID, product.getChatId());
-            Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                    .navigate(R.id.chatFragment, data);
+        if (isLoggedIn()) {
+            if (product.getChatId() == 0) {
+                generateProductChat();
+            } else {
+                Bundle data = new Bundle();
+                data.putSerializable(AppConstants.BundleData.CHAT_ID, product.getChatId());
+                Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.chatFragment, data);
+            }
         }
     }
 
@@ -307,14 +310,16 @@ public class ProductDetailsViewModel extends
     }
 
     public void onMakeOfferClicked() {
-        OfferFragmentDialog offerFragmentDialog = new OfferFragmentDialog.Builder().build();
-        offerFragmentDialog.setMethodCallBack(new OfferFragmentDialog.OfferCallBack() {
-            @Override
-            public void callBack(double amount) {
-                sendOffer(amount);
-            }
-        });
-        offerFragmentDialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
+        if (isLoggedIn()) {
+            OfferFragmentDialog offerFragmentDialog = new OfferFragmentDialog.Builder().build();
+            offerFragmentDialog.setMethodCallBack(new OfferFragmentDialog.OfferCallBack() {
+                @Override
+                public void callBack(double amount) {
+                    sendOffer(amount);
+                }
+            });
+            offerFragmentDialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
+        }
     }
 
     private void sendOffer(double amount) {
@@ -339,11 +344,13 @@ public class ProductDetailsViewModel extends
     }
 
     public void onBuyNowClicked() {
-        if (product != null) {
-            Bundle data = new Bundle();
-            data.putSerializable(AppConstants.BundleData.PRODUCT, product);
-            Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                    .navigate(R.id.action_productDetailsFragment_to_reviewOfferFragment, data);
+        if (isLoggedIn()) {
+            if (product != null) {
+                Bundle data = new Bundle();
+                data.putSerializable(AppConstants.BundleData.PRODUCT, product);
+                Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.action_productDetailsFragment_to_reviewOfferFragment, data);
+            }
         }
     }
 

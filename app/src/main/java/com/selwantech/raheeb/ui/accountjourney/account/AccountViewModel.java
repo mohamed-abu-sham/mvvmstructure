@@ -11,6 +11,7 @@ import com.selwantech.raheeb.enums.PickImageTypes;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.model.User;
+import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.auth.login.LoginActivity;
@@ -57,7 +58,7 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
             public void onSuccess(Object response) {
                 SessionManager.logoutUser();
                 getBaseActivity().finishAffinity();
-                getBaseActivity().startActivity(LoginActivity.newIntent(getMyContext()));
+                getBaseActivity().startActivity(LoginActivity.newIntent(getMyContext(), ""));
             }
 
             @Override
@@ -89,13 +90,54 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
         }
     }
 
-    public void onReportClicked() {
+    public void onValidateItemsClicked() {
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.action_nav_account_to_validateItemsFragment);
+    }
 
+    public void onInviteClicked() {
+        getDataManager().getAccountService().getInviteToken(getMyContext(), true, new APICallBack<VerifyPhoneResponse>() {
+            @Override
+            public void onSuccess(VerifyPhoneResponse response) {
+                sendInvite(response.getToken());
+            }
+
+            @Override
+            public void onError(String error, int errorCode) {
+                showSnackBar(getMyContext().getResources().getString(R.string.error), error,
+                        getMyContext().getResources().getString(R.string.ok),
+                        new SnackViewBulider.SnackbarCallback() {
+                            @Override
+                            public void onActionClick(Snackbar snackbar) {
+                                snackbar.dismiss();
+                            }
+                        });
+            }
+        });
+    }
+
+    public void sendInvite(String inviteToken) {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getMyContext().getResources().getString(R.string.app_name));
+            String shareMessage = "\n" + getMyContext().getResources().getString(R.string.share_this_product_with) + "\n\n";
+            shareMessage = shareMessage + "http://raheeb.selwantech.tech/invite?token=" + inviteToken + "\n\n";
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            getBaseActivity().startActivity(Intent.createChooser(shareIntent, "choose one"));
+        } catch (Exception e) {
+            //e.toString();
+        }
     }
 
     public void onHelpClicked(){
         Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
         .navigate(R.id.action_nav_account_to_helpFragment);
+    }
+
+    public void onTwitterFriendsClicked() {
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.action_nav_account_to_twitterFriendsFragment);
     }
 
     public void onFollowingClicked(){
@@ -139,11 +181,6 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
                         response.setToken(User.getInstance().getToken());
                         User.getInstance().setObjUser(response);
                         SessionManager.createUserLoginSession();
-
-//                        User user1 =new User();
-//                        user1.setName("llll");
-//                        user1.setCount_followers(10);
-
                         user.postValue(User.getInstance());
                         setTexts();
                     }

@@ -4,18 +4,19 @@ import android.content.Context;
 import android.text.Html;
 import android.view.View;
 
-import androidx.databinding.ViewDataBinding;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentUserProfileDetailsBinding;
 import com.selwantech.raheeb.helper.GeneralFunction;
+import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.model.ProductOwner;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.SnackViewBulider;
+
+import androidx.databinding.ViewDataBinding;
 
 public class UserProfileDetailsViewModel extends BaseViewModel<UserProfileDetailsNavigator, FragmentUserProfileDetailsBinding> {
 
@@ -57,13 +58,18 @@ public class UserProfileDetailsViewModel extends BaseViewModel<UserProfileDetail
 
 
     public void onFollowClicked() {
-        if (!productOwner.isIsFollow()) {
-            followUser();
-        } else {
-            unfollowUser();
+        if (isLoggedIn()) {
+            if (!productOwner.isIsFollow()) {
+                followUser();
+            } else {
+                unfollowUser();
+            }
         }
     }
 
+    private boolean isLoggedIn() {
+        return SessionManager.isLoggedInAndLogin(getBaseActivity());
+    }
     private void followUser() {
         getDataManager().getUserService().followUser(getMyContext(), true, productOwner.getId(), new APICallBack<String>() {
             @Override

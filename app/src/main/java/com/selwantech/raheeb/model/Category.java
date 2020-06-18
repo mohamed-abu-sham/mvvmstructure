@@ -1,5 +1,7 @@
 package com.selwantech.raheeb.model;
 
+import android.view.View;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Category {
@@ -30,5 +32,9 @@ public class Category {
 
     public boolean isIsShipNationwide() {
         return isShipNationwide;
+    }
+
+    public int isIsShipNationwideVisible() {
+        return isShipNationwide ? View.VISIBLE : View.GONE;
     }
 }

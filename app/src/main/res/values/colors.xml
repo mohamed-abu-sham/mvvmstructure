@@ -67,6 +67,8 @@
     <color name="color_blue_twitter">#F2F9FF</color>
     <color name="color_red_logout">#EE5555</color>
     <color name="color_red_note">#FF0000</color>
+
+    <color name="color_image_validate">#DC65A2</color>
     <color name="received_message_bubble">#0A55ACEE</color>
     <color name="rsbColorSeekBarDefault">#c3c3c3</color>
     <color name="rsbColorThumbPressed">#FFE7E7E7</color>

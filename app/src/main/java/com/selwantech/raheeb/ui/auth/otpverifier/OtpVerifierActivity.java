@@ -21,8 +21,10 @@ public class OtpVerifierActivity extends BaseActivity<ActivityOtpVerifierBinding
     private OtpVerifierViewModel mOtpViewModel;
     private ActivityOtpVerifierBinding mViewBinding;
 
-    public static Intent getStartIntent(Context context, int type) {
-        Intent intent = new Intent(context, OtpVerifierActivity.class).putExtra(AppConstants.BundleData.TYPE, type);
+    public static Intent getStartIntent(Context context, int type, String inviteToken) {
+        Intent intent = new Intent(context, OtpVerifierActivity.class)
+                .putExtra(AppConstants.BundleData.TYPE, type)
+                .putExtra(AppConstants.BundleData.INVITE_TOKEN, inviteToken);
         return intent;
     }
 
@@ -66,4 +68,10 @@ public class OtpVerifierActivity extends BaseActivity<ActivityOtpVerifierBinding
     public String getToken() {
         return getIntent().getStringExtra(AppConstants.BundleData.TOKEN);
     }
+
+    @Override
+    public String getInviteToken() {
+        return getIntent().getStringExtra(AppConstants.BundleData.INVITE_TOKEN);
+    }
+
 }

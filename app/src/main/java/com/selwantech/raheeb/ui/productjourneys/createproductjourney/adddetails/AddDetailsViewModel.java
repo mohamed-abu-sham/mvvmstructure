@@ -2,8 +2,6 @@ package com.selwantech.raheeb.ui.productjourneys.createproductjourney.adddetails
 
 import android.content.Context;
 
-import androidx.databinding.ViewDataBinding;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductDetailsBinding;
@@ -20,6 +18,8 @@ import com.selwantech.raheeb.utils.conditionSeekbar.ConditionSeekBar;
 import com.selwantech.raheeb.utils.conditionSeekbar.OnRangeChangedListener;
 
 import java.util.ArrayList;
+
+import androidx.databinding.ViewDataBinding;
 
 public class AddDetailsViewModel extends
         BaseViewModel<AddDetailsNavigator, FragmentAddProductDetailsBinding> {
@@ -103,6 +103,7 @@ public class AddDetailsViewModel extends
             getNavigator().getPost().setConditionId(condition.getId());
             getNavigator().getPost().setDescription(getViewBinding().edDescription.getText().toString());
             getNavigator().getPost().setCategoryId(category.getId());
+            getNavigator().getPost().setCategory(category);
             return getNavigator().getPost();
         }
         return null;

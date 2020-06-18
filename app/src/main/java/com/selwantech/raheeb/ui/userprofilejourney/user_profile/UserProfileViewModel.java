@@ -5,15 +5,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.navigation.Navigation;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentUserProfileBinding;
+import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.model.ProductOwner;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -24,11 +20,17 @@ import com.selwantech.raheeb.ui.userprofilejourney.user_profile_details.UserProf
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
+
 public class UserProfileViewModel extends BaseViewModel<UserProfileNavigator, FragmentUserProfileBinding> {
 
 
     ProductOwner productOwner;
-
+    FragmentManager fragmentManager;
+    UserProfileDetailsFragment userProfileDetailsFragment = new UserProfileDetailsFragment();
     public <V extends ViewDataBinding, N extends BaseNavigator> UserProfileViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (UserProfileNavigator) navigation, (FragmentUserProfileBinding) viewDataBinding);
 
@@ -78,12 +80,16 @@ public class UserProfileViewModel extends BaseViewModel<UserProfileNavigator, Fr
         getViewBinding().tabLayout.getTabAt(0).setText(R.string.profile);
         getViewBinding().tabLayout.getTabAt(1).setText(R.string.my_offers);
 
-        FragmentManager fragmentManager = getBaseActivity().getSupportFragmentManager().getFragments().get(0).getChildFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_profile_tab, getItem(0)).commit();
+        fragmentManager = getBaseActivity().getSupportFragmentManager().getFragments().get(0).getChildFragmentManager();
+        moveFragment(0);
         getViewBinding().tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                fragmentManager.beginTransaction().replace(R.id.fragment_profile_tab, getItem(tab.getPosition())).commit();
+                if (tab.getPosition() == 1 && isLoggedIn())
+                    moveFragment(tab.getPosition());
+                else if (tab.getPosition() == 0)
+                    moveFragment(tab.getPosition());
+                else getViewBinding().tabLayout.getTabAt(0).select();
             }
 
             @Override
@@ -97,11 +103,14 @@ public class UserProfileViewModel extends BaseViewModel<UserProfileNavigator, Fr
         });
     }
 
+    private void moveFragment(int position) {
+        fragmentManager.beginTransaction().replace(R.id.fragment_profile_tab, getItem(position)).commit();
+    }
+
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
         switch (position) {
             case 0:
-                UserProfileDetailsFragment userProfileDetailsFragment = new UserProfileDetailsFragment();
                 bundle.putSerializable(AppConstants.BundleData.PRODUCT_OWNER, productOwner);
                 userProfileDetailsFragment.setArguments(bundle);
                 return userProfileDetailsFragment;
@@ -132,12 +141,17 @@ public class UserProfileViewModel extends BaseViewModel<UserProfileNavigator, Fr
     }
 
     public void onReportClicked() {
-        if(productOwner!=null){
-            Bundle data = new Bundle();
-            data.putSerializable(AppConstants.BundleData.PRODUCT_OWNER,productOwner);
-            Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
-                    .navigate(R.id.action_userProfileFragment_to_reportUserFragment,data);
+        if (isLoggedIn()) {
+            if (productOwner != null) {
+                Bundle data = new Bundle();
+                data.putSerializable(AppConstants.BundleData.PRODUCT_OWNER, productOwner);
+                Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.action_userProfileFragment_to_reportUserFragment, data);
+            }
         }
     }
 
+    private boolean isLoggedIn() {
+        return SessionManager.isLoggedInAndLogin(getBaseActivity());
+    }
 }

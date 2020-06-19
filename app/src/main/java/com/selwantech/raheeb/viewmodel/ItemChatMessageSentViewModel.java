@@ -5,12 +5,12 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.view.View;
 
+import androidx.databinding.BaseObservable;
+
 import com.selwantech.raheeb.databinding.CellChatItemSentBinding;
 import com.selwantech.raheeb.interfaces.ChatMessageRecyclerClick;
 import com.selwantech.raheeb.model.ChatObject;
 import com.selwantech.raheeb.utils.AppConstants;
-
-import androidx.databinding.BaseObservable;
 
 
 public class ItemChatMessageSentViewModel extends BaseObservable {
@@ -22,6 +22,7 @@ public class ItemChatMessageSentViewModel extends BaseObservable {
     private ChatObject messages;
     private int position;
 
+//    MutableLiveData<ChatObject> chatObjectMutableLiveData = new MutableLiveData<>();
 
     public ItemChatMessageSentViewModel(Context context,
                                         ChatObject messages,
@@ -36,6 +37,11 @@ public class ItemChatMessageSentViewModel extends BaseObservable {
         this.mRecyclerClick = mRecyclerClick;
         this.mMediaPlayer = mediaPlayer;
 //        if(messages.getMessage_type().equals(AppConstants.MESSAGE_TYPE.VOICE)){
+//            if(URLUtil.isValidUrl(messages.getMessage()))
+//                cellChatItemSentBinding.audioPlayer.setAudioTarget(messages.getMessage());
+//            else
+//                cellChatItemSentBinding.audioPlayer.setAudioTarget(Uri.parse(messages.getMessage()));
+//        }
 //            try {
 //                MediaPlayer mMediaPlayer = new MediaPlayer();
 //                mMediaPlayer.setDataSource("https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3");
@@ -46,6 +52,7 @@ public class ItemChatMessageSentViewModel extends BaseObservable {
 //            }
 //
 //        }
+        isSent();
     }
 
 
@@ -56,6 +63,7 @@ public class ItemChatMessageSentViewModel extends BaseObservable {
     public void setMessages(ChatObject messages) {
         this.messages = messages;
         notifyChange();
+        isSent();
     }
 
     public void onItemClick(View view) {
@@ -94,9 +102,10 @@ public class ItemChatMessageSentViewModel extends BaseObservable {
     }
 
 
-    public int isSent() {
-        return (!messages.isSent() && messages.getId() < 0)
-                ? View.VISIBLE : View.GONE;
+    public void isSent() {
+        if (!messages.isSent() && messages.getId() < 0)
+            cellChatItemSentBinding.cardResend.setVisibility(View.VISIBLE);
+        else cellChatItemSentBinding.cardResend.setVisibility(View.GONE);
     }
 
 }

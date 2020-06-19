@@ -2,6 +2,7 @@ package com.selwantech.raheeb.ui.messagesjourney.chat;
 
 import android.content.Context;
 
+import com.rygelouv.audiosensei.player.AudioSenseiListObserver;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChatBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
@@ -83,6 +84,7 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     @Override
     protected void setUp() {
         mViewBinding = getViewDataBinding();
+        AudioSenseiListObserver.getInstance().registerLifecycle(getLifecycle());
         if (getChatId() == -1) {
             mViewBinding.setData(getChat());
             setUpToolbar(getChat());

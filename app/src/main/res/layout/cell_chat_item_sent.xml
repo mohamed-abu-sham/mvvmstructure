@@ -70,7 +70,13 @@
                         android:textColor="@color/black"
                         android:textSize="9sp"
                         android:visibility="@{viewModel.isTextOrOffer()}" />
-
+                    <!--                    <com.rygelouv.audiosensei.player.AudioSenseiPlayerView&ndash;&gt;-->
+                    <!--                        android:id="@+id/audio_player"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_5sdp"-->
+                    <!--                        android:visibility="@{viewModel.isVoice()}"-->
+                    <!--                        app:custom_layout="@layout/cell_audio" />-->
                     <LinearLayout
                         android:id="@+id/linearPlayer"
                         android:layout_width="wrap_content"
@@ -139,7 +145,7 @@
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:visibility="@{viewModel.isSent}"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/color_blue"
                 app:cardCornerRadius="@dimen/_10sdp">
 

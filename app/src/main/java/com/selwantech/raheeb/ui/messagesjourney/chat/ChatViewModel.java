@@ -10,6 +10,10 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.selwantech.raheeb.R;
@@ -36,9 +40,6 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -62,7 +63,6 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     public <V extends ViewDataBinding, N extends BaseNavigator> ChatViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ChatNavigator) navigation, (FragmentChatBinding) viewDataBinding);
-
     }
 
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
@@ -251,7 +251,11 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         if (isResend) {
             chatAdapter.getItem(position).setSent(true);
             chatAdapter.notifyItemChanged(position);
-            sendTxtMessage(chatObject.getMessage(), chatObject.getId());
+            if (chatObject.getMessage_type().equals("voice")) {
+                sendImageMessage(chatObject.getMessage(), chatObject.getId());
+            } else {
+                sendTxtMessage(chatObject.getMessage(), chatObject.getId());
+            }
         } else {
             if (chatObject.getMessage_type().equals(AppConstants.MESSAGE_TYPE.VOICE)) {
                 AudioPlayerDialog audioPlayerDialog = new AudioPlayerDialog(getMyContext(), chatObject);

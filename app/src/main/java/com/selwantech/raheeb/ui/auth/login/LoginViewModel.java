@@ -3,17 +3,18 @@ package com.selwantech.raheeb.ui.auth.login;
 import android.content.Context;
 import android.view.View;
 
+import androidx.databinding.ViewDataBinding;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityLoginBinding;
-import com.selwantech.raheeb.enums.PhoneNumberTypes;
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.model.LoginObject;
 import com.selwantech.raheeb.model.RegisterResponse;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.auth.phonenumber.PhoneNumberFragment;
+import com.selwantech.raheeb.ui.auth.forgetpassword.ForgetPasswordActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
@@ -22,8 +23,6 @@ import com.selwantech.raheeb.utils.LanguageUtils;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.TwitterUtils;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
-
-import androidx.databinding.ViewDataBinding;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator, ActivityLoginBinding> implements TwitterUtils.TwitterCallback {
 
@@ -156,7 +155,6 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator, ActivityLoginB
     }
 
     public void forgetPasswordClick() {
-        getMyContext().startActivity(PhoneNumberFragment.newIntent(getMyContext(),
-                PhoneNumberTypes.FORGET_PASSWORD.getValue()));
+        getMyContext().startActivity(ForgetPasswordActivity.newIntent(getMyContext()));
     }
 }

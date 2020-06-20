@@ -2,6 +2,11 @@ package com.selwantech.raheeb.viewmodel;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.accountjourney.about.AboutViewModel;
 import com.selwantech.raheeb.ui.accountjourney.account.AccountViewModel;
@@ -17,6 +22,7 @@ import com.selwantech.raheeb.ui.accountjourney.validateitems.ValidateItemsViewMo
 import com.selwantech.raheeb.ui.auth.changepassword.ChangePasswordViewModel;
 import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeViewModel;
 import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordViewModel;
+import com.selwantech.raheeb.ui.auth.forgetpassword.ForgetPasswordViewModel;
 import com.selwantech.raheeb.ui.auth.login.LoginViewModel;
 import com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierViewModel;
 import com.selwantech.raheeb.ui.auth.phonenumber.PhoneNumberViewModel;
@@ -59,11 +65,6 @@ import com.selwantech.raheeb.ui.userprofilejourney.user_profile_details.UserProf
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 /**
  * @ViewDataBinding : Base class for generated data binding classes
@@ -258,6 +259,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(TwitterFriendsViewModel.class)) {
             //noinspection unchecked
             return (T) new TwitterFriendsViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(ForgetPasswordViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ForgetPasswordViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

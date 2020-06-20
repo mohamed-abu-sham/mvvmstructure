@@ -2,6 +2,8 @@ package com.selwantech.raheeb.ui.auth.register;
 
 import android.content.Context;
 
+import androidx.databinding.ViewDataBinding;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityRegisterBinding;
@@ -15,8 +17,6 @@ import com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.SnackViewBulider;
-
-import androidx.databinding.ViewDataBinding;
 
 public class RegisterViewModel extends BaseViewModel<RegisterNavigator, ActivityRegisterBinding> {
 
@@ -58,7 +58,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator, Activity
             public void onSuccess(VerifyPhoneResponse response) {
                 User.getInstance().setToken(response.getToken());
                 getMyContext().startActivity(OtpVerifierActivity.getStartIntent(getMyContext()
-                        , PhoneNumberTypes.REGISTER.getValue(), getNavigator().getInviteToken()));
+                        , PhoneNumberTypes.REGISTER.getValue(), response.getToken(), getNavigator().getInviteToken()));
             }
 
             @Override

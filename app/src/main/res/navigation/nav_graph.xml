@@ -135,7 +135,11 @@
     <fragment
         android:id="@+id/productBuyingDetailsFragment"
         android:name="com.selwantech.raheeb.ui.offersjourney.productbuyingdetails.ProductBuyingDetailsFragment"
-        android:label="ProductBuyingDetailsFragment" />
+        android:label="ProductBuyingDetailsFragment">
+        <action
+            android:id="@+id/action_productBuyingDetailsFragment_to_reportProductFragment"
+            app:destination="@id/reportProductFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_account"
         android:name="com.selwantech.raheeb.ui.accountjourney.account.AccountFragment"
@@ -185,9 +189,6 @@
             android:id="@+id/action_settingsFragment_to_updateEmailFragment"
             app:destination="@id/updateEmailFragment" />
         <action
-            android:id="@+id/action_settingsFragment_to_updateIDFragment"
-            app:destination="@id/updateIDFragment" />
-        <action
             android:id="@+id/action_settingsFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
         <action
@@ -196,6 +197,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_changeLanguageFragment"
             app:destination="@id/changeLanguageFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_updateProfilePictureFragment"
+            app:destination="@id/updateProfilePictureFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -232,7 +236,11 @@
     <fragment
         android:id="@+id/validateItemsFragment"
         android:name="com.selwantech.raheeb.ui.accountjourney.validateitems.ValidateItemsFragment"
-        android:label="ValidateItemsFragment" />
+        android:label="ValidateItemsFragment">
+        <action
+            android:id="@+id/action_validateItemsFragment_to_updateIDFragment"
+            app:destination="@id/updateIDFragment" />
+    </fragment>
     <fragment
         android:id="@+id/twitterFriendsFragment"
         android:name="com.selwantech.raheeb.ui.accountjourney.twitterfriends.TwitterFriendsFragment"
@@ -241,5 +249,9 @@
         android:id="@+id/changeLanguageFragment"
         android:name="com.selwantech.raheeb.ui.accountjourney.changelanguage.ChangeLanguageFragment"
         android:label="ChangeLanguageFragment" />
+    <fragment
+        android:id="@+id/updateProfilePictureFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.updateprofilepicture.UpdateProfilePictureFragment"
+        android:label="UpdateProfilePictureFragment" />
 
 </navigation>

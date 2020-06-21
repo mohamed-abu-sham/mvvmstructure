@@ -43,17 +43,18 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 android:onClick="@{viewModel::onDownloadClick}"
                 android:tint="@color/color_blue"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_file_download" />
 
             <LinearLayout
                 android:id="@+id/linearPlayer"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imgDownload"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
-                android:gravity="center|start"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -87,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_7sdp"
-                    android:text="150"
+                    android:text="00:00"
                     android:visibility="visible" />
 
             </LinearLayout>

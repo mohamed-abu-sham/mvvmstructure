@@ -4,6 +4,7 @@ package com.selwantech.raheeb.viewmodel;
 import android.content.Context;
 import android.view.View;
 
+import com.selwantech.raheeb.interfaces.RecyclerClickNoData;
 import com.selwantech.raheeb.model.ValidateItem;
 
 import androidx.databinding.BaseObservable;
@@ -15,10 +16,13 @@ public class ItemValidateViewModel extends BaseObservable {
     private ValidateItem validateItem;
     private int position;
 
-    public ItemValidateViewModel(Context context, ValidateItem validateItem, int position) {
+    RecyclerClickNoData recyclerClickNoData;
+
+    public ItemValidateViewModel(Context context, ValidateItem validateItem, int position, RecyclerClickNoData recyclerClickNoData) {
         this.context = context;
         this.validateItem = validateItem;
         this.position = position;
+        this.recyclerClickNoData = recyclerClickNoData;
     }
 
     public ValidateItem getValidateItem() {
@@ -32,6 +36,12 @@ public class ItemValidateViewModel extends BaseObservable {
 
 
     public void onItemClick(View view) {
+        if (position == 0 && !validateItem.isValid()) {
+            recyclerClickNoData.onClick(position);
+        }
+    }
 
+    public int isValid() {
+        return !validateItem.isValid() ? View.VISIBLE : View.GONE;
     }
 }

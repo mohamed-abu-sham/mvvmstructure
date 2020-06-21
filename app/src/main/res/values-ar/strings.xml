@@ -41,7 +41,7 @@
     <string name="register">انشاء حساب</string>
     <string name="change_password">تحديث كلمة المرور</string>
     <string name="home">الرئيسية</string>
-    <string name="favorite">المفضلة</string>
+    <string name="favorite">مفضلة</string>
     <string name="profile">الصفحة الشخصية</string>
     <string name="offers">العروض</string>
     <string name="error">لقد حدث خطأ ما</string>
@@ -92,7 +92,7 @@
     <string name="uploading">جاري التحميل</string>
     <string name="file_too_large">الملف كبير جدًا</string>
     <string name="edit">تعديل</string>
-    <string name="select_location">اختر موقعا</string>
+    <string name="select_location">اختر موقع</string>
     <string name="warning">تحذير</string>
     <string name="no">لا</string>
     <string name="to">الى</string>
@@ -207,7 +207,7 @@
     <string name="newest">الاحدث</string>
     <string name="closest">الاقرب</string>
     <string name="low_to_high">أقل ل أعلى</string>
-    <string name="filter_price">Filter price</string>
+    <string name="filter_price">تصنيف السعر</string>
     <string name="selling">البيع</string>
     <string name="buying">المشتريات</string>
     <string name="favorite_txt">المفضلة</string>
@@ -235,7 +235,7 @@
     <string name="account_settings">إعدادت الحساب</string>
     <string name="please_try_again">حاول مرة اخرى</string>
     <string name="last_password">كلمة المرور الأخيرة</string>
-    <string name="upload_id_image">تحميل صورة التعريف</string>
+    <string name="upload_id_image">تحميل صورة البطاقة الشخصية</string>
     <string name="connected_with_twitter">متصل مع تويتر</string>
     <string name="connect_with_twitter">تواصل مع تويتر</string>
     <string name="set_your_location">حدد موقعك</string>
@@ -246,7 +246,7 @@
     <string name="enter_your_email">ادخل بريدك الالكتروني</string>
     <string name="please_enter_valid_email">الرجاء إدخال بريد إلكتروني صحيح</string>
     <string name="please_fill_your_email">يرجى اجخال البريد الالكتروني</string>
-    <string name="official_id">التعريف الرسمي</string>
+    <string name="official_id">البطاقة الشخصية</string>
     <string name="please_pick_the_id_picture">يرجى اختيار صورة الهوية</string>
     <string name="upload_successful">تحميل ناجح</string>
     <string name="product_created_successful">تم إنشاء المنتج بنجاح</string>
@@ -259,4 +259,6 @@
     <string name="twitter_friends">أصدقاء تويتر</string>
     <string name="create_password">انشئ كلمة مرور</string>
     <string name="this_product_is_not_available">هذا المنتج غير متوفر</string>
+    <string name="to_enable_email_notifications_you_have_to_verify_your_email">لتفعيل اشعارات البريد الالكتروني يجب عليك تأكيد بريدك الالكتروني</string>
+    <string name="update_profile_picture">تحديث الصورة الشخصية</string>
 </resources>

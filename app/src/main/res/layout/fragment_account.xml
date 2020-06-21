@@ -451,7 +451,7 @@
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:background="@drawable/shape_black_for_bott"
                     android:backgroundTint="@color/color_blue_light"
-                    android:onClick="@{()->viewModel.onAddImageClicked()}"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/ic_camera_white" />
             </RelativeLayout>
 

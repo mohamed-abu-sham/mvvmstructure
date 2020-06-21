@@ -46,6 +46,11 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
 
 
     public void updateEmailNotifications() {
+        if (User.getInstance().getEmail() == null || User.getInstance().getEmail().isEmpty()) {
+            getViewBinding().switchEmail.setChecked(!getViewBinding().switchEmail.isChecked());
+            showToast(getMyContext().getResources().getString(R.string.to_enable_email_notifications_you_have_to_verify_your_email));
+            return;
+        }
         getDataManager().getAccountService().updateEmailNotifications(getMyContext(), true, new APICallBack<User>() {
             @Override
             public void onSuccess(User response) {
@@ -63,7 +68,7 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
                                 snackbar.dismiss();
                             }
                         });
-//                getViewBinding().switchEmail.setChecked(!getViewBinding().switchEmail.isChecked());
+                getViewBinding().switchEmail.setChecked(!getViewBinding().switchEmail.isChecked());
             }
         });
     }
@@ -86,7 +91,7 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
                                 snackbar.dismiss();
                             }
                         });
-//                getViewBinding().switchPush.setChecked(!getViewBinding().switchPush.isChecked());
+                getViewBinding().switchPush.setChecked(!getViewBinding().switchPush.isChecked());
             }
         });
     }
@@ -113,8 +118,7 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
                 User.getInstance().getPhone() : getMyContext().getResources().getString(R.string.phone_number));
         arrayListText.add(User.getInstance().getEmail() != null && !User.getInstance().getEmail().isEmpty() ?
                 User.getInstance().getEmail() : getMyContext().getResources().getString(R.string.email));
-        arrayListText.add(User.getInstance().isIs_valid() ? getMyContext().getResources().getString(R.string.trusted_member)
-                : getMyContext().getResources().getString(R.string.upload_id_image));
+        arrayListText.add(getMyContext().getResources().getString(R.string.update_profile_picture));
         arrayListText.add(User.getInstance().isLoggedInWithTwitter() ? getMyContext().getResources().getString(R.string.connected_with_twitter)
                 : getMyContext().getResources().getString(R.string.connect_with_twitter));
         arrayListText.add(getMyContext().getResources().getString(R.string.password));
@@ -136,11 +140,9 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
                 Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
                         .navigate(R.id.action_settingsFragment_to_updateEmailFragment);
                 break;
-            case TRUSTED:
-                if (!User.getInstance().isIs_valid()) {
-                    Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                            .navigate(R.id.action_settingsFragment_to_updateIDFragment);
-                }
+            case IMAGE:
+                Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.action_settingsFragment_to_updateProfilePictureFragment);
                 break;
             case TWITTER:
                 if (!User.getInstance().getLogin_with().equals(AppConstants.LOGGED_IN_TYPE.TWITTER)) {

@@ -1,10 +1,10 @@
-package com.selwantech.raheeb.ui.accountjourney.updateid;
+package com.selwantech.raheeb.ui.accountjourney.updateprofilepicture;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.databinding.FragmentUpdateIdBinding;
+import com.selwantech.raheeb.databinding.FragmentUpdateProfilePictureBinding;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.repository.DataManager;
@@ -18,15 +18,15 @@ import javax.inject.Inject;
 import static android.app.Activity.RESULT_OK;
 
 
-public class UpdateIDFragment extends BaseFragment<FragmentUpdateIdBinding, UpdateIDViewModel>
-        implements UpdateIDNavigator, ActivityResultCallBack {
+public class UpdateProfilePictureFragment extends BaseFragment<FragmentUpdateProfilePictureBinding, UpdateProfilePictureViewModel>
+        implements UpdateProfilePictureNavigator, ActivityResultCallBack {
 
-    private static final String TAG = UpdateIDFragment.class.getSimpleName();
+    private static final String TAG = UpdateProfilePictureFragment.class.getSimpleName();
 
     @Inject
     ViewModelProviderFactory factory;
-    private UpdateIDViewModel mViewModel;
-    private FragmentUpdateIdBinding mViewBinding;
+    private UpdateProfilePictureViewModel mViewModel;
+    private FragmentUpdateProfilePictureBinding mViewBinding;
 
     @Override
     public int getBindingVariable() {
@@ -51,13 +51,13 @@ public class UpdateIDFragment extends BaseFragment<FragmentUpdateIdBinding, Upda
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_update_id;
+        return R.layout.fragment_update_profile_picture;
     }
 
     @Override
-    public UpdateIDViewModel getViewModel() {
-        mViewModel = (UpdateIDViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(UpdateIDViewModel.class, getViewDataBinding(), this);
+    public UpdateProfilePictureViewModel getViewModel() {
+        mViewModel = (UpdateProfilePictureViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
+                .create(UpdateProfilePictureViewModel.class, getViewDataBinding(), this);
         return mViewModel;
     }
 
@@ -69,7 +69,7 @@ public class UpdateIDFragment extends BaseFragment<FragmentUpdateIdBinding, Upda
     @Override
     protected void setUp() {
         mViewBinding = getViewDataBinding();
-        setUpToolbar(mViewBinding.toolbar, TAG, getString(R.string.upload_id_image));
+        setUpToolbar(mViewBinding.toolbar, TAG, getString(R.string.update_profile_picture));
         mViewModel.setUp();
     }
 

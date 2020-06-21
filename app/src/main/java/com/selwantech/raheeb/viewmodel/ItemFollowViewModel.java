@@ -4,10 +4,11 @@ package com.selwantech.raheeb.viewmodel;
 import android.content.Context;
 import android.view.Gravity;
 
+import com.selwantech.raheeb.App;
 import com.selwantech.raheeb.enums.FollowStatus;
-import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.interfaces.ItemClickWithType;
 import com.selwantech.raheeb.model.ProductOwner;
+import com.selwantech.raheeb.utils.LanguageUtils;
 
 import androidx.databinding.BaseObservable;
 
@@ -48,7 +49,8 @@ public class ItemFollowViewModel extends BaseObservable {
     }
 
     public int getGravity() {
-        return SessionManager.getLanguage().equals("ar") ? Gravity.LEFT : Gravity.RIGHT;
+        return LanguageUtils.getLanguage(App.getInstance()).equals("ar")
+                ? Gravity.RIGHT : Gravity.LEFT;
     }
 
 }

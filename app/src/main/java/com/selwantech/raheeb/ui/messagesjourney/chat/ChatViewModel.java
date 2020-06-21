@@ -7,15 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.selwantech.raheeb.App;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChatBinding;
 import com.selwantech.raheeb.interfaces.ChatMessageRecyclerClick;
@@ -32,6 +30,7 @@ import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.AudioPlayerDialog;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.AudioRecorder;
+import com.selwantech.raheeb.utils.LanguageUtils;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import org.json.JSONException;
@@ -40,6 +39,9 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -522,6 +524,11 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
             }
         }
 //        messages.get(position).setShowProgress(showProgress);
+    }
+
+    public int getGravity() {
+        return LanguageUtils.getLanguage(App.getInstance()).equals("ar")
+                ? Gravity.RIGHT : Gravity.LEFT;
     }
 
 }

@@ -7,11 +7,13 @@ public class ValidateItem implements Serializable {
     int image;
     int color;
     int text;
+    boolean isValid;
 
-    public ValidateItem(int image, int color, int text) {
+    public ValidateItem(int image, int color, int text, boolean isValid) {
         this.image = image;
         this.color = color;
         this.text = text;
+        this.isValid = isValid;
     }
 
     public int getImage() {
@@ -36,5 +38,13 @@ public class ValidateItem implements Serializable {
 
     public void setText(int text) {
         this.text = text;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
     }
 }

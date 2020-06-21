@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentValidateListBinding;
+import com.selwantech.raheeb.interfaces.RecyclerClickNoData;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.ValidateItem;
 import com.selwantech.raheeb.repository.DataManager;
@@ -14,9 +15,11 @@ import com.selwantech.raheeb.ui.base.BaseViewModel;
 import java.util.ArrayList;
 
 import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-public class ValidateItemsViewModel extends BaseViewModel<ValidateItemsNavigator, FragmentValidateListBinding> {
+public class ValidateItemsViewModel extends BaseViewModel<ValidateItemsNavigator, FragmentValidateListBinding>
+        implements RecyclerClickNoData {
 
     ValidateItemsAdapter validateItemsAdapter;
 
@@ -32,30 +35,29 @@ public class ValidateItemsViewModel extends BaseViewModel<ValidateItemsNavigator
 
     private void setUpRecycler() {
         getViewBinding().recyclerView.setLayoutManager(new GridLayoutManager(getMyContext(), 3));
-        validateItemsAdapter = new ValidateItemsAdapter(getMyContext());
+        validateItemsAdapter = new ValidateItemsAdapter(getMyContext(), this::onClick);
         getViewBinding().recyclerView.setAdapter(validateItemsAdapter);
 
     }
 
     private void getData() {
         ArrayList<ValidateItem> validateItems = new ArrayList<>();
-        if (User.getInstance().isIs_valid()) {
-            validateItems.add(new ValidateItem(R.drawable.ic_verified, R.color.color_dark_blue, R.string.trusted));
-        }
-        if (User.getInstance().getPhone() != null && !User.getInstance().getPhone().isEmpty()) {
-            validateItems.add(new ValidateItem(R.drawable.ic_phone, R.color.color_green, R.string.phone));
-        }
-        if (User.getInstance().getAvatar() != null && !User.getInstance().getAvatar().isEmpty()) {
-            validateItems.add(new ValidateItem(R.drawable.ic_camera_white, R.color.color_image_validate, R.string.image));
-        }
-        if (User.getInstance().getEmail() != null && !User.getInstance().getEmail().isEmpty()) {
-            validateItems.add(new ValidateItem(R.drawable.ic_email, R.color.color_gray, R.string.email));
-        }
-        if (User.getInstance().getLogin_with().equals("twitter")) {
-            validateItems.add(new ValidateItem(R.drawable.ic_twitter, R.color.colorPrimaryDark, R.string.twitter));
-        }
+        validateItems.add(new ValidateItem(R.drawable.ic_verified, R.color.color_dark_blue, R.string.trusted, User.getInstance().isIs_valid()));
+        validateItems.add(new ValidateItem(R.drawable.ic_phone, R.color.color_green, R.string.phone,
+                User.getInstance().getPhone() != null && !User.getInstance().getPhone().isEmpty()));
+        validateItems.add(new ValidateItem(R.drawable.ic_camera_white, R.color.color_image_validate, R.string.image,
+                User.getInstance().getAvatar() != null && !User.getInstance().getAvatar().isEmpty()));
+        validateItems.add(new ValidateItem(R.drawable.ic_email, R.color.color_gray, R.string.email,
+                User.getInstance().getEmail() != null && !User.getInstance().getEmail().isEmpty()));
+        validateItems.add(new ValidateItem(R.drawable.ic_twitter, R.color.colorPrimaryDark, R.string.twitter,
+                User.getInstance().getLogin_with().equals("twitter")));
 
         validateItemsAdapter.addItems(validateItems);
     }
 
+    @Override
+    public void onClick(int position) {
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.action_validateItemsFragment_to_updateIDFragment);
+    }
 }

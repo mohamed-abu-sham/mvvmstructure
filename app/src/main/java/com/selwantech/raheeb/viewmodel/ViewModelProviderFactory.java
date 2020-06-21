@@ -14,6 +14,7 @@ import com.selwantech.raheeb.ui.accountjourney.settings.SettingsViewModel;
 import com.selwantech.raheeb.ui.accountjourney.twitterfriends.TwitterFriendsViewModel;
 import com.selwantech.raheeb.ui.accountjourney.updateemail.UpdateEmailViewModel;
 import com.selwantech.raheeb.ui.accountjourney.updateid.UpdateIDViewModel;
+import com.selwantech.raheeb.ui.accountjourney.updateprofilepicture.UpdateProfilePictureViewModel;
 import com.selwantech.raheeb.ui.accountjourney.validateitems.ValidateItemsViewModel;
 import com.selwantech.raheeb.ui.auth.changepassword.ChangePasswordViewModel;
 import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeViewModel;
@@ -266,6 +267,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(ChangeLanguageViewModel.class)) {
             //noinspection unchecked
             return (T) new ChangeLanguageViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(UpdateProfilePictureViewModel.class)) {
+            //noinspection unchecked
+            return (T) new UpdateProfilePictureViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

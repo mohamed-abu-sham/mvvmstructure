@@ -58,7 +58,7 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:gravity="center|start"
+                    android:gravity="@{viewModel.gravity}"
                     android:text="@{data.user.name}"
                     android:textColor="@color/black"
                     android:textSize="14sp" />

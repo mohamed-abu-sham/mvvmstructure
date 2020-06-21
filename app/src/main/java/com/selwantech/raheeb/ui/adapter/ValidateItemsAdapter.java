@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.selwantech.raheeb.databinding.CellValidateItemBinding;
+import com.selwantech.raheeb.interfaces.RecyclerClickNoData;
 import com.selwantech.raheeb.model.ValidateItem;
 import com.selwantech.raheeb.ui.base.BaseViewHolder;
 import com.selwantech.raheeb.viewmodel.ItemValidateViewModel;
@@ -18,10 +19,12 @@ public class ValidateItemsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     ArrayList<ValidateItem> validateItems;
     Context mContext;
+    RecyclerClickNoData recyclerClickNoData;
 
-    public ValidateItemsAdapter(Context mContext) {
+    public ValidateItemsAdapter(Context mContext, RecyclerClickNoData recyclerClickNoData) {
         this.validateItems = new ArrayList<>();
         this.mContext = mContext;
+        this.recyclerClickNoData = recyclerClickNoData;
     }
 
     @Override
@@ -62,7 +65,7 @@ public class ValidateItemsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             if (mBinding.getViewModel() == null) {
-                mBinding.setViewModel(new ItemValidateViewModel(mContext, validateItems.get(position), position));
+                mBinding.setViewModel(new ItemValidateViewModel(mContext, validateItems.get(position), position, recyclerClickNoData));
             } else {
                 mBinding.getViewModel().setValidateItem(validateItems.get(position));
             }

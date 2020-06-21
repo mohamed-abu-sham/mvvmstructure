@@ -7,7 +7,6 @@ import android.text.Html;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAccountBinding;
-import com.selwantech.raheeb.enums.PickImageTypes;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.model.User;
@@ -17,21 +16,15 @@ import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.auth.login.LoginActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
-import com.selwantech.raheeb.ui.dialog.CustomUploadingDialog;
-import com.selwantech.raheeb.ui.dialog.PickImageFragmentDialog;
-import com.selwantech.raheeb.utils.PickImageUtility;
-import com.selwantech.raheeb.utils.ProgressRequestBody;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.Navigation;
 
-public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAccountBinding>
-        implements ProgressRequestBody.UploadCallbacks {
+public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAccountBinding> {
 
 
-    CustomUploadingDialog customUploadingDialog;
     MutableLiveData<User> user = new MutableLiveData<>();
 
     public <V extends ViewDataBinding, N extends BaseNavigator> AccountViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
@@ -44,7 +37,6 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
     protected void setUp() {
         user.postValue(User.getInstance());
         setTexts();
-        customUploadingDialog = new CustomUploadingDialog(getMyContext());
       //  getProfile();
     }
 
@@ -155,24 +147,6 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
                 .navigate(R.id.action_nav_account_to_settingsFragment);
     }
 
-    public void onAddImageClicked() {
-        PickImageFragmentDialog pickImageFragmentDialog = new PickImageFragmentDialog.Builder().build();
-        pickImageFragmentDialog.setMethodCallBack(new PickImageFragmentDialog.methodClick() {
-            @Override
-            public void onMethodBack(int type) {
-                if (type == PickImageTypes.GALLERY.getIntValue()) {
-                    PickImageUtility.selectImage(getBaseActivity());
-                } else {
-                    PickImageUtility.TakePictureIntent(getBaseActivity());
-                }
-            }
-        });
-        pickImageFragmentDialog.show(getBaseActivity().getSupportFragmentManager(), "picker");
-    }
-
-    public void setImage(String image) {
-        updateImage(image);
-    }
 
     public void getProfile() {
         getDataManager().getAccountService().getProfile(getMyContext(), true, new APICallBack<User>() {
@@ -197,32 +171,7 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
                     }
                 });
     }
-    private void updateImage(String image) {
-        customUploadingDialog.showProgress();
-        getDataManager().getAccountService().updateAvatar(getMyContext(), false,
-                GeneralFunction.getImageMultiPartWithProgress(image, "avatar", this), new APICallBack<User>() {
-            @Override
-            public void onSuccess(User response) {
-                response.setToken(User.getInstance().getToken());
-                User.getInstance().setObjUser(response);
-                SessionManager.createUserLoginSession();
-                GeneralFunction.loadImage(getMyContext(),User.getInstance().getAvatar(),getViewBinding().imgProfile);
-                customUploadingDialog.setProgress(100);
-            }
 
-            @Override
-            public void onError(String error, int errorCode) {
-                showSnackBar(getMyContext().getResources().getString(R.string.error),
-                        error, getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
-                            @Override
-                            public void onActionClick(Snackbar snackbar) {
-                                snackbar.dismiss();
-                            }
-                        });
-                customUploadingDialog.setProgress(100);
-            }
-        });
-    }
 
     private void setTexts() {
         getViewBinding().tvFollowers.setText(Html.fromHtml(getFollowersText()));
@@ -245,19 +194,5 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
         return followers.toString();
     }
 
-    @Override
-    public void onProgressUpdate(int percentage) {
-        customUploadingDialog.setProgress(percentage);
-    }
-
-    @Override
-    public void onError() {
-        customUploadingDialog.setProgress(100);
-    }
-
-    @Override
-    public void onFinish() {
-        customUploadingDialog.setProgress(100);
-    }
 
 }

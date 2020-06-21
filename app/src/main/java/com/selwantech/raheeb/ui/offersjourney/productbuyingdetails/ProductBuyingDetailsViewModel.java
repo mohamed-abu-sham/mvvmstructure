@@ -1,18 +1,16 @@
 package com.selwantech.raheeb.ui.offersjourney.productbuyingdetails;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductBuyingDetailsBinding;
-import com.selwantech.raheeb.databinding.FragmentProductSellingDetailsBinding;
 import com.selwantech.raheeb.helper.GeneralFunction;
+import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.ImagesItem;
 import com.selwantech.raheeb.model.Product;
-import com.selwantech.raheeb.model.Selling;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.adapter.ProductImagesAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
@@ -60,6 +58,18 @@ public class ProductBuyingDetailsViewModel extends
 
     }
 
+    private boolean isLoggedIn() {
+        return SessionManager.isLoggedInAndLogin(getBaseActivity());
+    }
+
+    public void onReportClicked() {
+        if (isLoggedIn()) {
+            Bundle data = new Bundle();
+            data.putSerializable(AppConstants.BundleData.PRODUCT, product);
+            Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                    .navigate(R.id.action_productBuyingDetailsFragment_to_reportProductFragment, data);
+        }
+    }
     public void onBackClicked() {
         popUp();
     }

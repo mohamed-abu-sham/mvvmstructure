@@ -17,20 +17,35 @@
         android:onClick="@{viewModel::onItemClick}"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            cardviewBackgroundColor="@{viewModel.validateItem.color}"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            app:cardCornerRadius="@dimen/_20sdp"
-            app:cardElevation="0dp">
+        <RelativeLayout
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp">
 
-            <ImageView
-                imageResources="@{viewModel.validateItem.image}"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:layout_gravity="center" />
 
-        </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                cardviewBackgroundColor="@{viewModel.validateItem.color}"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_20sdp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    imageResources="@{viewModel.validateItem.image}"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_gravity="center" />
+
+            </androidx.cardview.widget.CardView>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:src="@color/order_cell_red"
+                android:visibility="@{viewModel.isValid()}" />
+
+        </RelativeLayout>
+
 
         <TextView
             style="@style/poppins_regular"

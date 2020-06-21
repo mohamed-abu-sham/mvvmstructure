@@ -3,7 +3,7 @@ package com.selwantech.raheeb.enums;
 public enum SettingsTypes {
     PHONE_NUMBER(0),
     EMAIL(1),
-    TRUSTED(2),
+    IMAGE(2),
     TWITTER(3),
     PASSWORD(4),
     LOCATION(5);

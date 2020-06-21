@@ -1,28 +1,19 @@
 package com.selwantech.raheeb.ui.accountjourney.account;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAccountBinding;
-import com.selwantech.raheeb.databinding.FragmentUserProfileBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
-import com.selwantech.raheeb.model.ProductOwner;
-import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
-import com.selwantech.raheeb.utils.AppConstants;
-import com.selwantech.raheeb.utils.PickImageUtility;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import javax.inject.Inject;
 
-import static android.app.Activity.RESULT_OK;
-
 
 public class AccountFragment extends BaseFragment<FragmentAccountBinding, AccountViewModel>
-        implements AccountNavigator , ActivityResultCallBack{
+        implements AccountNavigator {
 
     private static final String TAG = AccountFragment.class.getSimpleName();
 
@@ -49,12 +40,12 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding, Accoun
 
     @Override
     public boolean isNeedActivityResult() {
-        return true;
+        return false;
     }
 
     @Override
     public ActivityResultCallBack activityResultCallBack() {
-        return this::callBack;
+        return null;
     }
 
     @Override
@@ -81,28 +72,5 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding, Accoun
         mViewModel.setUp();
     }
 
-    @Override
-    public void callBack(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case PickImageUtility.PICK_IMAGE_GALLERY:
-                if (resultCode == RESULT_OK) {
-                    PickImageUtility.Crop(data.getData(), getBaseActivity(), true);
-                }
-                break;
-            case PickImageUtility.PICK_IMAGE_CAMERA:
-                if (resultCode == RESULT_OK) {
-                    PickImageUtility.Crop(PickImageUtility.getCameraImage(), getBaseActivity(), true);
-                }
-                break;
-            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE: {
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if (resultCode == RESULT_OK) {
-                    mViewModel.setImage(result.getUri().getPath());
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    Exception error = result.getError();
-                }
-            }
-        }
-    }
 
 }

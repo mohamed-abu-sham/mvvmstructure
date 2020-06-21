@@ -262,5 +262,7 @@
     <string name="twitter_friends">Twitter friends</string>
     <string name="create_password">Create Password</string>
     <string name="this_product_is_not_available">This product is not available</string>
+    <string name="to_enable_email_notifications_you_have_to_verify_your_email">To enable email notifications you have to verify your email</string>
+    <string name="update_profile_picture">Update profile picture</string>
 
 </resources>

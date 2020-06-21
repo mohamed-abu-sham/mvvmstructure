@@ -6,16 +6,15 @@ import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.SeekBar;
 
-import androidx.databinding.BaseObservable;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.CellChatItemReceivedBinding;
 import com.selwantech.raheeb.interfaces.ChatMessageRecyclerClick;
 import com.selwantech.raheeb.model.ChatObject;
 import com.selwantech.raheeb.utils.AppConstants;
-import com.selwantech.raheeb.utils.TimeUtils;
 
 import java.io.IOException;
+
+import androidx.databinding.BaseObservable;
 
 
 public class ItemChatMessageReceivedViewModel extends BaseObservable {
@@ -29,14 +28,15 @@ public class ItemChatMessageReceivedViewModel extends BaseObservable {
     MediaPlayer mMediaPlayer ;
     public ItemChatMessageReceivedViewModel(Context context, ChatObject messages,
                                             int position,
-                                            CellChatItemReceivedBinding cellChatItemSentBinding,
+                                            CellChatItemReceivedBinding cellChatItemReceivedBinding,
                                             ChatMessageRecyclerClick mRecyclerClick) {
         this.context = context;
         this.messages = messages;
         this.position = position;
         this.mRecyclerClick = mRecyclerClick;
-        this.cellChatItemReceivedBinding = cellChatItemSentBinding;
+        this.cellChatItemReceivedBinding = cellChatItemReceivedBinding;
         this.mRecyclerClick = mRecyclerClick;
+        cellChatItemReceivedBinding.seekAudioIn.setEnabled(false);
 //        this.mMediaPlayer = mediaPlayer ;
 //        if(messages.getMessage_type().equals(AppConstants.MESSAGE_TYPE.VOICE)){
 //            setUpAudio();

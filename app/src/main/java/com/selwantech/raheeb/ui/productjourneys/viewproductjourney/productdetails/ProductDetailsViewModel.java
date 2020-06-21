@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.Snackbar;
+import com.selwantech.raheeb.App;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductDetailsBinding;
 import com.selwantech.raheeb.enums.DialogTypes;
@@ -380,8 +381,9 @@ public class ProductDetailsViewModel extends
     public void onClick(ImagesItem imagesItem, int position) {
         GeneralFunction.loadImage(getMyContext(), imagesItem.getImage(), getViewBinding().imgProduct);
     }
+
     public int getGravity() {
-        return LanguageUtils.getLanguage(getMyContext()).equals("ar")
+        return LanguageUtils.getLanguage(App.getInstance()).equals("ar")
                 ? Gravity.RIGHT : Gravity.LEFT;
     }
 

@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:gravity="@{viewModel.gravity}"
                 android:layout_toStartOf="@id/imgArrow"
                 android:textColor="@color/black"
                 android:text="@{viewModel.text}"

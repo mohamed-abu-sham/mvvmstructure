@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.accountjourney.settings;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentSettingsBinding;
@@ -12,7 +13,7 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 import javax.inject.Inject;
 
 
-public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, SettingsViewModel> implements SettingsNavigator {
+public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, SettingsViewModel> implements SettingsNavigator, ActivityResultCallBack {
 
     private static final String TAG = SettingsFragment.class.getSimpleName();
 
@@ -33,12 +34,12 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
 
     @Override
     public boolean isNeedActivityResult() {
-        return false;
+        return true;
     }
 
     @Override
     public ActivityResultCallBack activityResultCallBack() {
-        return null;
+        return this::callBack;
     }
 
     @Override
@@ -63,5 +64,10 @@ public class SettingsFragment extends BaseFragment<FragmentSettingsBinding, Sett
         mViewBinding = getViewDataBinding();
         setUpToolbar(mViewBinding.toolbar, TAG, R.string.settings);
         mOffersViewModel.setUp();
+    }
+
+    @Override
+    public void callBack(int requestCode, int resultCode, Intent data) {
+        mOffersViewModel.getTwitterAuthClient().onActivityResult(requestCode, resultCode, data);
     }
 }

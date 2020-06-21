@@ -32,6 +32,7 @@ public class CreatePasswordActivity extends BaseActivity<ActivityCreatePasswordB
 
     @Override
     public void setUpToolbar() {
+        setUpToolbar(getViewDataBinding().toolbar.toolbar, R.string.create_password, false);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.selwantech.raheeb.ui.changelanguage;
+package com.selwantech.raheeb.ui.accountjourney.changelanguage;
 
 
 import com.selwantech.raheeb.ui.base.BaseNavigator;

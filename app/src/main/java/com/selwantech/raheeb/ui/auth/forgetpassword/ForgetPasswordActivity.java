@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityForgetPasswordBinding;
 import com.selwantech.raheeb.repository.DataManager;
@@ -13,6 +11,8 @@ import com.selwantech.raheeb.ui.base.BaseActivity;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
+
+import androidx.annotation.Nullable;
 
 public class ForgetPasswordActivity extends BaseActivity<ActivityForgetPasswordBinding, ForgetPasswordViewModel>
         implements ForgetPasswordNavigator {
@@ -34,7 +34,7 @@ public class ForgetPasswordActivity extends BaseActivity<ActivityForgetPasswordB
 
     @Override
     public void setUpToolbar() {
-        setUpToolbar(mViewBinding.toolbar.toolbar, R.string.forget_password, true);
+        setUpToolbar(getViewDataBinding().toolbar.toolbar, R.string.forget_password, true);
     }
 
     @Override

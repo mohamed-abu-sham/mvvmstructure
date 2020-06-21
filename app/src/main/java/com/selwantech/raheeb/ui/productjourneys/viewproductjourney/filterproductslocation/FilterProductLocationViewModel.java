@@ -7,9 +7,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
@@ -33,6 +30,9 @@ import com.selwantech.raheeb.utils.seekbar.RangeSeekBar;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
+
 public class FilterProductLocationViewModel extends
         BaseViewModel<FilterProductLocationNavigator, FragmentFilterProductsLocationBinding>
         implements LocationHelper.OnLocationReceived {
@@ -41,15 +41,14 @@ public class FilterProductLocationViewModel extends
     GeoAddress geoAddress;
     FilterLocation filterLocation;
     int distance = 0;
+    LocationHelper locationHelper;
     public <V extends ViewDataBinding, N extends BaseNavigator> FilterProductLocationViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (FilterProductLocationNavigator) navigation, (FragmentFilterProductsLocationBinding) viewDataBinding);
     }
 
     @Override
     protected void setUp() {
-
-
-        LocationHelper locationHelper = new LocationHelper(getMyContext());
+        locationHelper = new LocationHelper(getMyContext());
         locationHelper.setLocationReceivedLister(this);
         getViewBinding().toolbar.tvToolbarAction.setText(R.string.reset);
         getViewBinding().toolbar.tvToolbarAction.setVisibility(View.VISIBLE);
@@ -162,8 +161,11 @@ public class FilterProductLocationViewModel extends
     private boolean isValid() {
         int error = 0;
         if (filterLocation == null) {
+            if (locationHelper.hasPermission()) {
+                locationHelper.checkLocationEnabled();
+            }
             showSnackBar(getMyContext().getResources().getString(R.string.error),
-                    getMyContext().getResources().getString(R.string.please_fill_all_data),
+                    getMyContext().getResources().getString(R.string.please_select_location),
                     getMyContext().getResources().getString(R.string.ok),
                     new SnackViewBulider.SnackbarCallback() {
                         @Override
@@ -171,6 +173,7 @@ public class FilterProductLocationViewModel extends
                             snackbar.dismiss();
                         }
                     });
+            error++;
         }
         return error == 0;
     }

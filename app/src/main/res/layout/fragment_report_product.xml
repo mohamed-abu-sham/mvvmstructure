@@ -79,6 +79,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@{product.title}"
                                     android:textColor="@color/black"
+                                    android:gravity="@{viewModel.gravity}"
                                     android:textSize="14sp" />
                                 <TextView
                                     android:id="@+id/tvMarkSold"

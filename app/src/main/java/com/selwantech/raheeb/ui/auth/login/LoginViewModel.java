@@ -3,8 +3,6 @@ package com.selwantech.raheeb.ui.auth.login;
 import android.content.Context;
 import android.view.View;
 
-import androidx.databinding.ViewDataBinding;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityLoginBinding;
@@ -24,6 +22,8 @@ import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.TwitterUtils;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
+import androidx.databinding.ViewDataBinding;
+
 public class LoginViewModel extends BaseViewModel<LoginNavigator, ActivityLoginBinding> implements TwitterUtils.TwitterCallback {
 
     private static final String TAG = "LoginViewModel";
@@ -40,7 +40,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator, ActivityLoginB
 
     @Override
     protected void setUp() {
-        twitterUtils = new TwitterUtils(getBaseActivity(), this::twitterUser);
+        twitterUtils = new TwitterUtils(getBaseActivity(), this::twitterUser, true);
         String lang = LanguageUtils.getLanguage(getMyContext());
         if (lang.equals("ar")) {
             getViewBinding().tvLanguage.setText(getMyContext().getResources().getString(R.string.arabic));

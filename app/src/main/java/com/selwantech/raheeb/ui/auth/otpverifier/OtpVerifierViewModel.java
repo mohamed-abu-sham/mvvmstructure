@@ -17,6 +17,7 @@ import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
+import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordActivity;
 import com.selwantech.raheeb.ui.auth.login.LoginActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
@@ -59,6 +60,8 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
         if (isValidate()) {
             if (type == PhoneNumberTypes.REGISTER.getValue()) {
                 verifyOtp();
+            } else if (type == PhoneNumberTypes.FORGET_PASSWORD.getValue()) {
+                verifyOtp();
             } else if (type == PhoneNumberTypes.CHANGE_PHONE_NUMBER.getValue()) {
                 verifyOtpToUpdate();
             }
@@ -89,10 +92,14 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
 
     private void verifyOtp() {
         getDataManager().getAuthService().verifyOtp(getMyContext(),
-                true, User.getInstance().getToken(), getOtp(), new APICallBack<String>() {
+                true, getNavigator().getToken(), getOtp(), new APICallBack<String>() {
                     @Override
                     public void onSuccess(String response) {
-                        registerUser();
+                        if (type == PhoneNumberTypes.REGISTER.getValue()) {
+                            registerUser();
+                        } else if (type == PhoneNumberTypes.FORGET_PASSWORD.getValue()) {
+                            getBaseActivity().startActivity(CreatePasswordActivity.newIntent(getMyContext(), getNavigator().getToken()));
+                        }
                     }
 
                     @Override

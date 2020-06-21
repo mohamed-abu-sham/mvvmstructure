@@ -193,6 +193,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_setLocationFragment"
             app:destination="@id/setLocationFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_changeLanguageFragment"
+            app:destination="@id/changeLanguageFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -234,5 +237,9 @@
         android:id="@+id/twitterFriendsFragment"
         android:name="com.selwantech.raheeb.ui.accountjourney.twitterfriends.TwitterFriendsFragment"
         android:label="TwitterFriendsFragment" />
+    <fragment
+        android:id="@+id/changeLanguageFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.changelanguage.ChangeLanguageFragment"
+        android:label="ChangeLanguageFragment" />
 
 </navigation>

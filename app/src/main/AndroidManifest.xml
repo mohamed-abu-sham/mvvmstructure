@@ -104,6 +104,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.auth.forgetpassword.ForgetPasswordActivity" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

@@ -10,9 +10,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.DialogFragment;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.ApiException;
@@ -30,6 +27,9 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.DialogFragment;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -186,10 +186,18 @@ public class LocationHelper implements LocationListener,
             mLocationReceived.onConntected(connectionHint);
     }
 
+    public boolean hasPermission() {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermission();
+            return false;
+        }
+        return true;
+    }
     private void startPeriodicUpdates() {
 
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermission();
+        if (!hasPermission()) {
             return;
         }
         FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
@@ -234,7 +242,7 @@ public class LocationHelper implements LocationListener,
         checkLocationEnabled();
     }
 
-    private void checkLocationEnabled() {
+    public void checkLocationEnabled() {
         LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(10);
         mLocationRequest.setSmallestDisplacement(10);

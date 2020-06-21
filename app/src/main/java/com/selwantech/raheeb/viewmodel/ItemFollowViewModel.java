@@ -2,13 +2,12 @@
 package com.selwantech.raheeb.viewmodel;
 
 import android.content.Context;
-import android.view.View;
+import android.view.Gravity;
 
 import com.selwantech.raheeb.enums.FollowStatus;
+import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.interfaces.ItemClickWithType;
-import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.ProductOwner;
-import com.selwantech.raheeb.model.chatdata.Chat;
 
 import androidx.databinding.BaseObservable;
 
@@ -46,6 +45,10 @@ public class ItemFollowViewModel extends BaseObservable {
         } else {
             mRecyclerClick.onClick(user, FollowStatus.UNFOLLOW.getStatus(),position);
         }
+    }
+
+    public int getGravity() {
+        return SessionManager.getLanguage().equals("ar") ? Gravity.LEFT : Gravity.RIGHT;
     }
 
 }

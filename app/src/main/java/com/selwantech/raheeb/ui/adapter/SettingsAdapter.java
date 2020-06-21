@@ -64,7 +64,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             if (mBinding.getViewModel() == null) {
-                mBinding.setViewModel(new ItemSettingViewModel(mContext, arrayListText.get(position), position, mRecyclerClick));
+                mBinding.setViewModel(new ItemSettingViewModel(mContext, mBinding, arrayListText.get(position), position, mRecyclerClick));
             } else {
                 mBinding.getViewModel().setText(arrayListText.get(position));
             }

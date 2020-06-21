@@ -10,30 +10,12 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
-    <style name="AppThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_blue</item>
-        <item name="colorPrimaryDark">@color/color_blue_dark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="fontFamily">@font/cairo_regular</item>
-    </style>
-
-    <style name="ToolbarColoredBackArrow" parent="AppThemeLight">
-        <item name="android:textColorSecondary">@color/color_blue_dark</item>
-        <item name="android:textColorPrimary">@color/color_blue_dark</item>
-        <item name="android:background">@color/white</item>
-    </style>
-
     <style name="ToolbarColoredBackArrowDark" parent="AppThemeArabic">
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:background">@color/color_blue</item>
     </style>
 
-    <style name="horizontal_progress_bar" parent="Widget.AppCompat.ProgressBar.Horizontal">
-
-        <item name="android:backgroundTint">@color/color_blue</item>
-    </style>
     <!--    <style name="AppThemeNight" parent="Theme.AppCompat.DayNight">-->
     <!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
     <!--        <item name="colorPrimary">@color/white</item>-->
@@ -68,14 +50,6 @@
 
     <style name="textview_arabic_style">
         <item name="fontFamily">@font/cairo_regular</item>
-    </style>
-
-    <style name="poppins_black">
-        <item name="fontFamily">@font/poppins_black</item>
-    </style>
-
-    <style name="poppins_bold">
-        <item name="fontFamily">@font/poppins_bold</item>
     </style>
 
     <style name="poppins_semi_bold">
@@ -124,15 +98,6 @@
     <style name="RatingBarToRate" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/light_gray2</item>
         <item name="colorControlActivated">@color/color_dark_gold</item>
-    </style>
-
-    <style name="RatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="colorControlNormal">@color/light_gray2</item>
-        <item name="colorControlActivated">@color/gold</item>
-        <item name="android:scaleX">.8</item>
-        <item name="android:scaleY">.8</item>
-        <item name="android:transformPivotX">0dp</item>
-        <item name="android:transformPivotY">@dimen/_1sdp</item>
     </style>
 
     <style name="RatingBarColor" parent="Theme.AppCompat">
@@ -213,18 +178,9 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="AudioPlayerSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
     <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/poppins_medium</item>
-    </style>
-
-    <style name="customRatingBar" parent="android:style/Widget.Material.RatingBar.Small">
-        <item name="colorControlNormal">#E8DC33</item>
-        <item name="colorControlActivated">#E8DC33</item>
     </style>
 
     <eat-comment />
@@ -245,19 +201,6 @@
     <eat-comment />
     <dimen name="rippleRadius">64dp</dimen>
     <dimen name="rippleStrokeWidth">2dp</dimen>
-
-
-    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
-        <!-- active thumb & track color (30% transparency) -->
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
-
-        <!-- inactive thumb color -->
-        <item name="colorSwitchThumbNormal">#f1f1f1</item>
-
-        <!-- inactive track color (30% transparency) -->
-        <item name="android:colorForeground">@color/colorPrimaryDark
-        </item>
-    </style>
 
 
 </resources>

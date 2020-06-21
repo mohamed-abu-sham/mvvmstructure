@@ -11,6 +11,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductDetailsBinding;
+import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.helper.GeoCoderAddress;
 import com.selwantech.raheeb.helper.SessionManager;
@@ -24,6 +25,7 @@ import com.selwantech.raheeb.ui.adapter.ProductImagesAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OfferFragmentDialog;
+import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.LanguageUtils;
 import com.selwantech.raheeb.utils.SnackViewBulider;
@@ -78,6 +80,22 @@ public class ProductDetailsViewModel extends
             @Override
             public void onSuccess(Product response) {
                 product = response;
+                if (!product.getStatus().equals(AppConstants.PRODUCT_STATUS.AVAILABLE)) {
+                    new OnLineDialog(getMyContext()) {
+                        @Override
+                        public void onPositiveButtonClicked() {
+                            dismiss();
+                            popUp();
+                        }
+
+                        @Override
+                        public void onNegativeButtonClicked() {
+
+                        }
+                    }.showConfirmationDialog(DialogTypes.OK, getMyContext().getResources().getString(R.string.error),
+                            getMyContext().getResources().getString(R.string.this_product_is_not_available));
+                    return;
+                }
                 getViewBinding().setData(product);
                 setTexts();
                 initMap();

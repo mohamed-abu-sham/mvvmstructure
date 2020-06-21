@@ -2,12 +2,14 @@
 package com.selwantech.raheeb.viewmodel;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 
-import androidx.databinding.BaseObservable;
-
+import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.notificationsdata.Notification;
+
+import androidx.databinding.BaseObservable;
 
 
 public class ItemNotificationViewModel extends BaseObservable {
@@ -35,6 +37,10 @@ public class ItemNotificationViewModel extends BaseObservable {
 
     public void onItemClick(View view) {
         mRecyclerClick.onClick(notification, position);
+    }
+
+    public int getGravity() {
+        return SessionManager.getLanguage().equals("ar") ? Gravity.LEFT : Gravity.RIGHT;
     }
 
 }

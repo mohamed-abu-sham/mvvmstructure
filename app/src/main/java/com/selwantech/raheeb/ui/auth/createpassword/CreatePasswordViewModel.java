@@ -3,8 +3,6 @@ package com.selwantech.raheeb.ui.auth.createpassword;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.databinding.ViewDataBinding;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityCreatePasswordBinding;
 import com.selwantech.raheeb.enums.DialogTypes;
@@ -17,6 +15,7 @@ import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 
+import androidx.databinding.ViewDataBinding;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -26,6 +25,11 @@ public class CreatePasswordViewModel extends BaseViewModel<CreatePasswordNavigat
 
     public <V extends ViewDataBinding, N extends BaseNavigator> CreatePasswordViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (CreatePasswordNavigator) navigation, (ActivityCreatePasswordBinding) viewDataBinding);
+    }
+
+    @Override
+    protected void setUp() {
+        token = getNavigator().getToken();
     }
 
     public boolean isValid() {
@@ -79,8 +83,5 @@ public class CreatePasswordViewModel extends BaseViewModel<CreatePasswordNavigat
         }
     }
 
-    @Override
-    protected void setUp() {
-        token = getNavigator().getToken();
-    }
+
 }

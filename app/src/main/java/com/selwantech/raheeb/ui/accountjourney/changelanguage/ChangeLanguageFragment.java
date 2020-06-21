@@ -1,7 +1,6 @@
-package com.selwantech.raheeb.ui.changelanguage;
+package com.selwantech.raheeb.ui.accountjourney.changelanguage;
 
 import android.content.Context;
-import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChangeLanguageBinding;
@@ -21,14 +20,6 @@ public class ChangeLanguageFragment extends BaseFragment<FragmentChangeLanguageB
     ViewModelProviderFactory factory;
     private ChangeLanguageViewModel mChangeLanguageViewModel;
     private FragmentChangeLanguageBinding mViewBinding;
-
-
-    public static ChangeLanguageFragment newInstance() {
-        Bundle args = new Bundle();
-        ChangeLanguageFragment fragment = new ChangeLanguageFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public int getBindingVariable() {

@@ -10,6 +10,7 @@ public class ApiConstants {
 
     public class apiAuthService {
         public static final String VERIFY_PHONE = "auth/verifyPhone";
+        public static final String VERIFY_PHONE_FORGET_PASSWORD = "auth/forgotPassword/verifyPhone";
         public static final String VERIFY_CODE = "auth/verifyPhone/check-code";
         public static final String VERIFY_CODE_TO_UPDATE = "user/update/phone_number";
         public static final String RESEND_CODE = "auth/verifyPhone/reset-code";

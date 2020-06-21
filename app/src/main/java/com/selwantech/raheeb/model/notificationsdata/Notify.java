@@ -10,11 +10,19 @@ public class Notify {
     @SerializedName("body")
     private String body;
 
+    @SerializedName("date")
+    private String date = "1 day";
+
+
     public String getTitle() {
         return title;
     }
 
     public String getBody() {
         return body;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

@@ -92,6 +92,14 @@ public class AuthService {
                 .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(mContext, enableLoading, apiCallBack));
     }
 
+    public void sendOtpForgetPassword(Context mContext, boolean enableLoading, String phoneNumber, APICallBack<VerifyPhoneResponse> apiCallBack) {
+        getDataApi().sendOtpForgetPassword(phoneNumber)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(mContext, enableLoading, apiCallBack));
+    }
+
     public void verifyOtp(Context mContext, boolean enableLoading, String token, String otp, APICallBack<String> apiCallBack) {
         getDataApi().verifyCode(token, otp)
                 .toObservable()
@@ -170,6 +178,9 @@ public class AuthService {
 
         @POST(ApiConstants.apiAuthService.VERIFY_PHONE)
         Single<Response<GeneralResponse<VerifyPhoneResponse>>> verifyPhone(@Query("phone_number") String phoneNumber);
+
+        @POST(ApiConstants.apiAuthService.VERIFY_PHONE_FORGET_PASSWORD)
+        Single<Response<GeneralResponse<VerifyPhoneResponse>>> sendOtpForgetPassword(@Query("phone_number") String phoneNumber);
 
         @POST(ApiConstants.apiAuthService.VERIFY_CODE)
         Single<Response<GeneralResponse<String>>> verifyCode(@Query("token") String token,

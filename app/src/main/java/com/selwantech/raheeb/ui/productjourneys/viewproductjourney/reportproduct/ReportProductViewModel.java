@@ -2,12 +2,14 @@ package com.selwantech.raheeb.ui.productjourneys.viewproductjourney.reportproduc
 
 import android.content.Context;
 import android.net.Uri;
+import android.view.Gravity;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentReportProductBinding;
 import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.enums.PickImageTypes;
+import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.model.Product;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -124,6 +126,10 @@ public class ReportProductViewModel extends BaseViewModel<ReportProductNavigator
             error++;
         }
         return error == 0 ;
+    }
+
+    public int getGravity() {
+        return SessionManager.getLanguage().equals("ar") ? Gravity.LEFT : Gravity.RIGHT;
     }
 
 }

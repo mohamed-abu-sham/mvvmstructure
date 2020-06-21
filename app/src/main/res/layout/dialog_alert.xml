@@ -16,7 +16,7 @@
         android:layout_margin="@dimen/_25sdp"
         android:minWidth="300dp"
         android:orientation="vertical"
-        app:cardCornerRadius="25dp">
+        app:cardCornerRadius="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,11 +25,12 @@
             <ImageView
                 android:id="@+id/imgIcon"
                 android:layout_width="65dp"
-                android:layout_height="65dp"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/_15sdp"
-                app:srcCompat="@drawable/ic_logo" />
+                android:tint="@color/color_blue"
+                app:srcCompat="@drawable/logo" />
 
             <TextView
                 android:id="@+id/tvTitle"

@@ -82,6 +82,7 @@
                                     android:singleLine="true"
                                     android:text="@{productOwner.name}"
                                     android:textColor="@color/black"
+                                    android:gravity="@{viewModel.gravity}"
                                     android:textSize="14sp" />
 
                                 <TextView

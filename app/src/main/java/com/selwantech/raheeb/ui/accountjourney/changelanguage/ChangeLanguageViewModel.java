@@ -1,14 +1,14 @@
-package com.selwantech.raheeb.ui.changelanguage;
+package com.selwantech.raheeb.ui.accountjourney.changelanguage;
 
 import android.content.Context;
-
-import androidx.databinding.ViewDataBinding;
 
 import com.selwantech.raheeb.databinding.FragmentChangeLanguageBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.LanguageUtils;
+
+import androidx.databinding.ViewDataBinding;
 
 public class ChangeLanguageViewModel extends BaseViewModel<ChangeLanguageNavigator, FragmentChangeLanguageBinding> {
 

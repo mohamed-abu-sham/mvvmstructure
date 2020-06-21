@@ -5,9 +5,6 @@ import android.text.Html;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
@@ -24,6 +21,9 @@ import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.io.IOException;
+
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 
 public class ReviewOfferViewModel extends BaseViewModel<ReviewOfferNavigator, FragmentReviewOfferBinding> {
 
@@ -123,7 +123,7 @@ public class ReviewOfferViewModel extends BaseViewModel<ReviewOfferNavigator, Fr
 
     private void setGooglePayDis() {
         StringBuilder description = new StringBuilder();
-        description.append(getMyContext().getResources().getString(R.string.by_continuing_you_accept_the_name_apps));
+        description.append(getMyContext().getResources().getString(R.string.by_continuing_you_accept_raheeb));
         description.append(" ");
         description.append(GeneralFunction.textMultiColor(getMyContext().getResources().getString(R.string.terms_of_service), "#55ACEE"));
         getViewBinding().tvGooglePayDis.setText(Html.fromHtml(description.toString()));

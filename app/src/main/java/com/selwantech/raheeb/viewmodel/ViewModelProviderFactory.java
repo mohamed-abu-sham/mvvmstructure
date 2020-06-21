@@ -2,14 +2,10 @@ package com.selwantech.raheeb.viewmodel;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.accountjourney.about.AboutViewModel;
 import com.selwantech.raheeb.ui.accountjourney.account.AccountViewModel;
+import com.selwantech.raheeb.ui.accountjourney.changelanguage.ChangeLanguageViewModel;
 import com.selwantech.raheeb.ui.accountjourney.followers.FollowersViewModel;
 import com.selwantech.raheeb.ui.accountjourney.following.FollowingViewModel;
 import com.selwantech.raheeb.ui.accountjourney.help.HelpViewModel;
@@ -65,6 +61,11 @@ import com.selwantech.raheeb.ui.userprofilejourney.user_profile_details.UserProf
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * @ViewDataBinding : Base class for generated data binding classes
@@ -262,6 +263,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(ForgetPasswordViewModel.class)) {
             //noinspection unchecked
             return (T) new ForgetPasswordViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(ChangeLanguageViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ChangeLanguageViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

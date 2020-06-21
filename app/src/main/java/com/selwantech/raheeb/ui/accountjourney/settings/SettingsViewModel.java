@@ -21,6 +21,7 @@ import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.TwitterUtils;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import java.util.ArrayList;
 
@@ -28,15 +29,17 @@ import androidx.databinding.ViewDataBinding;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class SettingsViewModel extends BaseViewModel<SettingsNavigator, FragmentSettingsBinding> implements RecyclerClickNoData, TwitterUtils.TwitterCallback {
+public class SettingsViewModel extends BaseViewModel<SettingsNavigator, FragmentSettingsBinding>
+        implements RecyclerClickNoData, TwitterUtils.TwitterCallbackToConnect {
 
-
+    TwitterUtils twitterUtils;
     public <V extends ViewDataBinding, N extends BaseNavigator> SettingsViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (SettingsNavigator) navigation, (FragmentSettingsBinding) viewDataBinding);
     }
 
     @Override
     protected void setUp() {
+        twitterUtils = new TwitterUtils(getBaseActivity(), this::twitterUser, false);
         setUpRecycler();
         getViewBinding().setUser(User.getInstance());
     }
@@ -99,6 +102,11 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
                 .navigate(R.id.action_settingsFragment_to_aboutFragment);
     }
 
+    public void onLanguageClicked(View view) {
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.action_settingsFragment_to_changeLanguageFragment);
+    }
+
     private ArrayList<String> getArraylistText() {
         ArrayList<String> arrayListText = new ArrayList<>();
         arrayListText.add(User.getInstance().getPhone() != null && !User.getInstance().getPhone().isEmpty() ?
@@ -151,14 +159,14 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
     }
 
     private void connectWithTwitter() {
-        TwitterUtils twitterUtils = new TwitterUtils(getBaseActivity(), this::twitterUser);
+
         twitterUtils.twitterClick();
     }
 
     @Override
-    public void twitterUser(User user) {
+    public void twitterUser(String userID) {
         getDataManager().getAuthService().connectTwitterUser(getMyContext(),
-                true, user.getSocial_id(), new APICallBack<RegisterResponse>() {
+                true, userID, new APICallBack<RegisterResponse>() {
                     @Override
                     public void onSuccess(RegisterResponse response) {
                         User user = response.getUser();
@@ -179,5 +187,9 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
                                 });
                     }
                 });
+    }
+
+    public TwitterAuthClient getTwitterAuthClient() {
+        return twitterUtils.getTwitterAuthClient();
     }
 }

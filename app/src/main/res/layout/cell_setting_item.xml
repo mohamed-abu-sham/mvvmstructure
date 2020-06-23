@@ -9,48 +9,41 @@
             type="com.selwantech.raheeb.viewmodel.ItemSettingViewModel" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
+        android:id="@+id/itemView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_with_shadow_solid"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:onClick="@{viewModel::onItemClick}"
-        app:cardCornerRadius="@dimen/_5sdp"
-        app:cardElevation="@dimen/_3sdp">
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
 
-        <RelativeLayout
-            android:id="@+id/itemView"
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/poppins_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp">
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_toStartOf="@id/imgArrow"
+            android:gravity="@{viewModel.gravity}"
+            android:text="@{viewModel.text}"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
 
+        <ImageView
+            android:id="@+id/imgArrow"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:srcCompat="@drawable/ic_arrow_forward" />
 
-            <TextView
-                android:id="@+id/textView"
-                style="@style/poppins_regular"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:gravity="@{viewModel.gravity}"
-                android:layout_toStartOf="@id/imgArrow"
-                android:textColor="@color/black"
-                android:text="@{viewModel.text}"
-                android:textSize="13sp" />
-
-            <ImageView
-                android:id="@+id/imgArrow"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                app:srcCompat="@drawable/ic_arrow_forward" />
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 </layout>

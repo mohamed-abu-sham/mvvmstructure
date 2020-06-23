@@ -100,6 +100,7 @@
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_15sdp">
 
                 <ImageView
@@ -113,8 +114,6 @@
                     android:id="@+id/seekbarKm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_weight="1"
                     app:rsb_gravity="bottom"
                     app:rsb_mode="single"
@@ -133,6 +132,8 @@
                     app:rsb_tick_mark_mode="other"
                     app:rsb_tick_mark_text_color="@color/text_gray"
                     app:rsb_tick_mark_text_size="10sp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     app:rsb_tick_mark_text_margin="@dimen/_12sdp" />
 
 

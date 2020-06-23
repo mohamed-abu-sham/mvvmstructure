@@ -264,5 +264,10 @@
     <string name="this_product_is_not_available">This product is not available</string>
     <string name="to_enable_email_notifications_you_have_to_verify_your_email">To enable email notifications you have to verify your email</string>
     <string name="update_profile_picture">Update profile picture</string>
+    <string name="rate">Rate</string>
+    <string name="click_on_the_star_to_rate_the_buyer">Click on the star to rate the buyer</string>
+    <string name="was_it_good_shopping">Was it good shopping?</string>
+    <string name="type_a_comment">Type a comment ...</string>
+    <string name="rated_successful">Rated successful</string>
 
 </resources>

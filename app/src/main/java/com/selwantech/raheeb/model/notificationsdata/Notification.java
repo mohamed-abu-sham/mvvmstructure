@@ -24,6 +24,9 @@ public class Notification implements Serializable {
     @SerializedName("result_firebase")
     private String resultFirebase;
 
+    @SerializedName("date")
+    private String date;
+
     public int getUserId() {
         return userId;
     }
@@ -42,6 +45,10 @@ public class Notification implements Serializable {
 
     public Notify getNotify() {
         return notify;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public String getResultFirebase() {

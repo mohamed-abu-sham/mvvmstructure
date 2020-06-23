@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.selwantech.raheeb.helper.GeneralFunction;
 import com.selwantech.raheeb.model.MyOffer;
 import com.selwantech.raheeb.model.ProductOwner;
+import com.selwantech.raheeb.model.Rate;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.ApiClient;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
@@ -19,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -71,9 +73,16 @@ public class UserService {
                 .subscribeOn(Schedulers.io())
                 .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
     }
-
     public void unfollowUser(Context mContext, boolean enableLoading, int userId, APICallBack<String> apiCallBack) {
         getDataApi().unfollowUser(userId)
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
+    }
+
+    public void rateUser(Context mContext, boolean enableLoading, int userId, Rate rate, APICallBack<String> apiCallBack) {
+        getDataApi().rateUser(userId, rate)
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -112,6 +121,9 @@ public class UserService {
 
         @POST(ApiConstants.apiUserService.UNFOLLOW_USER)
         Single<Response<GeneralResponse<String>>> unfollowUser(@Query("user_id") int productId);
+
+        @POST(ApiConstants.apiUserService.RATE_USER)
+        Single<Response<GeneralResponse<String>>> rateUser(@Path("user_id") int user_id, @Body Rate rate);
 
         @Multipart
         @POST(ApiConstants.apiUserService.SEND_REPORT)

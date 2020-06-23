@@ -31,10 +31,16 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     @Override
     public void onResume() {
         super.onResume();
-        if(mViewModel.chat != null){
-            mViewModel.initiateSocket();
+        if (mViewModel.chat != null && mViewModel.joinRoom) {
+//            mViewModel.initiateSocket();
             mViewModel.joinRoom(mViewModel.chat.getId());
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mViewModel.leaveRoom();
     }
 
     @Override

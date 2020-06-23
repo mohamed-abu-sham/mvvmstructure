@@ -4,14 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentNotificationsBinding;
+import com.selwantech.raheeb.helper.NotificationHelper;
 import com.selwantech.raheeb.interfaces.OnLoadMoreListener;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.notificationsdata.Notification;
@@ -24,6 +20,10 @@ import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.util.ArrayList;
+
+import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class NotificationsViewModel extends BaseViewModel<NotificationsNavigator, FragmentNotificationsBinding> implements RecyclerClick<Notification> {
 
@@ -128,8 +128,7 @@ public class NotificationsViewModel extends BaseViewModel<NotificationsNavigator
     public void onClick(Notification notification, int position) {
         Bundle data = new Bundle();
         data.putSerializable(AppConstants.BundleData.MY_OFFER, notification);
-//        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-//                .navigate(R.id.productDetailsFragment, data);
+        new NotificationHelper(getBaseActivity(), notification).handleNotificationEvent();
     }
 
 

@@ -7,10 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.selwantech.raheeb.databinding.CellChatItemReceivedBinding;
 import com.selwantech.raheeb.databinding.CellChatItemSentBinding;
 import com.selwantech.raheeb.databinding.CellLoadMoreBinding;
@@ -25,6 +21,10 @@ import com.selwantech.raheeb.viewmodel.ItemChatMessageSentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
@@ -98,7 +98,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void addItems(List<ChatObject> chatObjectList) {
-        chatObjectArrayList.addAll(chatObjectList);
+        chatObjectArrayList.addAll(0, chatObjectList);
         notifyDataSetChanged();
     }
 

@@ -140,7 +140,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp">
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:onClick="@{()->viewModel.onViewProductOwnerClicked()}">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/imgUserImage"
@@ -170,6 +171,7 @@
                                 android:singleLine="true"
                                 android:text="@{data.productOwner.name}"
                                 android:textColor="@color/black"
+                                android:gravity="@{viewModel.gravity}"
                                 android:textSize="14sp" />
 
                             <LinearLayout
@@ -212,7 +214,6 @@
                             android:layout_height="@dimen/_15sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerInParent="true"
-                            android:onClick="@{()->viewModel.onViewProductOwnerClicked()}"
                             app:srcCompat="@drawable/ic_arrow_forward" />
                     </RelativeLayout>
 

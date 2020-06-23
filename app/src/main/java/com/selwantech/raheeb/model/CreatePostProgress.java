@@ -1,33 +1,18 @@
 package com.selwantech.raheeb.model;
 
-import androidx.databinding.BaseObservable;
-
 import com.selwantech.raheeb.App;
 import com.selwantech.raheeb.R;
 
 import java.io.Serializable;
 
+import androidx.databinding.BaseObservable;
+
 public class CreatePostProgress extends BaseObservable implements Serializable {
 
-    //    private static CreatePostProgress createPostProgress = null;
     boolean addPhotos = true;
     boolean addDetails = false;
     boolean addPrice = false;
     boolean finish = false;
-
-//    private CreatePostProgress() {
-//
-//    }
-
-//    public static CreatePostProgress getInstance() {
-//        if (createPostProgress == null)
-//            createPostProgress = new CreatePostProgress();
-//        return createPostProgress;
-//    }
-//
-//    public void setObj(CreatePostProgress createPostProgress) {
-//        this.createPostProgress = createPostProgress;
-//    }
 
     public int isAddPhotos() {
         return getColorTint(addPhotos);

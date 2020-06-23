@@ -2,7 +2,9 @@ package com.selwantech.raheeb.model.notificationsdata;
 
 import com.google.gson.annotations.SerializedName;
 
-public class NotifyData {
+import java.io.Serializable;
+
+public class NotifyData implements Serializable {
 
     @SerializedName("acction_id")
     private int acctionId;

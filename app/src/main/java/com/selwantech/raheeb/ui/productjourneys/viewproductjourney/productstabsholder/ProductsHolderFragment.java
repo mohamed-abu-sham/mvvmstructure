@@ -3,8 +3,6 @@ package com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productstabs
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.fragment.app.FragmentManager;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductsTabsHolderBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
@@ -13,6 +11,9 @@ import com.selwantech.raheeb.ui.base.BaseFragment;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.fragment.app.FragmentManager;
 
 
 public class ProductsHolderFragment extends
@@ -56,12 +57,6 @@ public class ProductsHolderFragment extends
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mViewModel.onResume();
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.fragment_products_tabs_holder;
     }
@@ -82,8 +77,30 @@ public class ProductsHolderFragment extends
     protected void setUp() {
         mViewBinding = getViewDataBinding();
         mViewModel.setUp();
+        setupOnBackPressed();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupOnBackPressed();
+        mViewModel.onResume();
+    }
+
+    private void setupOnBackPressed() {
+        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (!mViewBinding.edSearch.getText().toString().isEmpty() || mViewBinding.edSearch.isFocused()) {
+                    mViewModel.onCancelSearchClicked();
+                } else {
+                    getBaseActivity().finishAffinity();
+                    this.setEnabled(false);
+                }
+
+            }
+        });
+    }
     @Override
     public FragmentManager getChildFragment() {
         return getChildFragmentManager();

@@ -24,6 +24,12 @@ public class ChatsFragment extends BaseFragment<FragmentChatsBinding, ChatsViewM
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mHomeViewModel.reloadData();
+    }
+
+    @Override
     public int getBindingVariable() {
         return com.selwantech.raheeb.BR.viewModel;
     }

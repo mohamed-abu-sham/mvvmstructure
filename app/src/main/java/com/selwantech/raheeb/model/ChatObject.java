@@ -25,6 +25,7 @@ public class ChatObject implements Serializable {
     private int offer_id;
     @SerializedName("offer")
     Offer offer ;
+
     public ChatObject(int id, String message_type, String message, String date, Sender sender) {
         this.id = id;
         this.message_type = message_type;

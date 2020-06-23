@@ -54,6 +54,7 @@ public class ApiConstants {
     public class apiUserService {
         public static final String GET_USER = "users/{userId}/profile";
         public static final String FOLLOW_USER = "user/follower/follow";
+        public static final String RATE_USER = "user/post/sold/rate/{user_id}";
         public static final String UNFOLLOW_USER = "user/follower/unfollow";
         public static final String GET_MY_OFFERS = "users/{userId}/offers";
         public static final String SEND_REPORT = "user/{user_id}/report";

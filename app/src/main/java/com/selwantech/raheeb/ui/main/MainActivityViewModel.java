@@ -16,11 +16,14 @@ import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 
 public class MainActivityViewModel extends BaseViewModel<MainActivityNavigator, ActivityMainBinding> {
 
+    NavOptions navOptions;
+    NavOptions.Builder navBuilder = new NavOptions.Builder();
     public <V extends ViewDataBinding, N extends BaseNavigator> MainActivityViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (MainActivityNavigator) navigation, (ActivityMainBinding) viewDataBinding);
 
@@ -29,7 +32,7 @@ public class MainActivityViewModel extends BaseViewModel<MainActivityNavigator, 
 
     @Override
     protected void setUp() {
-
+        navOptions = navBuilder.setPopUpTo(R.id.nav_home, false).build();
         getViewBinding().bottomSheet.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -42,11 +45,6 @@ public class MainActivityViewModel extends BaseViewModel<MainActivityNavigator, 
                         if (SessionManager.isLoggedIn()) {
                             navigate(menuItem.getItemId());
                         } else {
-//                            BottomNavigationMenuView menuView = (BottomNavigationMenuView) getViewBinding().bottomSheet.getChildAt(0);
-//                            BottomNavigationItemView item = (BottomNavigationItemView)menuView.getChildAt(menuItem.getOrder());
-//                            item.setActivated(false);
-//                            getViewBinding().bottomSheet.setSelectedItemId(R.id.nav_home);
-
                             new OnLineDialog(getBaseActivity()) {
                                 @Override
                                 public void onPositiveButtonClicked() {
@@ -73,6 +71,6 @@ public class MainActivityViewModel extends BaseViewModel<MainActivityNavigator, 
 
     private void navigate(int id) {
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                .navigate(id);
+                .navigate(id, null, navOptions);
     }
 }

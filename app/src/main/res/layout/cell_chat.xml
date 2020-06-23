@@ -67,7 +67,16 @@
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/shape_rounded_empty_gray"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:padding="@dimen/_4sdp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgSeen"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:src="@color/color_green"
+                android:visibility="@{viewModel.messages.is_seen}" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

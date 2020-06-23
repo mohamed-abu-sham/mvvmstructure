@@ -54,7 +54,8 @@
                     android:id="@+id/tvName"
                     style="@style/poppins_regular"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_weight="1"
@@ -115,9 +116,9 @@
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:textColor="@color/text_gray"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/text_gray"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/btn_send"

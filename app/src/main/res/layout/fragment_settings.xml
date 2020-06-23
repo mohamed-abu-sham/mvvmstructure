@@ -64,86 +64,71 @@
                     android:textColor="@color/black"
                     android:textSize="13sp" />
 
-                <androidx.cardview.widget.CardView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow_solid"
+                    android:paddingTop="15dp"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
-                    app:cardCornerRadius="@dimen/_5sdp"
-                    app:cardElevation="@dimen/_3sdp">
+                    android:paddingBottom="15dp">
 
-                    <RelativeLayout
+                    <TextView
+                        style="@style/poppins_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp">
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toStartOf="@id/switchEmail"
+                        android:text="@string/email"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
 
-                        <TextView
-                            style="@style/poppins_regular"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_toStartOf="@id/switchEmail"
-                            android:text="@string/email"
-                            android:textColor="@color/black"
-                            android:textSize="13sp" />
+                    <Switch
+                        android:id="@+id/switchEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:checked="@{user.emailNotification}"
+                        android:onClick="@{()->viewModel.updateEmailNotifications()}"
+                        android:thumb="@drawable/switch_color"
+                        android:track="@drawable/switch_track_color" />
+                </RelativeLayout>
 
-                        <Switch
-                            android:id="@+id/switchEmail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:checked="@{user.emailNotification}"
-                            android:thumb="@drawable/switch_color"
-                            android:onClick="@{()->viewModel.updateEmailNotifications()}"
-                            android:track="@drawable/switch_track_color" />
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow_solid"
+                    android:paddingTop="15dp"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
-                    app:cardCornerRadius="@dimen/_5sdp"
-                    app:cardElevation="@dimen/_3sdp">
+                    android:paddingBottom="15dp">
 
-                    <RelativeLayout
+                    <TextView
+                        style="@style/poppins_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp">
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toStartOf="@id/switchPush"
+                        android:text="@string/push"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
 
-                        <TextView
-                            style="@style/poppins_regular"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_toStartOf="@id/switchPush"
-                            android:text="@string/push"
-                            android:textColor="@color/black"
-                            android:textSize="13sp" />
-
-                        <Switch
-                            android:id="@+id/switchPush"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:checked="@{user.pushNotification}"
-                            android:thumb="@drawable/switch_color"
-                            android:onClick="@{()->viewModel.updatePushNotifications()}"
-                            android:track="@drawable/switch_track_color" />
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
+                    <Switch
+                        android:id="@+id/switchPush"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:checked="@{user.pushNotification}"
+                        android:onClick="@{()->viewModel.updatePushNotifications()}"
+                        android:thumb="@drawable/switch_color"
+                        android:track="@drawable/switch_track_color" />
+                </RelativeLayout>
                 <TextView
                     style="@style/poppins_medium"
                     android:layout_width="match_parent"
@@ -154,86 +139,73 @@
                     android:textColor="@color/black"
                     android:textSize="13sp" />
 
-                <androidx.cardview.widget.CardView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow_solid"
+                    android:paddingTop="15dp"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:onClick="@{viewModel::onLanguageClicked}"
-                    app:cardCornerRadius="@dimen/_5sdp"
-                    app:cardElevation="@dimen/_3sdp">
+                    android:paddingBottom="15dp">
 
-                    <RelativeLayout
+                    <TextView
+                        style="@style/poppins_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp">
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toStartOf="@id/imgArrowLanguage"
+                        android:text="@string/change_language"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
 
-                        <TextView
-                            style="@style/poppins_regular"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_toStartOf="@id/imgArrowLanguage"
-                            android:text="@string/change_language"
-                            android:textColor="@color/black"
-                            android:textSize="13sp" />
+                    <ImageView
+                        android:id="@+id/imgArrowLanguage"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:srcCompat="@drawable/ic_arrow_forward" />
 
-                        <ImageView
-                            android:id="@+id/imgArrowLanguage"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            app:srcCompat="@drawable/ic_arrow_forward" />
+                </RelativeLayout>
 
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow_solid"
+                    android:paddingTop="15dp"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_30sdp"
                     android:onClick="@{viewModel::onAboutClicked}"
-                    app:cardCornerRadius="@dimen/_5sdp"
-                    app:cardElevation="@dimen/_3sdp">
+                    android:paddingBottom="15dp">
 
-                    <RelativeLayout
+                    <TextView
+                        style="@style/poppins_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp">
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toStartOf="@id/imgArrowAbout"
+                        android:text="@string/about_raheeb"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
 
-                        <TextView
-                            style="@style/poppins_regular"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_toStartOf="@id/imgArrowAbout"
-                            android:text="@string/about_raheeb"
-                            android:textColor="@color/black"
-                            android:textSize="13sp" />
+                    <ImageView
+                        android:id="@+id/imgArrowAbout"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:srcCompat="@drawable/ic_arrow_forward" />
 
-                        <ImageView
-                            android:id="@+id/imgArrowAbout"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            app:srcCompat="@drawable/ic_arrow_forward" />
+                </RelativeLayout>
 
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

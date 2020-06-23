@@ -7,11 +7,6 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.navigation.Navigation;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.selwantech.raheeb.R;
@@ -27,6 +22,11 @@ import com.selwantech.raheeb.ui.main.MainActivity;
 import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.product.ProductFragment;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
+
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 public class ProductsHolderViewModel extends BaseViewModel<ProductsHolderNavigator, FragmentProductsTabsHolderBinding> {
 
@@ -130,9 +130,12 @@ public class ProductsHolderViewModel extends BaseViewModel<ProductsHolderNavigat
         getBaseActivity().hideKeyboard();
         getViewBinding().edSearch.setText("");
         getViewBinding().edSearch.clearFocus();
-        FilterProduct.getInstance().setTitle("");
         showSearchTools(false);
-        applyFilter();
+        if (FilterProduct.getInstance().getTitle() != null &&
+                !FilterProduct.getInstance().getTitle().isEmpty()) {
+            FilterProduct.getInstance().setTitle("");
+            applyFilter();
+        }
     }
 
     public void onSearchClicked() {

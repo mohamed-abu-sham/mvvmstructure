@@ -79,7 +79,7 @@ public abstract class BaseViewModel<N, T extends ViewDataBinding> extends ViewMo
         Toast.makeText(getMyContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    protected void popUp() {
+    public void popUp() {
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment).popBackStack(Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment).
                 getCurrentDestination().getId(), true);
     }

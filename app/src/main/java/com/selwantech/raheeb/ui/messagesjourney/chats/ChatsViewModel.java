@@ -4,12 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChatsBinding;
@@ -25,6 +19,11 @@ import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.util.ArrayList;
+
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsBinding> implements RecyclerClick<Chat> {
 
@@ -210,4 +209,9 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
         setIsRefreshing(false);
     }
 
+    public void reloadData() {
+        getViewBinding().swipeRefreshLayout.setRefreshing(true);
+        setIsRefreshing(true);
+        getData();
+    }
 }

@@ -2,7 +2,9 @@ package com.selwantech.raheeb.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LoginObject {
+import java.io.Serializable;
+
+public class LoginObject implements Serializable {
 
     @SerializedName("phone_number")
     String phone_number;

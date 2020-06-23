@@ -69,7 +69,7 @@
                         style="@style/poppins_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.notification.notify.date}"
+                        android:text="@{viewModel.notification.date}"
                         android:textColor="@color/text_gray"
                         android:textSize="10sp" />
                 </LinearLayout>

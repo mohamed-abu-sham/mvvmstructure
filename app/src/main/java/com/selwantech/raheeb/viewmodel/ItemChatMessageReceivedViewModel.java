@@ -42,8 +42,28 @@ public class ItemChatMessageReceivedViewModel extends BaseObservable {
 //            setUpAudio();
 //
 //        }
+        setView();
     }
 
+
+    private void setView() {
+        if (messages.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)
+                && messages.getOffer().getStatus().equals(AppConstants.OFFER_STATUS.WAITING)) {
+            cellChatItemReceivedBinding.tvInMessage.setVisibility(View.VISIBLE);
+            cellChatItemReceivedBinding.linearPlayer.setVisibility(View.GONE);
+            cellChatItemReceivedBinding.btnAcceptOffer.setVisibility(View.VISIBLE);
+        } else if (messages.getMessage_type().equals(AppConstants.MESSAGE_TYPE.TEXT)
+                || (messages.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER)
+                && !messages.getOffer().getStatus().equals(AppConstants.OFFER_STATUS.WAITING))) {
+            cellChatItemReceivedBinding.tvInMessage.setVisibility(View.VISIBLE);
+            cellChatItemReceivedBinding.linearPlayer.setVisibility(View.GONE);
+            cellChatItemReceivedBinding.btnAcceptOffer.setVisibility(View.GONE);
+        } else {
+            cellChatItemReceivedBinding.linearPlayer.setVisibility(View.VISIBLE);
+            cellChatItemReceivedBinding.tvInMessage.setVisibility(View.GONE);
+            cellChatItemReceivedBinding.btnAcceptOffer.setVisibility(View.GONE);
+        }
+    }
 
     public ChatObject getMessages() {
         return messages;
@@ -52,6 +72,7 @@ public class ItemChatMessageReceivedViewModel extends BaseObservable {
     public void setMessages(ChatObject messages) {
         this.messages = messages;
         notifyChange();
+        setView();
     }
 
     public void onItemClick(View view) {

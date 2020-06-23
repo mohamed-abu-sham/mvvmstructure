@@ -2,7 +2,6 @@ package com.selwantech.raheeb.ui.productjourneys.viewproductjourney.product;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductBinding;
@@ -24,19 +23,6 @@ public class ProductFragment extends BaseFragment<FragmentProductBinding, Produc
     ViewModelProviderFactory factory;
     private ProductViewModel mHomeViewModel;
     private FragmentProductBinding mViewBinding;
-
-
-    public static ProductFragment newInstance() {
-        Bundle args = new Bundle();
-        ProductFragment fragment = new ProductFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     @Override
     public int getBindingVariable() {
@@ -82,6 +68,7 @@ public class ProductFragment extends BaseFragment<FragmentProductBinding, Produc
         mViewBinding = getViewDataBinding();
         mHomeViewModel.setUp();
     }
+
 
     @Override
     public void callBack(int requestCode, int resultCode, Intent data) {

@@ -54,6 +54,18 @@ public class ItemChatMessageSentViewModel extends BaseObservable {
 //
 //        }
         isSent();
+        setView();
+    }
+
+    private void setView() {
+        if (messages.getMessage_type().equals(AppConstants.MESSAGE_TYPE.OFFER) ||
+                messages.getMessage_type().equals(AppConstants.MESSAGE_TYPE.TEXT)) {
+            cellChatItemSentBinding.tvOutMessage.setVisibility(View.VISIBLE);
+            cellChatItemSentBinding.linearPlayer.setVisibility(View.GONE);
+        } else {
+            cellChatItemSentBinding.linearPlayer.setVisibility(View.VISIBLE);
+            cellChatItemSentBinding.tvOutMessage.setVisibility(View.GONE);
+        }
     }
 
 
@@ -65,6 +77,7 @@ public class ItemChatMessageSentViewModel extends BaseObservable {
         this.messages = messages;
         notifyChange();
         isSent();
+        setView();
     }
 
     public void onItemClick(View view) {

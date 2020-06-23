@@ -1,10 +1,12 @@
 package com.selwantech.raheeb.model;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
-public class Distance {
+import java.io.Serializable;
+
+import androidx.annotation.NonNull;
+
+public class Distance implements Serializable {
 
     @SerializedName("unit")
     private String unit;

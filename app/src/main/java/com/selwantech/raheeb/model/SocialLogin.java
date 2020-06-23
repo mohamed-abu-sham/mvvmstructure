@@ -3,7 +3,9 @@ package com.selwantech.raheeb.model;
 import com.google.gson.annotations.SerializedName;
 import com.selwantech.raheeb.utils.AppConstants;
 
-public class SocialLogin {
+import java.io.Serializable;
+
+public class SocialLogin implements Serializable {
 
     @SerializedName("email")
     String email;

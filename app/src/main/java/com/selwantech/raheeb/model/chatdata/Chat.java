@@ -1,5 +1,7 @@
 package com.selwantech.raheeb.model.chatdata;
 
+import android.view.View;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -17,7 +19,8 @@ public class Chat implements Serializable {
 
     @SerializedName("user")
     private User user;
-
+    @SerializedName("is_seen")
+    boolean is_seen;
     public String getDate() {
         return date;
     }
@@ -32,5 +35,13 @@ public class Chat implements Serializable {
 
     public User getUser() {
         return user;
+    }
+
+    public int isIs_seen() {
+        return is_seen ? View.GONE : View.VISIBLE;
+    }
+
+    public void setIs_seen(boolean is_seen) {
+        this.is_seen = is_seen;
     }
 }

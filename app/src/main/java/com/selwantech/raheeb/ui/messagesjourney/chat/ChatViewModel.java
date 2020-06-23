@@ -61,7 +61,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     AudioRecorder audioRecorder;
     Chat chat;
-
+    boolean joinRoom = false;
 
     public <V extends ViewDataBinding, N extends BaseNavigator> ChatViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ChatNavigator) navigation, (FragmentChatBinding) viewDataBinding);
@@ -432,7 +432,6 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
     }
 
     protected void destroySocket() {
-        leaveRoom();
         mSocket.disconnect();
         mSocket.off(Socket.EVENT_CONNECT, onConnect);
         mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
@@ -464,6 +463,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
         if (mSocket.connected()) {
             try {
+                joinRoom = true;
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("chat_id", chatId);
                 mSocket.emit("join_room", jsonObject);

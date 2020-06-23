@@ -2,16 +2,15 @@ package com.selwantech.raheeb.model.notificationsdata;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Notify {
+import java.io.Serializable;
+
+public class Notify implements Serializable {
 
     @SerializedName("title")
     private String title;
 
     @SerializedName("body")
     private String body;
-
-    @SerializedName("date")
-    private String date = "1 day";
 
 
     public String getTitle() {
@@ -22,7 +21,4 @@ public class Notify {
         return body;
     }
 
-    public String getDate() {
-        return date;
-    }
 }

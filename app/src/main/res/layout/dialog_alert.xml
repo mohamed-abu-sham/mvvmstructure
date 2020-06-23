@@ -30,13 +30,14 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:tint="@color/color_blue"
+                android:visibility="gone"
                 app:srcCompat="@drawable/logo" />
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imgIcon"
+                android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"

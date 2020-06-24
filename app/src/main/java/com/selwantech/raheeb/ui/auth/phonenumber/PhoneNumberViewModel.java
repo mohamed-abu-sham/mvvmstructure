@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentUpdatePhoneBinding;
-import com.selwantech.raheeb.enums.PhoneNumberTypes;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
@@ -48,10 +47,9 @@ public class PhoneNumberViewModel extends BaseViewModel<PhoneNumberNavigator, Fr
 //                        , PhoneNumberTypes.CHANGE_PHONE_NUMBER.getValue()));
 
                 Bundle data = new Bundle();
-                data.putInt(AppConstants.BundleData.TYPE, PhoneNumberTypes.CHANGE_PHONE_NUMBER.getValue());
                 data.putString(AppConstants.BundleData.TOKEN, response.getToken());
                 Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                        .navigate(R.id.action_phoneNumberFragment_to_otpVerifierActivity, data);
+                        .navigate(R.id.action_phoneNumberFragment_to_otpVerifierToUpdateFragment, data);
             }
 
             @Override

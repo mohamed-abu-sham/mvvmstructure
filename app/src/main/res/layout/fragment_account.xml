@@ -233,6 +233,7 @@
                                 android:layout_marginEnd="@dimen/_15sdp"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:paddingStart="@dimen/_10sdp"
+                                android:onClick="@{()->viewModel.onPaymentClicked()}"
                                 android:background="@drawable/background_with_shadow_solid">
 
                                 <LinearLayout

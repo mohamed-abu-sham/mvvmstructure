@@ -31,6 +31,7 @@ public final class AppConstants {
         public static final String TOKEN = "TOKEN";
         public static final String INVITE_TOKEN = "INVITE_TOKEN";
         public static final String CHAT_POSITION = "CHAT_POSITION";
+        public static final String NOTIFICATION = "NOTIFICATION";
     }
 
     public class FILTER_BY_KEYS {
@@ -67,7 +68,7 @@ public final class AppConstants {
 
     public class ORDERING_TYPE {
         public static final String DISTANCE = "distance";
-        public static final String DESC = "desc";
+        public static final String DATE = "date";
         public static final String PRICE = "price";
     }
 }

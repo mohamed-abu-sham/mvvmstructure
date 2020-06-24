@@ -72,7 +72,7 @@ public class OrderByFragmentDialog extends BottomSheetDialogFragment implements 
         }
         if (FilterProduct.getInstance().getOrdering() != null
                 && !FilterProduct.getInstance().getOrdering().isEmpty()) {
-            if (FilterProduct.getInstance().getOrdering().equals(AppConstants.ORDERING_TYPE.DESC)) {
+            if (FilterProduct.getInstance().getOrdering().equals(AppConstants.ORDERING_TYPE.DATE)) {
                 selectChoice(0);
             } else if (FilterProduct.getInstance().getOrdering().equals(AppConstants.ORDERING_TYPE.PRICE)) {
                 selectChoice(1);
@@ -131,7 +131,7 @@ public class OrderByFragmentDialog extends BottomSheetDialogFragment implements 
         if (orderByAdapter.getSelectedItem() > -1) {
             switch (orderByAdapter.getSelectedItem()) {
                 case 0:
-                    FilterProduct.getInstance().setOrdering(AppConstants.ORDERING_TYPE.DESC);
+                    FilterProduct.getInstance().setOrdering(AppConstants.ORDERING_TYPE.DATE);
                     break;
                 case 1:
                     FilterProduct.getInstance().setOrdering(AppConstants.ORDERING_TYPE.PRICE);

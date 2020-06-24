@@ -71,22 +71,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
     public <V extends ViewDataBinding, N extends BaseNavigator> ChatViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ChatNavigator) navigation, (FragmentChatBinding) viewDataBinding);
     }
-    private Emitter.Listener onNewMessage = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getBaseActivity().runOnUiThread(() -> {
-                if (args != null && args.length > 0) {
-                    ChatObject chatObject =
-                            new Gson().fromJson(args[0].toString(), ChatObject.class);
-                    if (chatObject.getSender().getId() != User.getInstance().getUserID()) {
-                        chatAdapter.addItem(chatObject);
-                        chatAdapter.notifyItemInserted(chatAdapter.getItemCount() - 1);
-                        getViewBinding().recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
-                    }
-                }
-            });
-        }
-    };
+
 
     private void init() {
         mediaPlayer = new MediaPlayer();
@@ -259,6 +244,23 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
             getBaseActivity().runOnUiThread(() -> {
                 joinRoom(chat.getId());
             });
+
+    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getBaseActivity().runOnUiThread(() -> {
+                if (args != null && args.length > 0) {
+                    ChatObject chatObject =
+                            new Gson().fromJson(args[0].toString(), ChatObject.class);
+                    if (chatObject.getSender().getId() != User.getInstance().getUserID()) {
+                        chatAdapter.addItem(chatObject);
+                        chatAdapter.notifyItemInserted(chatAdapter.getItemCount() - 1);
+                        getViewBinding().recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+                    }
+                }
+            });
+        }
+    };
 
     private void showChat(int position, String type, String message) {
         ChatObject chatObject = new ChatObject(position, type, message, "now",
@@ -553,8 +555,10 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     public void returnData() {
         Intent intent = new Intent();
-        intent.putExtra(AppConstants.BundleData.CHAT_POSITION, chatPosition);
-        ((MainActivity) getBaseActivity()).onActivityResultFromFragment(
-                222, Activity.RESULT_OK, intent);
+        if (chatPosition != -1) {
+            intent.putExtra(AppConstants.BundleData.CHAT_POSITION, chatPosition);
+            ((MainActivity) getBaseActivity()).onActivityResultFromFragment(
+                    222, Activity.RESULT_OK, intent);
+        }
     }
 }

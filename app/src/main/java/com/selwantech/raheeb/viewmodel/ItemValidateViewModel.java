@@ -36,7 +36,7 @@ public class ItemValidateViewModel extends BaseObservable {
 
 
     public void onItemClick(View view) {
-        if (position == 0 && !validateItem.isValid()) {
+        if (!validateItem.isValid()) {
             recyclerClickNoData.onClick(position);
         }
     }

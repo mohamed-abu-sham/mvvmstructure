@@ -9,6 +9,7 @@ import com.selwantech.raheeb.ui.accountjourney.changelanguage.ChangeLanguageView
 import com.selwantech.raheeb.ui.accountjourney.followers.FollowersViewModel;
 import com.selwantech.raheeb.ui.accountjourney.following.FollowingViewModel;
 import com.selwantech.raheeb.ui.accountjourney.help.HelpViewModel;
+import com.selwantech.raheeb.ui.accountjourney.payment.pay.PayViewModel;
 import com.selwantech.raheeb.ui.accountjourney.setlocation.SetLocationViewModel;
 import com.selwantech.raheeb.ui.accountjourney.settings.SettingsViewModel;
 import com.selwantech.raheeb.ui.accountjourney.twitterfriends.TwitterFriendsViewModel;
@@ -22,6 +23,7 @@ import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordViewModel;
 import com.selwantech.raheeb.ui.auth.forgetpassword.ForgetPasswordViewModel;
 import com.selwantech.raheeb.ui.auth.login.LoginViewModel;
 import com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierViewModel;
+import com.selwantech.raheeb.ui.auth.otpverifiertoupdate.OtpVerifierToUpdateViewModel;
 import com.selwantech.raheeb.ui.auth.phonenumber.PhoneNumberViewModel;
 import com.selwantech.raheeb.ui.auth.register.RegisterViewModel;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
@@ -270,6 +272,12 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(UpdateProfilePictureViewModel.class)) {
             //noinspection unchecked
             return (T) new UpdateProfilePictureViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(PayViewModel.class)) {
+            //noinspection unchecked
+            return (T) new PayViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(OtpVerifierToUpdateViewModel.class)) {
+            //noinspection unchecked
+            return (T) new OtpVerifierToUpdateViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

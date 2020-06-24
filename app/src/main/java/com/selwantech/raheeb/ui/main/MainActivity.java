@@ -4,21 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityMainBinding;
 import com.selwantech.raheeb.helper.LocationHelper;
+import com.selwantech.raheeb.model.notificationsdata.NotifyData;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
+
+import androidx.annotation.Nullable;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivityViewModel>
         implements MainActivityNavigator {
@@ -30,8 +31,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
     private MainActivityViewModel mMainViewModel;
     private ActivityMainBinding mViewBinding;
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, MainActivity.class);
+    public static Intent newIntent(Context context, NotifyData notifyData) {
+        return new Intent(context, MainActivity.class).putExtra(AppConstants.BundleData.NOTIFICATION, notifyData);
     }
 
     @Override
@@ -115,6 +116,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
         if (getActivityResultCallBack() != null && requestCode != LocationHelper.LOCATION_REQUEST_CODE) {
             getActivityResultCallBack().callBack(requestCode, resultCode, data);
         }
-
     }
+
+    @Override
+    public NotifyData getNotification() {
+        if (getIntent().getExtras() != null)
+            return (NotifyData) getIntent().getSerializableExtra(AppConstants.BundleData.NOTIFICATION);
+        else return null;
+    }
+
 }

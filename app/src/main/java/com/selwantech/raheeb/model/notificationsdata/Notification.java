@@ -27,6 +27,7 @@ public class Notification implements Serializable {
     @SerializedName("date")
     private String date;
 
+
     public int getUserId() {
         return userId;
     }

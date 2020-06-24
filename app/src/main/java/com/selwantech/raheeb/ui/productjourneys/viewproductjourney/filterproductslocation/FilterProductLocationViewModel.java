@@ -89,8 +89,13 @@ public class FilterProductLocationViewModel extends
             public void onSuccess(ArrayList<Distance> response) {
                 getViewBinding().seekbarKm.setSteps(response.size() - 1);
                 getViewBinding().seekbarKm.setTickMarkTextArray(response);
-                getViewBinding().seekbarKm.setProgress(0);
-                onSeekChanged(getViewBinding().seekbarKm.getTickMarkTextArray().get(0));
+                if (FilterProduct.getInstance().getDistance() != 0.0) {
+                    getViewBinding().seekbarKm.setProgress(getOldDistanceProgress(response));
+                    onSeekChanged(getOldDistance(response));
+                } else {
+                    getViewBinding().seekbarKm.setProgress(0);
+                    onSeekChanged(getViewBinding().seekbarKm.getTickMarkTextArray().get(0));
+                }
             }
 
             @Override
@@ -107,10 +112,24 @@ public class FilterProductLocationViewModel extends
         });
     }
 
-//    private String[] convertDistanceToStrings(ArrayList<Distance> distanceArrayList) {
-//        List<String> strings = new ArrayList<>();
-//        strings.toArray();
-//    }
+    private float getOldDistanceProgress(ArrayList<Distance> response) {
+        for (int i = 0; i < response.size(); i++) {
+            if (response.get(i).getDistance() == FilterProduct.getInstance().getDistance()) {
+                return (float) ((i / ((response.size() - 1) * 1.0))
+                        * 100);
+            }
+        }
+        return 0;
+    }
+
+    private Distance getOldDistance(ArrayList<Distance> response) {
+        for (Distance d : response) {
+            if (d.getDistance() == FilterProduct.getInstance().getDistance()) {
+                return d;
+            }
+        }
+        return null;
+    }
 
     public void onEditLocationClick() {
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)

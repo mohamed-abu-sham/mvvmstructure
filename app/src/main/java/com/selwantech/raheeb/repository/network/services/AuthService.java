@@ -132,12 +132,12 @@ public class AuthService {
                 .subscribe(new CustomObserverResponse<RegisterResponse>(mContext, enableLoading, apiCallBack));
     }
 
-    public void connectTwitterUser(Context mContext, boolean enableLoading, String userId, APICallBack<RegisterResponse> apiCallBack) {
+    public void connectTwitterUser(Context mContext, boolean enableLoading, String userId, APICallBack<User> apiCallBack) {
         getDataApi().connectTwitterUser(userId)
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<RegisterResponse>(mContext, enableLoading, apiCallBack));
+                .subscribe(new CustomObserverResponse<User>(mContext, enableLoading, apiCallBack));
     }
 
     public void resendOtp(Context mContext, boolean enableLoading, String token, APICallBack<VerifyPhoneResponse> apiCallBack) {
@@ -200,7 +200,7 @@ public class AuthService {
         Single<Response<GeneralResponse<RegisterResponse>>> registerTwitterUser(@Body User user, @Query("token_invite") String token_invite);
 
         @POST(ApiConstants.apiAuthService.CONNECT_TWITTER_USER)
-        Single<Response<GeneralResponse<RegisterResponse>>> connectTwitterUser(@Query("social_id") String userID);
+        Single<Response<GeneralResponse<User>>> connectTwitterUser(@Query("social_id") String userID);
 
         @POST(ApiConstants.apiAuthService.LOGIN_USER)
         Single<Response<GeneralResponse<RegisterResponse>>> loginUser(@Body LoginObject loginObject);

@@ -2,12 +2,11 @@ package com.selwantech.raheeb.ui.productjourneys.createproductjourney.addprice;
 
 import android.content.Context;
 
-import androidx.activity.OnBackPressedCallback;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductPriceBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.interfaces.BackPressed;
+import com.selwantech.raheeb.interfaces.BackPressedHandler;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
@@ -27,7 +26,7 @@ public class AddPriceFragment extends BaseFragment<FragmentAddProductPriceBindin
     ViewModelProviderFactory factory;
     private AddPriceViewModel mViewModel;
     private FragmentAddProductPriceBinding mViewBinding;
-
+    BackPressedHandler backPressedHandler;
 
     @Override
     public int getBindingVariable() {
@@ -80,14 +79,10 @@ public class AddPriceFragment extends BaseFragment<FragmentAddProductPriceBindin
         setupOnBackPressed();
     }
 
-    private void setupOnBackPressed() {
-        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                backPressed.onBackPressed(2);
-                this.setEnabled(false);
-            }
-        });
+    public void setupOnBackPressed() {
+        if (backPressedHandler != null) {
+            getBaseActivity().getOnBackPressedDispatcher().addCallback(this, backPressedHandler);
+        }
     }
 
     private void setUpLocalToolbar() {
@@ -110,5 +105,10 @@ public class AddPriceFragment extends BaseFragment<FragmentAddProductPriceBindin
 
     public void setBackPressed(BackPressed backPressed) {
         this.backPressed = backPressed;
+        backPressedHandler = new BackPressedHandler(true, 0, this.backPressed);
+    }
+
+    public void disableBackPress() {
+        backPressedHandler.setEnabled(false);
     }
 }

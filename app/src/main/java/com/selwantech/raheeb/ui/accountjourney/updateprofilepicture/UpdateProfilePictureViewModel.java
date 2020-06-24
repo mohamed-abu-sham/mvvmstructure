@@ -36,6 +36,10 @@ public class UpdateProfilePictureViewModel extends BaseViewModel<UpdateProfilePi
 
     }
 
+    public String userPicture() {
+        return User.getInstance().getAvatar();
+    }
+
     public void setReportImageUri(Uri reportImageUri) {
         this.reportImageUri = reportImageUri;
     }

@@ -25,17 +25,15 @@ import com.selwantech.raheeb.utils.SnackViewBulider;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.Navigation;
 
 public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNavigator, FragmentAddProductHolderBinding>
         implements BackPressed {
 
     CreatePostProgress createPostProgress;
-
-    AddImageFragment addImageFragment;
-    AddDetailsFragment addDetailsFragment;
-    AddPriceFragment addPriceFragment;
-    AddShippingFragment addShippingFragment;
+    AddImageFragment addImageFragment = new AddImageFragment();
+    AddDetailsFragment addDetailsFragment = new AddDetailsFragment();
+    AddPriceFragment addPriceFragment = new AddPriceFragment();
+    AddShippingFragment addShippingFragment = new AddShippingFragment();
     int currentFragment = 0;
 
     Post post;
@@ -52,10 +50,6 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
         getViewBinding().setProgress(createPostProgress);
         createPostProgress.setAddPhotos(true);
         post = new Post();
-        addImageFragment = new AddImageFragment();
-        addDetailsFragment = new AddDetailsFragment();
-        addPriceFragment = new AddPriceFragment();
-        addShippingFragment = new AddShippingFragment();
         fragmentManager = getBaseActivity().getSupportFragmentManager().getFragments().get(0).getChildFragmentManager();
         moveFragment(0);
     }
@@ -135,8 +129,7 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
                     @Override
                     public void onPositiveButtonClicked() {
                         dismiss();
-                        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                                .navigate(R.id.action_nav_post_to_productsHolderFragment);
+                        back();
                     }
 
                     @Override
@@ -168,12 +161,24 @@ public class AddProductHolderViewModel extends BaseViewModel<AddProductHolderNav
     @Override
     public void onBackPressed(int position) {
         if (position == 0) {
-            popUp();
+            back();
         } else {
             moveFragment(position - 1);
             currentFragment = position - 1;
             reverseProgress(position);
         }
+    }
+
+    private void back() {
+        if (addImageFragment.isAdded())
+            addImageFragment.disableBackPress();
+        if (addDetailsFragment.isAdded())
+            addDetailsFragment.disableBackPress();
+        if (addPriceFragment.isAdded())
+            addPriceFragment.disableBackPress();
+        if (addShippingFragment.isAdded())
+            addShippingFragment.disableBackPress();
+        popUp();
     }
 
     private void reverseProgress(int position) {

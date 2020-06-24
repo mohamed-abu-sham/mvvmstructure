@@ -162,6 +162,9 @@
         <action
             android:id="@+id/action_nav_account_to_twitterFriendsFragment"
             app:destination="@id/twitterFriendsFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_payFragment"
+            app:destination="@id/payFragment" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -210,8 +213,8 @@
         android:name="com.selwantech.raheeb.ui.auth.phonenumber.PhoneNumberFragment"
         android:label="PhoneNumberFragment">
         <action
-            android:id="@+id/action_phoneNumberFragment_to_otpVerifierActivity"
-            app:destination="@id/otpVerifierActivity" />
+            android:id="@+id/action_phoneNumberFragment_to_otpVerifierToUpdateFragment"
+            app:destination="@id/otpVerifierToUpdateFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateEmailFragment"
@@ -225,10 +228,6 @@
         android:id="@+id/changePasswordFragment"
         android:name="com.selwantech.raheeb.ui.auth.changepassword.ChangePasswordFragment"
         android:label="ChangePasswordFragment" />
-    <activity
-        android:id="@+id/otpVerifierActivity"
-        android:name="com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierActivity"
-        android:label="OtpVerifierActivity" />
     <fragment
         android:id="@+id/setLocationFragment"
         android:name="com.selwantech.raheeb.ui.accountjourney.setlocation.SetLocationFragment"
@@ -253,5 +252,18 @@
         android:id="@+id/updateProfilePictureFragment"
         android:name="com.selwantech.raheeb.ui.accountjourney.updateprofilepicture.UpdateProfilePictureFragment"
         android:label="UpdateProfilePictureFragment" />
+    <fragment
+        android:id="@+id/payFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.payment.pay.PayFragment"
+        android:label="PayFragment" />
+    <fragment
+        android:id="@+id/otpVerifierToUpdateFragment"
+        android:name="com.selwantech.raheeb.ui.auth.otpverifiertoupdate.OtpVerifierToUpdateFragment"
+        android:label="OtpVerifierToUpdateFragment">
+        <action
+            android:id="@+id/action_otpVerifierToUpdateFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:popUpTo="@id/nav_home" />
+    </fragment>
 
 </navigation>

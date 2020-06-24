@@ -2,12 +2,11 @@ package com.selwantech.raheeb.ui.productjourneys.createproductjourney.adddetails
 
 import android.content.Context;
 
-import androidx.activity.OnBackPressedCallback;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductDetailsBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.interfaces.BackPressed;
+import com.selwantech.raheeb.interfaces.BackPressedHandler;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
@@ -28,7 +27,7 @@ public class AddDetailsFragment extends BaseFragment<FragmentAddProductDetailsBi
     ViewModelProviderFactory factory;
     private AddDetailsViewModel mViewModel;
     private FragmentAddProductDetailsBinding mViewBinding;
-
+    BackPressedHandler backPressedHandler;
 
     @Override
     public int getBindingVariable() {
@@ -81,14 +80,10 @@ public class AddDetailsFragment extends BaseFragment<FragmentAddProductDetailsBi
         setupOnBackPressed();
     }
 
-    private void setupOnBackPressed() {
-        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                backPressed.onBackPressed(1);
-                this.setEnabled(false);
-            }
-        });
+    public void setupOnBackPressed() {
+        if (backPressedHandler != null) {
+            getBaseActivity().getOnBackPressedDispatcher().addCallback(this, backPressedHandler);
+        }
     }
 
     private void setUpLocalToolbar() {
@@ -111,6 +106,11 @@ public class AddDetailsFragment extends BaseFragment<FragmentAddProductDetailsBi
 
     public void setBackPressed(BackPressed backPressed) {
         this.backPressed = backPressed;
+        backPressedHandler = new BackPressedHandler(true, 1, this.backPressed);
+    }
+
+    public void disableBackPress() {
+        backPressedHandler.setEnabled(false);
     }
 
 }

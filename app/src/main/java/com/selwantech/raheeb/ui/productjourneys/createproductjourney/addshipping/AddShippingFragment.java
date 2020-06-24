@@ -7,6 +7,7 @@ import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductShippingBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.interfaces.BackPressed;
+import com.selwantech.raheeb.interfaces.BackPressedHandler;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
@@ -14,8 +15,6 @@ import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
-
-import androidx.activity.OnBackPressedCallback;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -30,7 +29,7 @@ public class AddShippingFragment extends BaseFragment<FragmentAddProductShipping
     BackPressed backPressed;
     private AddShippingViewModel mViewModel;
     private FragmentAddProductShippingBinding mViewBinding;
-
+    BackPressedHandler backPressedHandler;
     @Override
     public int getBindingVariable() {
         return com.selwantech.raheeb.BR.viewModel;
@@ -84,14 +83,10 @@ public class AddShippingFragment extends BaseFragment<FragmentAddProductShipping
             setupOnBackPressed();
     }
 
-    private void setupOnBackPressed() {
-        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                backPressed.onBackPressed(3);
-                this.setEnabled(false);
-            }
-        });
+    public void setupOnBackPressed() {
+        if (backPressedHandler != null) {
+            getBaseActivity().getOnBackPressedDispatcher().addCallback(this, backPressedHandler);
+        }
     }
 
     private void setUpLocalToolbar() {
@@ -115,6 +110,7 @@ public class AddShippingFragment extends BaseFragment<FragmentAddProductShipping
 
     public void setBackPressed(BackPressed backPressed) {
         this.backPressed = backPressed;
+        backPressedHandler = new BackPressedHandler(true, 3, this.backPressed);
     }
 
     @Override
@@ -124,5 +120,9 @@ public class AddShippingFragment extends BaseFragment<FragmentAddProductShipping
                 mViewModel.setLocation(data.getParcelableExtra(AppConstants.BundleData.ADDRESS));
             }
         }
+    }
+
+    public void disableBackPress() {
+        backPressedHandler.setEnabled(false);
     }
 }

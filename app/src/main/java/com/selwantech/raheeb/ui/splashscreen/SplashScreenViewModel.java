@@ -85,7 +85,7 @@ public class SplashScreenViewModel extends BaseViewModel<SplashScreenNavigator, 
             if (SessionManager.isLoggedIn()) {
                 SessionManager.getUserDetails();
                 getBaseActivity().finish();
-                getMyContext().startActivity(MainActivity.newIntent(getMyContext()));
+                getMyContext().startActivity(MainActivity.newIntent(getMyContext(), getNavigator().getNotification()));
             } else if (!SessionManager.isLoggedIn() && !getNavigator().getInviteToken().isEmpty()) {
                 getBaseActivity().finish();
                 getMyContext().startActivity(RegisterActivity.newIntent(getMyContext(), getNavigator().getInviteToken()));

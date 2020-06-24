@@ -11,7 +11,6 @@ import com.selwantech.raheeb.enums.PhoneNumberTypes;
 import com.selwantech.raheeb.enums.SettingsTypes;
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.interfaces.RecyclerClickNoData;
-import com.selwantech.raheeb.model.RegisterResponse;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
@@ -33,6 +32,7 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
         implements RecyclerClickNoData, TwitterUtils.TwitterCallbackToConnect {
 
     TwitterUtils twitterUtils;
+    SettingsAdapter settingsAdapter;
     public <V extends ViewDataBinding, N extends BaseNavigator> SettingsViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (SettingsNavigator) navigation, (FragmentSettingsBinding) viewDataBinding);
     }
@@ -98,8 +98,9 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
 
 
     private void setUpRecycler() {
+        settingsAdapter = new SettingsAdapter(getMyContext(), this, getArraylistText());
         getViewBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getMyContext(), LinearLayoutManager.VERTICAL, false));
-        getViewBinding().recyclerView.setAdapter(new SettingsAdapter(getMyContext(), this, getArraylistText()));
+        getViewBinding().recyclerView.setAdapter(settingsAdapter);
     }
 
     public void onAboutClicked(View view) {
@@ -168,13 +169,14 @@ public class SettingsViewModel extends BaseViewModel<SettingsNavigator, Fragment
     @Override
     public void twitterUser(String userID) {
         getDataManager().getAuthService().connectTwitterUser(getMyContext(),
-                true, userID, new APICallBack<RegisterResponse>() {
+                true, userID, new APICallBack<User>() {
                     @Override
-                    public void onSuccess(RegisterResponse response) {
-                        User user = response.getUser();
-                        user.setToken(response.getJwt_token());
-                        User.getInstance().setObjUser(user);
+                    public void onSuccess(User response) {
+                        response.setToken(User.getInstance().getToken());
+                        User.getInstance().setObjUser(response);
                         SessionManager.createUserLoginSession();
+                        settingsAdapter.replaceItem(3, getMyContext().getResources().getString(R.string.connected_with_twitter));
+
                     }
 
                     @Override

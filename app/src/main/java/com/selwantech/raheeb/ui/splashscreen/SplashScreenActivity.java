@@ -11,6 +11,7 @@ import android.os.Bundle;
 import com.selwantech.raheeb.BR;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivitySplashScreenBinding;
+import com.selwantech.raheeb.model.notificationsdata.NotifyData;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseActivity;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
@@ -122,5 +123,13 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     @Override
     public String getInviteToken() {
         return inviteToken;
+    }
+
+    @Override
+    public NotifyData getNotification() {
+        if (getIntent().getExtras() != null)
+            return new NotifyData(Integer.valueOf(getIntent().getExtras().getString(("acction_id"))),
+                    getIntent().getExtras().getString("type"));
+        else return null;
     }
 }

@@ -12,6 +12,11 @@ public class NotifyData implements Serializable {
     @SerializedName("type")
     private String type;
 
+    public NotifyData(int acctionId, String type) {
+        this.acctionId = acctionId;
+        this.type = type;
+    }
+
     public int getAcctionId() {
         return acctionId;
     }

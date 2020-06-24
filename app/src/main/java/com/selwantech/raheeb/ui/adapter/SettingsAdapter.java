@@ -51,6 +51,12 @@ public class SettingsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         arrayListText.addAll(text);
     }
 
+    public void replaceItem(int i, String text) {
+        arrayListText.remove(i);
+        arrayListText.add(i, text);
+        notifyItemChanged(i);
+    }
+
 
     public class SettingsItemViewHolder extends BaseViewHolder {
 

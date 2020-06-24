@@ -8,14 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ButtomSheetOfferBinding;
+import com.selwantech.raheeb.repository.DataManager;
+import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 
 public class OfferFragmentDialog extends BottomSheetDialogFragment {
 
@@ -40,7 +42,22 @@ public class OfferFragmentDialog extends BottomSheetDialogFragment {
         buttomSheetOfferBinding = DataBindingUtil.inflate(inflater, R.layout.buttom_sheet_offer, null, false);
         buttomSheetOfferBinding.setViewModel(this);
         setCancelable(false);
+        getCurrency();
         return buttomSheetOfferBinding.getRoot();
+    }
+
+    private void getCurrency() {
+        DataManager.getInstance().getAppService().getCurrency(getContext(), true, new APICallBack<String>() {
+            @Override
+            public void onSuccess(String response) {
+                buttomSheetOfferBinding.tvCurrency.setText(response);
+            }
+
+            @Override
+            public void onError(String error, int errorCode) {
+
+            }
+        });
     }
 
     @Override

@@ -74,7 +74,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator, ActivityLoginB
                         SessionManager.createUserLoginSession();
                         getDataManager().getAuthService().reInit();
                         getBaseActivity().finishAffinity();
-                        getBaseActivity().startActivity(MainActivity.newIntent(getMyContext()));
+                        getBaseActivity().startActivity(MainActivity.newIntent(getMyContext(), null));
                     }
 
                     @Override
@@ -106,7 +106,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator, ActivityLoginB
                     SessionManager.createUserLoginSession();
                     getDataManager().getAuthService().reInit();
                     getBaseActivity().finishAffinity();
-                    getBaseActivity().startActivity(MainActivity.newIntent(getMyContext()));
+                    getBaseActivity().startActivity(MainActivity.newIntent(getMyContext(), null));
                     showSnackBar(getMyContext().getString(R.string.error),
                             getMyContext().getResources().getString(R.string.welcome),
                             getMyContext().getResources().getString(R.string.ok),

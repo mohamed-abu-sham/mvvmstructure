@@ -3,12 +3,11 @@ package com.selwantech.raheeb.ui.productjourneys.createproductjourney.addimage;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.activity.OnBackPressedCallback;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductImagesBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.interfaces.BackPressed;
+import com.selwantech.raheeb.interfaces.BackPressedHandler;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
@@ -34,6 +33,7 @@ public class AddImageFragment extends BaseFragment<FragmentAddProductImagesBindi
     private FragmentAddProductImagesBinding mViewBinding;
 
     boolean enableCallback = true;
+    BackPressedHandler backPressedHandler;
     @Override
     public int getBindingVariable() {
         return com.selwantech.raheeb.BR.viewModel;
@@ -85,14 +85,10 @@ public class AddImageFragment extends BaseFragment<FragmentAddProductImagesBindi
         setupOnBackPressed();
     }
 
-    private void setupOnBackPressed() {
-        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                backPressed.onBackPressed(0);
-                this.setEnabled(false);
-            }
-        });
+    public void setupOnBackPressed() {
+        if (backPressedHandler != null) {
+            getBaseActivity().getOnBackPressedDispatcher().addCallback(this, backPressedHandler);
+        }
     }
 
     private void setUpLocalToolbar() {
@@ -138,6 +134,11 @@ public class AddImageFragment extends BaseFragment<FragmentAddProductImagesBindi
 
     public void setBackPressed(BackPressed backPressed) {
         this.backPressed = backPressed;
+        backPressedHandler = new BackPressedHandler(true, 0, this.backPressed);
+    }
+
+    public void disableBackPress() {
+        backPressedHandler.setEnabled(false);
     }
 
 }

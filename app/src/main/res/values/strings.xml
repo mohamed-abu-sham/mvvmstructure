@@ -2,8 +2,8 @@
     <string name="map_key" translatable="false">AIzaSyDush2X-qRdsPfun85e6K-dMYiNiGf7rzE</string>
     <string name="facebook_app_id" translatable="false">305302623766887</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb231516321368439</string>
-    <string name="twitter_api_key" translatable="false">SxJkaUb4SrxHQlBR9DnTNd2ea</string>
-    <string name="twitter_api_secret" translatable="false">BYN3PogKFnx0KwJJkoMJhBCK9QsooWGVInzSX9LD1GEl5S1UW9</string>
+    <string name="twitter_api_key" translatable="false">1gWIxLkM6BmNo9VPV5Xl4GW7Z</string>
+    <string name="twitter_api_secret" translatable="false">H15EgaJdIeVwRn7UZtRhwzDnX3qJL5xFvx1AACoZN6nKjr6xQ5</string>
     <string name="app_name">Raheeb</string>
     <string name="Loading">Loading ...</string>
     <string name="log_in">Login</string>

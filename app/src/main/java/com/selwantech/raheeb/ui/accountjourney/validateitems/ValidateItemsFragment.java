@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.accountjourney.validateitems;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentValidateListBinding;
@@ -12,7 +13,8 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 import javax.inject.Inject;
 
 
-public class ValidateItemsFragment extends BaseFragment<FragmentValidateListBinding, ValidateItemsViewModel> implements ValidateItemsNavigator {
+public class ValidateItemsFragment extends BaseFragment<FragmentValidateListBinding, ValidateItemsViewModel>
+        implements ValidateItemsNavigator, ActivityResultCallBack {
 
     private static final String TAG = ValidateItemsFragment.class.getSimpleName();
 
@@ -33,12 +35,12 @@ public class ValidateItemsFragment extends BaseFragment<FragmentValidateListBind
 
     @Override
     public boolean isNeedActivityResult() {
-        return false;
+        return true;
     }
 
     @Override
     public ActivityResultCallBack activityResultCallBack() {
-        return null;
+        return this::callBack;
     }
 
     @Override
@@ -64,4 +66,10 @@ public class ValidateItemsFragment extends BaseFragment<FragmentValidateListBind
         setUpToolbar(mViewBinding.toolbar, TAG, R.string.verify_account);
         mOffersViewModel.setUp();
     }
+
+    @Override
+    public void callBack(int requestCode, int resultCode, Intent data) {
+        mOffersViewModel.getTwitterAuthClient().onActivityResult(requestCode, resultCode, data);
+    }
+
 }

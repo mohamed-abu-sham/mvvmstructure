@@ -29,7 +29,7 @@ public class ChooseUserTypeViewModel extends BaseViewModel<ChooseUserTypeNavigat
     }
 
     public void loginAsGuestClick() {
-        getMyContext().startActivity(MainActivity.newIntent(getMyContext()));
+        getMyContext().startActivity(MainActivity.newIntent(getMyContext(), null));
     }
 
     public void registerClick() {

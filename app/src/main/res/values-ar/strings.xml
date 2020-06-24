@@ -103,7 +103,7 @@
     <string name="success">تمت بنجاح</string>
     <string name="new_password">كلمة مرور جديده</string>
     <string name="finish">انهاء</string>
-    <string name="enter_your_password">ادخل كلمة مرور جديدة</string>
+    <string name="enter_your_password">ادخل كلمة مرور</string>
     <string name="enter_your_phone_number">أدخل رقم هاتفك</string>
     <string name="OR">او</string>
     <string name="login_with_twitter">تسجيل باستخدام تويتر</string>

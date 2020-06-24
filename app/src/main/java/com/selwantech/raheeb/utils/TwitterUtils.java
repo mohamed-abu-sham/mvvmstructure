@@ -5,6 +5,7 @@ import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
+import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.model.User;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -88,6 +89,7 @@ public class TwitterUtils {
                 userObj.setAvatar(twitterUser.profileImageUrl);
                 userObj.setLogin_with("twitter");
                 userObj.setName(twitterUser.name);
+                userObj.setFirebase_token(SessionManager.getKeyFirebaseToken());
                 twitterCallback.twitterUser(userObj);
 //                logoutTwitter();
             }

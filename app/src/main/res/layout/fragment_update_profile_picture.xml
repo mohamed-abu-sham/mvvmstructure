@@ -74,6 +74,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:scaleType="centerCrop"
+                                imageUrl="@{viewModel.userPicture()}"
                                 app:srcCompat="@drawable/ic_image" />
 
                         </androidx.cardview.widget.CardView>

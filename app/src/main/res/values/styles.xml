@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="fontFamily">@font/cairo_regular</item>
         <item name="android:windowBackground">@color/white</item>
+        <item name="colorSecondary">@color/color_red_note</item>
     </style>
 
     <style name="ToolbarColoredBackArrowDark" parent="AppThemeArabic">

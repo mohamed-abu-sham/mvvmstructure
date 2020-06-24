@@ -1,4 +1,4 @@
-package com.selwantech.raheeb.ui.auth.otpverifier;
+package com.selwantech.raheeb.ui.auth.otpverifiertoupdate;
 
 import android.content.Context;
 import android.os.CountDownTimer;
@@ -7,34 +7,25 @@ import android.text.TextWatcher;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.databinding.ActivityOtpVerifierBinding;
-import com.selwantech.raheeb.enums.PhoneNumberTypes;
-import com.selwantech.raheeb.helper.SessionManager;
-import com.selwantech.raheeb.model.RegisterResponse;
+import com.selwantech.raheeb.databinding.FragmentOtpVerifierToUpdateBinding;
+import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
-import com.selwantech.raheeb.ui.main.MainActivity;
+import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.TimeUtils;
 
 import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
 
-public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, ActivityOtpVerifierBinding> {
+public class OtpVerifierToUpdateViewModel extends BaseViewModel<OtpVerifierToUpdateNavigator, FragmentOtpVerifierToUpdateBinding> {
 
     int type;
     long milliToFinish = 90000;
-
-    public <V extends ViewDataBinding, N extends BaseNavigator> OtpVerifierViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (OtpVerifierNavigator) navigation, (ActivityOtpVerifierBinding) viewDataBinding);
-        setOtpTextWatcher();
-        countDownTimer.start();
-    }
-
     CountDownTimer countDownTimer = new CountDownTimer(milliToFinish, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
@@ -48,30 +39,28 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
         }
     };
 
+    public <V extends ViewDataBinding, N extends BaseNavigator> OtpVerifierToUpdateViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
+        super(mContext, dataManager, (OtpVerifierToUpdateNavigator) navigation, (FragmentOtpVerifierToUpdateBinding) viewDataBinding);
+        setOtpTextWatcher();
+        countDownTimer.start();
+    }
+
     @Override
     protected void setUp() {
     }
 
     public void verifyCode() {
         if (isValidate()) {
-            if (type == PhoneNumberTypes.REGISTER.getValue()) {
-                verifyOtp();
-            } else if (type == PhoneNumberTypes.FORGET_PASSWORD.getValue()) {
-                verifyOtp();
-            }
+            verifyOtpToUpdate();
         }
     }
 
-    private void verifyOtp() {
-        getDataManager().getAuthService().verifyOtp(getMyContext(),
-                true, getNavigator().getToken(), getOtp(), new APICallBack<String>() {
+    private void verifyOtpToUpdate() {
+        getDataManager().getAuthService().verifyOtpToUpdate(getMyContext(),
+                true, getNavigator().getToken(), getOtp(), new APICallBack<User>() {
                     @Override
-                    public void onSuccess(String response) {
-                        if (type == PhoneNumberTypes.REGISTER.getValue()) {
-                            registerUser();
-                        } else if (type == PhoneNumberTypes.FORGET_PASSWORD.getValue()) {
-                            getBaseActivity().startActivity(CreatePasswordActivity.newIntent(getMyContext(), getNavigator().getToken()));
-                        }
+                    public void onSuccess(User response) {
+                        showSuccessDialog();
                     }
 
                     @Override
@@ -88,35 +77,23 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
                 });
     }
 
-    public void registerUser() {
-        if (isValidate()) {
-            getDataManager().getAuthService().registerUser(getMyContext(),
-                    true, User.getInstance(), getNavigator().getInviteToken(), new APICallBack<RegisterResponse>() {
-                        @Override
-                        public void onSuccess(RegisterResponse response) {
-                            User user = response.getUser();
-                            user.setToken(response.getJwt_token());
-                            User.getInstance().setObjUser(user);
-                            SessionManager.createUserLoginSession();
-                            getDataManager().getAuthService().reInit();
-                            getBaseActivity().finishAffinity();
-                            getBaseActivity().startActivity(MainActivity.newIntent(getMyContext(), null));
-                        }
+    private void showSuccessDialog() {
+        new OnLineDialog(getMyContext()) {
+            @Override
+            public void onPositiveButtonClicked() {
+                dismiss();
+                Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.action_otpVerifierToUpdateFragment_to_settingsFragment);
+            }
 
-                        @Override
-                        public void onError(String error, int errorCode) {
-                            showSnackBar(getMyContext().getString(R.string.error),
-                                    error, getMyContext().getResources().getString(R.string.ok),
-                                    new SnackViewBulider.SnackbarCallback() {
-                                        @Override
-                                        public void onActionClick(Snackbar snackbar) {
-                                            snackbar.dismiss();
-                                        }
-                                    });
-                        }
-                    });
-        }
+            @Override
+            public void onNegativeButtonClicked() {
+                dismiss();
+            }
+        }.showConfirmationDialog(DialogTypes.OK, getMyContext().getResources().getString(R.string.success),
+                getMyContext().getResources().getString(R.string.update_successfully));
     }
+
 
     public boolean isValidate() {
         int error = 0;

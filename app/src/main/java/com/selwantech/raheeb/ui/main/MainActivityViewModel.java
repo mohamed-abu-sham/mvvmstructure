@@ -7,6 +7,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ActivityMainBinding;
 import com.selwantech.raheeb.enums.DialogTypes;
+import com.selwantech.raheeb.helper.NotificationHelper;
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.auth.login.LoginActivity;
@@ -67,8 +68,14 @@ public class MainActivityViewModel extends BaseViewModel<MainActivityNavigator, 
             }
         });
 
+        checkNotification();
     }
 
+    private void checkNotification() {
+        if (getNavigator().getNotification() != null) {
+            new NotificationHelper(getBaseActivity(), getNavigator().getNotification());
+        }
+    }
     private void navigate(int id) {
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
                 .navigate(id, null, navOptions);

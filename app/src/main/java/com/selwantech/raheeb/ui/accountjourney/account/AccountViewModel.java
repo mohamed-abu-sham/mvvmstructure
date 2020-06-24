@@ -147,6 +147,11 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
                 .navigate(R.id.action_nav_account_to_settingsFragment);
     }
 
+    public void onPaymentClicked() {
+        Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.action_nav_account_to_payFragment);
+    }
+
 
     public void getProfile() {
         getDataManager().getAccountService().getProfile(getMyContext(), true, new APICallBack<User>() {

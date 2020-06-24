@@ -128,7 +128,7 @@ public class NotificationsViewModel extends BaseViewModel<NotificationsNavigator
     public void onClick(Notification notification, int position) {
         Bundle data = new Bundle();
         data.putSerializable(AppConstants.BundleData.MY_OFFER, notification);
-        new NotificationHelper(getBaseActivity(), notification).handleNotificationEvent();
+        new NotificationHelper(getBaseActivity(), notification.getNotifyData()).handleNotificationEvent();
     }
 
 

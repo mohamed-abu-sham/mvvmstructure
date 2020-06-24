@@ -2,8 +2,6 @@ package com.selwantech.raheeb.ui.messagesjourney.messagestabholder;
 
 import android.content.Context;
 
-import androidx.fragment.app.FragmentManager;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentMessagesTabHolderBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
@@ -12,6 +10,8 @@ import com.selwantech.raheeb.ui.base.BaseFragment;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
+
+import androidx.fragment.app.FragmentManager;
 
 
 public class MessagesTabHolderFragment extends
@@ -48,6 +48,7 @@ public class MessagesTabHolderFragment extends
     @Override
     public void onResume() {
         super.onResume();
+        mViewModel.onResume();
     }
 
     @Override

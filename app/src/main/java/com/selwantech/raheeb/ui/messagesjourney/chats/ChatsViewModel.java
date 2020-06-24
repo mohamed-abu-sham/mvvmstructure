@@ -33,6 +33,7 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
     boolean enableLoading = false;
     boolean isLoadMore = false;
     boolean canLoadMore = false ;
+    boolean isFirstIn = true;
     public <V extends ViewDataBinding, N extends BaseNavigator> ChatsViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ChatsNavigator) navigation, (FragmentChatsBinding) viewDataBinding);
     }
@@ -81,6 +82,7 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
     public void getData() {
         if (!isLoadMore() && !isRefreshing() && !isRetry()) {
             enableLoading = true;
+
         }
         getDataManager().getMessagesService().getChats(getMyContext(), enableLoading, isRefreshing ? 0 :
                 messagesAdapter.getItemCount(), new APICallBack<ArrayList<Chat>>() {
@@ -134,6 +136,7 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
     public void onClick(Chat chat, int position) {
         Bundle data = new Bundle();
         data.putSerializable(AppConstants.BundleData.CHAT, chat);
+        data.putInt(AppConstants.BundleData.CHAT_POSITION, position);
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
                 .navigate(R.id.chatFragment, data);
     }
@@ -164,6 +167,7 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
             finishLoadMore();
         } else {
             enableLoading = false;
+            isFirstIn = false;
         }
     }
 
@@ -213,5 +217,10 @@ public class ChatsViewModel extends BaseViewModel<ChatsNavigator, FragmentChatsB
         getViewBinding().swipeRefreshLayout.setRefreshing(true);
         setIsRefreshing(true);
         getData();
+    }
+
+    public void notifyItem(int position) {
+        messagesAdapter.getItem(position).setIs_seen(true);
+        messagesAdapter.notifyItemChanged(position);
     }
 }

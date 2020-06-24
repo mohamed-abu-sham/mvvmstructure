@@ -4,12 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentProductBinding;
@@ -29,6 +23,11 @@ import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.util.ArrayList;
+
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentProductBinding> implements RecyclerClick<Product> {
 
@@ -142,8 +141,7 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
         OrderByFragmentDialog dialog = new OrderByFragmentDialog.Builder().build();
         dialog.setMethodCallBack(new OrderByFragmentDialog.OrderByCallBack() {
             @Override
-            public void callBack(int filterId) {
-
+            public void callBack() {
                 applyFilter();
             }
         });

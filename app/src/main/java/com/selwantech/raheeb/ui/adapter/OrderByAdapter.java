@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.CellOrderByBinding;
 import com.selwantech.raheeb.helper.GeneralFunction;
@@ -16,6 +14,8 @@ import com.selwantech.raheeb.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class OrderByAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
@@ -63,6 +63,10 @@ public class OrderByAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public int getSelectedItem() {
         return selectedItem;
+    }
+
+    public FilterDate getItem(int i) {
+        return filterDateArrayList.get(i);
     }
 
     public class OrderByItemViewHolder extends BaseViewHolder {

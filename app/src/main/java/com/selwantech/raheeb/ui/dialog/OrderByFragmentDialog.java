@@ -8,19 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ButtomSheetOrderByBinding;
 import com.selwantech.raheeb.interfaces.RecyclerClick;
 import com.selwantech.raheeb.model.FilterDate;
+import com.selwantech.raheeb.model.FilterProduct;
 import com.selwantech.raheeb.ui.adapter.OrderByAdapter;
+import com.selwantech.raheeb.utils.AppConstants;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class OrderByFragmentDialog extends BottomSheetDialogFragment implements RecyclerClick<FilterDate> {
 
@@ -63,9 +65,28 @@ public class OrderByFragmentDialog extends BottomSheetDialogFragment implements 
     }
 
     private void getData() {
-        orderByAdapter.addItem(new FilterDate(getContext().getResources().getString(R.string.newest), true));
-        orderByAdapter.addItem(new FilterDate(getContext().getResources().getString(R.string.closest), false));
+        orderByAdapter.addItem(new FilterDate(getContext().getResources().getString(R.string.newest), false));
         orderByAdapter.addItem(new FilterDate(getContext().getResources().getString(R.string.low_to_high), false));
+        if (FilterProduct.getInstance().getLat() != 0.0) {
+            orderByAdapter.addItem(new FilterDate(getContext().getResources().getString(R.string.closest), false));
+        }
+        if (FilterProduct.getInstance().getOrdering() != null
+                && !FilterProduct.getInstance().getOrdering().isEmpty()) {
+            if (FilterProduct.getInstance().getOrdering().equals(AppConstants.ORDERING_TYPE.DESC)) {
+                selectChoice(0);
+            } else if (FilterProduct.getInstance().getOrdering().equals(AppConstants.ORDERING_TYPE.PRICE)) {
+                selectChoice(1);
+            } else if (FilterProduct.getInstance().getOrdering().equals(AppConstants.ORDERING_TYPE.DISTANCE)) {
+                selectChoice(2);
+            }
+        } else {
+            selectChoice(0);
+        }
+    }
+
+    private void selectChoice(int position) {
+        orderByAdapter.getItem(position).setSelected(true);
+        notifyAdapter();
     }
 
     @Override
@@ -108,12 +129,23 @@ public class OrderByFragmentDialog extends BottomSheetDialogFragment implements 
     public void onApplyClicked(){
         dismiss();
         if (orderByAdapter.getSelectedItem() > -1) {
-            orderByCallBack.callBack(orderByAdapter.getSelectedItem());
+            switch (orderByAdapter.getSelectedItem()) {
+                case 0:
+                    FilterProduct.getInstance().setOrdering(AppConstants.ORDERING_TYPE.DESC);
+                    break;
+                case 1:
+                    FilterProduct.getInstance().setOrdering(AppConstants.ORDERING_TYPE.PRICE);
+                    break;
+                case 2:
+                    FilterProduct.getInstance().setOrdering(AppConstants.ORDERING_TYPE.DISTANCE);
+                    break;
+            }
+            orderByCallBack.callBack();
         }
     }
 
     public interface OrderByCallBack {
-        void callBack(int filterId);
+        void callBack();
     }
 
     public void onCancleClicked(){

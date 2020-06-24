@@ -4,10 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import com.google.android.material.tabs.TabLayout;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentMessagesTabHolderBinding;
@@ -17,8 +13,13 @@ import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.messagesjourney.chats.ChatsFragment;
 import com.selwantech.raheeb.ui.messagesjourney.notifications.NotificationsFragment;
 
-public class MessagesTabHolderViewModel extends BaseViewModel<MessagesTabHolderNavigator, FragmentMessagesTabHolderBinding> {
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+public class MessagesTabHolderViewModel extends BaseViewModel<MessagesTabHolderNavigator, FragmentMessagesTabHolderBinding> {
+    ChatsFragment chatsFragment = new ChatsFragment();
+    NotificationsFragment notificationsFragment = new NotificationsFragment();
     public <V extends ViewDataBinding, N extends BaseNavigator> MessagesTabHolderViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (MessagesTabHolderNavigator) navigation, (FragmentMessagesTabHolderBinding) viewDataBinding);
     }
@@ -60,13 +61,22 @@ public class MessagesTabHolderViewModel extends BaseViewModel<MessagesTabHolderN
         Bundle bundle = new Bundle();
         switch (position) {
             case 0:
-                ChatsFragment chatsFragment = new ChatsFragment();
                 chatsFragment.setArguments(bundle);
                 return chatsFragment;
             default:
-                NotificationsFragment notificationsFragment = new NotificationsFragment();
                 notificationsFragment.setArguments(bundle);
                 return notificationsFragment;
+        }
+    }
+
+    public void onResume() {
+        switch (getViewBinding().tabLayout.getSelectedTabPosition()) {
+            case 0:
+                chatsFragment.onResume();
+                break;
+            case 1:
+                notificationsFragment.onResume();
+                break;
         }
     }
 }

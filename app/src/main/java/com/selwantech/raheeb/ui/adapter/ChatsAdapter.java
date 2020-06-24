@@ -2,12 +2,8 @@ package com.selwantech.raheeb.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.selwantech.raheeb.databinding.CellChatBinding;
 import com.selwantech.raheeb.databinding.CellLoadMoreBinding;
@@ -19,6 +15,10 @@ import com.selwantech.raheeb.viewmodel.ItemChatViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ChatsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
@@ -134,6 +134,9 @@ public class ChatsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return chatList;
     }
 
+    public Chat getItem(int position) {
+        return chatList.get(position);
+    }
     public class ChatCellViewHolder extends BaseViewHolder {
 
         private final CellChatBinding mBinding;
@@ -150,6 +153,12 @@ public class ChatsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             } else {
                 mBinding.getViewModel().setMessages(chatList.get(position));
             }
+            mBinding.cardOfferCell.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecyclerClick.onClick(chatList.get(position), position);
+                }
+            });
             if (position >= getItemCount() - 3) {
                 if (!loading) {
                     if (loadMoreListener != null) {

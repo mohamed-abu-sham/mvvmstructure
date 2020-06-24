@@ -1,12 +1,15 @@
 package com.selwantech.raheeb.ui.messagesjourney.chat;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,6 +31,7 @@ import com.selwantech.raheeb.ui.adapter.ChatMessageAdapter;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.AudioPlayerDialog;
+import com.selwantech.raheeb.ui.main.MainActivity;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.AudioRecorder;
 import com.selwantech.raheeb.utils.LanguageUtils;
@@ -42,6 +46,7 @@ import java.util.ArrayList;
 import androidx.databinding.ViewDataBinding;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -56,7 +61,7 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
     ChatMessageAdapter chatAdapter;
     Socket mSocket;
     int inSideMessageId = 0;
-
+    int chatPosition;
     MediaPlayer mediaPlayer;
 
     AudioRecorder audioRecorder;
@@ -66,7 +71,6 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
     public <V extends ViewDataBinding, N extends BaseNavigator> ChatViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
         super(mContext, dataManager, (ChatNavigator) navigation, (FragmentChatBinding) viewDataBinding);
     }
-
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -83,7 +87,6 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
             });
         }
     };
-
 
     private void init() {
         mediaPlayer = new MediaPlayer();
@@ -190,23 +193,6 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
     }
 
     @Override
-    protected void setUp() {
-        initiateSocket();
-
-        if (getNavigator().getChatId() == -1) {
-            chat = getNavigator().getChat();
-            joinRoom(chat.getId());
-            init();
-        } else {
-            getChatById(getNavigator().getChatId());
-        }
-        getViewBinding().toolbar.toolbar.setNavigationOnClickListener(v -> {
-            getBaseActivity().onFragmentDetached("TAG");
-            popUp();
-        });
-    }
-
-    @Override
     public void callback(String recordPath) {
         if (recordPath != null) {
             showChat(inSideMessageId, "voice", recordPath);
@@ -269,31 +255,10 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
 
     }
 
-    private void getChatById(int chatId) {
-        getDataManager().getMessagesService().getChatById(getMyContext(), true, chatId, new APICallBack<Chat>() {
-            @Override
-            public void onSuccess(Chat response) {
-                chat = response;
-                getViewBinding().setData(chat);
-                getNavigator().setUpToolbar(chat);
+    private Emitter.Listener onConnect = args ->
+            getBaseActivity().runOnUiThread(() -> {
                 joinRoom(chat.getId());
-                init();
-            }
-
-            @Override
-            public void onError(String error, int errorCode) {
-                showSnackBar(getMyContext().getResources().getString(R.string.error),
-                        error, getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
-                            @Override
-                            public void onActionClick(Snackbar snackbar) {
-                                snackbar.dismiss();
-
-                            }
-                        });
-                popUp();
-            }
-        });
-    }
+            });
 
     private void showChat(int position, String type, String message) {
         ChatObject chatObject = new ChatObject(position, type, message, "now",
@@ -431,46 +396,55 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         mSocket.connect();
     }
 
-    protected void destroySocket() {
-        mSocket.disconnect();
-        mSocket.off(Socket.EVENT_CONNECT, onConnect);
-        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
-        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.off("receive_message", onNewMessage);
+    private Emitter.Listener onDisconnect = args ->
+            getBaseActivity().runOnUiThread(() -> {
+//                leaveRoom();
+            });
 
+    @Override
+    protected void setUp() {
+
+        chatPosition = getNavigator().getChatPosition();
+        if (getNavigator().getChatId() == -1) {
+            chat = getNavigator().getChat();
+//            joinRoom(chat.getId());
+            initiateSocket();
+            init();
+        } else {
+            getChatById(getNavigator().getChatId());
+        }
+        getViewBinding().toolbar.toolbar.setNavigationOnClickListener(v -> {
+            getBaseActivity().onFragmentDetached("TAG");
+            popUp();
+        });
     }
 
-    protected void leaveRoom() {
-        if (mSocket != null && mSocket.connected() && chat != null) {
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("chat_id", chat.getId());
-                mSocket.emit("leave_room", jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            //mSocket.disconnect();
-        }
-    }
+    private void getChatById(int chatId) {
+        getDataManager().getMessagesService().getChatById(getMyContext(), true, chatId, new APICallBack<Chat>() {
+            @Override
+            public void onSuccess(Chat response) {
+                chat = response;
+                getViewBinding().setData(chat);
+                getNavigator().setUpToolbar(chat);
+//                joinRoom(chat.getId());
+                initiateSocket();
+                init();
 
-    protected void joinRoom(int chatId) {
-//        if (mSocket != null &&
-////                !mSocket.connected()) {
-////            mSocket.connect();
-////            return;
-////        }
-
-        if (mSocket.connected()) {
-            try {
-                joinRoom = true;
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("chat_id", chatId);
-                mSocket.emit("join_room", jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-        }
+
+            @Override
+            public void onError(String error, int errorCode) {
+                showSnackBar(getMyContext().getResources().getString(R.string.error),
+                        error, getMyContext().getResources().getString(R.string.ok), new SnackViewBulider.SnackbarCallback() {
+                            @Override
+                            public void onActionClick(Snackbar snackbar) {
+                                snackbar.dismiss();
+
+                            }
+                        });
+                popUp();
+            }
+        });
     }
 
     public void setLoadMore(boolean loadMore) {
@@ -505,13 +479,59 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
         });
     }
 
-    private Emitter.Listener onConnect = args ->
-            getBaseActivity().runOnUiThread(() -> {
-//                joinRoom();
-            });
-    private Emitter.Listener onDisconnect = args ->
-            getBaseActivity().runOnUiThread(() -> {
-            });
+    protected void destroySocket() {
+        leaveRoom();
+        mSocket.disconnect();
+        mSocket.off(Socket.EVENT_CONNECT, onConnect);
+        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
+        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+        mSocket.off("receive_message", onNewMessage);
+
+    }
+
+    protected void leaveRoom() {
+        if (mSocket != null && mSocket.connected() && chat != null) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("chat_id", chat.getId());
+                jsonObject.put("user_id", User.getInstance().getUserID());
+                mSocket.emit("leave_room", jsonObject, new Ack() {
+                    @Override
+                    public void call(Object... args) {
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //mSocket.disconnect();
+        }
+    }
+
+    protected void joinRoom(int chatId) {
+//        if (mSocket != null &&
+////                !mSocket.connected()) {
+////            mSocket.connect();
+////            return;
+////        }
+
+        if (mSocket.connected()) {
+            try {
+                joinRoom = true;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("chat_id", chatId);
+                jsonObject.put("user_id", User.getInstance().getUserID());
+                mSocket.emit("join_room", jsonObject, new Ack() {
+                    @Override
+                    public void call(Object... args) {
+                        Log.d("joined", args.toString());
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     private Emitter.Listener onConnectError = args ->
             getBaseActivity().runOnUiThread(() -> {
             });
@@ -531,4 +551,10 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
                 ? Gravity.RIGHT : Gravity.LEFT;
     }
 
+    public void returnData() {
+        Intent intent = new Intent();
+        intent.putExtra(AppConstants.BundleData.CHAT_POSITION, chatPosition);
+        ((MainActivity) getBaseActivity()).onActivityResultFromFragment(
+                222, Activity.RESULT_OK, intent);
+    }
 }

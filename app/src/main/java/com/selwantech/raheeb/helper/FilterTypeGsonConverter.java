@@ -41,10 +41,10 @@ public class FilterTypeGsonConverter extends TypeAdapter<FilterProduct> {
             out.name("pick_up");
             out.value(value.isPick_up());
         }
-
-        out.name("distance");
-        out.value(value.getDistance());
-
+        if (value.getDistance() != 0) {
+            out.name("distance");
+            out.value(value.getDistance());
+        }
         if (value.getTitle() != null
                 && !value.getTitle().isEmpty()) {
             out.name("title");

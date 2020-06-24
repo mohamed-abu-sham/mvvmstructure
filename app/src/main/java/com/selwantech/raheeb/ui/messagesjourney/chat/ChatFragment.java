@@ -32,21 +32,24 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     public void onResume() {
         super.onResume();
         if (mViewModel.chat != null && mViewModel.joinRoom) {
-//            mViewModel.initiateSocket();
-            mViewModel.joinRoom(mViewModel.chat.getId());
+            mViewModel.initiateSocket();
+//            mViewModel.joinRoom(mViewModel.chat.getId());
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mViewModel.leaveRoom();
+//        mViewModel.leaveRoom();
+        if (mViewModel.mSocket != null) {
+            mViewModel.destroySocket();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mViewModel.destroySocket();
+        mViewModel.returnData();
     }
 
     @Override
@@ -102,6 +105,11 @@ public class ChatFragment extends BaseFragment<FragmentChatBinding, ChatViewMode
     public void setUpToolbar(Chat chat){
         mViewBinding.toolbar.toolbar.setNavigationIcon(getMyContext().getResources().getDrawable(R.drawable.ic_arrow_back));
         mViewBinding.toolbar.toolbar.setTitle(chat.getUser().getName());
+    }
+
+    @Override
+    public int getChatPosition() {
+        return getArguments().getInt(AppConstants.BundleData.CHAT_POSITION, -1);
     }
 
     @Override

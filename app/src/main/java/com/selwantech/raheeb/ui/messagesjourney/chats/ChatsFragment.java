@@ -1,19 +1,23 @@
 package com.selwantech.raheeb.ui.messagesjourney.chats;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChatsBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class ChatsFragment extends BaseFragment<FragmentChatsBinding, ChatsViewModel>
-        implements ChatsNavigator {
+        implements ChatsNavigator, ActivityResultCallBack {
 
     private static final String TAG = ChatsFragment.class.getSimpleName();
 
@@ -26,7 +30,9 @@ public class ChatsFragment extends BaseFragment<FragmentChatsBinding, ChatsViewM
     @Override
     public void onResume() {
         super.onResume();
-        mHomeViewModel.reloadData();
+//        if(mHomeViewModel!=null && !mHomeViewModel.isFirstIn){
+//            mHomeViewModel.reloadData();
+//        }
     }
 
     @Override
@@ -42,12 +48,12 @@ public class ChatsFragment extends BaseFragment<FragmentChatsBinding, ChatsViewM
 
     @Override
     public boolean isNeedActivityResult() {
-        return false;
+        return true;
     }
 
     @Override
     public ActivityResultCallBack activityResultCallBack() {
-        return null;
+        return this::callBack;
     }
 
     @Override
@@ -74,4 +80,10 @@ public class ChatsFragment extends BaseFragment<FragmentChatsBinding, ChatsViewM
         mHomeViewModel.setUp();
     }
 
+    @Override
+    public void callBack(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == 222) {
+            mHomeViewModel.notifyItem(data.getIntExtra(AppConstants.BundleData.CHAT_POSITION, -1));
+        }
+    }
 }

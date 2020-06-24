@@ -13,7 +13,7 @@ import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.auth.login.LoginActivity;
+import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.SnackViewBulider;
@@ -50,7 +50,7 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
             public void onSuccess(Object response) {
                 SessionManager.logoutUser();
                 getBaseActivity().finishAffinity();
-                getBaseActivity().startActivity(LoginActivity.newIntent(getMyContext(), ""));
+                getBaseActivity().startActivity(ChooseUserTypeActivity.newIntent(getMyContext(), ""));
             }
 
             @Override

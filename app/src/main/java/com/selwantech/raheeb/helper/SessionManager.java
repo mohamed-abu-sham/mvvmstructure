@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.model.User;
-import com.selwantech.raheeb.ui.auth.login.LoginActivity;
+import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeActivity;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 
 public class SessionManager {
@@ -114,7 +114,7 @@ public class SessionManager {
                 @Override
                 public void onPositiveButtonClicked() {
                     dismiss();
-                    activity.startActivity(LoginActivity.newIntent(activity, ""));
+                    activity.startActivity(ChooseUserTypeActivity.newIntent(activity, ""));
                 }
 
                 @Override

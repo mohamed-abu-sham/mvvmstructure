@@ -10,7 +10,7 @@ import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.helper.NotificationHelper;
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.repository.DataManager;
-import com.selwantech.raheeb.ui.auth.login.LoginActivity;
+import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeActivity;
 import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
@@ -51,7 +51,7 @@ public class MainActivityViewModel extends BaseViewModel<MainActivityNavigator, 
                                 public void onPositiveButtonClicked() {
                                     getViewBinding().bottomSheet.setSelectedItemId(R.id.nav_home);
                                     dismiss();
-                                    getBaseActivity().startActivity(LoginActivity.newIntent(getBaseActivity(), ""));
+                                    getBaseActivity().startActivity(ChooseUserTypeActivity.newIntent(getBaseActivity(), ""));
                                 }
 
                                 @Override

@@ -160,7 +160,7 @@ public class ProductViewModel extends BaseViewModel<ProductNavigator, FragmentPr
     @Override
     public void onClick(Product product, int position) {
         Bundle data = new Bundle();
-        data.putSerializable(AppConstants.BundleData.PRODUCT, product);
+        data.putInt(AppConstants.BundleData.PRODUCT_ID, product.getId());
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
                 .navigate(R.id.productDetailsFragment, data);
     }

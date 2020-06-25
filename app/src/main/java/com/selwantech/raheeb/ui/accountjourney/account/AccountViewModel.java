@@ -149,7 +149,7 @@ public class AccountViewModel extends BaseViewModel<AccountNavigator, FragmentAc
 
     public void onPaymentClicked() {
         Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
-                .navigate(R.id.action_nav_account_to_payFragment);
+                .navigate(R.id.action_nav_account_to_walletFragment);
     }
 
 

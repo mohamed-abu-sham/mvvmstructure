@@ -54,14 +54,18 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra(AppConstants.BundleData.NOTIFICATION, notifyData);
-        stackBuilder.addNextIntent(intent);
+//        stackBuilder.addNextIntent(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        stackBuilder.addNextIntentWithParentStack(intent);
+        int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
-                0,
+                uniqueInt,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
-
-        notificationManager.notify(notificationId, mBuilder.build());
+        mBuilder.setAutoCancel(true);
+        notificationManager.notify(uniqueInt, mBuilder.build());
     }
 
     @Override

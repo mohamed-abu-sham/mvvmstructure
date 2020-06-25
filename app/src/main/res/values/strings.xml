@@ -269,5 +269,10 @@
     <string name="was_it_good_shopping">Was it good shopping?</string>
     <string name="type_a_comment">Type a comment ...</string>
     <string name="rated_successful">Rated successful</string>
+    <string name="payment_online">Payment Online</string>
+    <string name="pay_from_my_wallet">Pay From My Wallet</string>
+    <string name="wallet">Wallet</string>
+    <string name="cash_in">Cash In</string>
+    <string name="cash_out">Cash Out</string>
 
 </resources>

@@ -64,24 +64,61 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/tvShippingAddress"
+                    android:id="@+id/tvLocationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/location"
+                    android:textAllCaps="true"
                     style="@style/poppins_regular"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:gravity="center|start"
-                    android:onClick="@{()->viewModel.onAddAddressClicked()}"
-                    android:singleLine="true"
-                    android:text="@string/add_address"
-                    android:textColor="@color/text_gray"
-                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
                     android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/itemView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvShippingAddress"
+                        style="@style/poppins_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/imgArrow"
+                        android:layout_toEndOf="@+id/cardView"
+                        android:gravity="center|start"
+                        android:singleLine="true"
+                        android:text="@string/select"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/imgArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:onClick="@{()->viewModel.onAddAddressClicked()}"
+                        android:text="@string/edit"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
 
                 <View
                     android:id="@+id/viewShippingAddress"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:background="@color/fill_order_dark_gray"
                     android:visibility="gone" />
 
@@ -248,7 +285,8 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -296,12 +334,36 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <View
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:background="@color/fill_order_dark_gray"
-                    android:visibility="visible" />
+                    android:layout_marginEnd="@dimen/_15sdp">
+
+                    <TextView
+                        style="@style/poppins_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_toStartOf="@id/radOnline"
+                        android:text="@string/payment_online"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <RadioButton
+                        android:id="@+id/radOnline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:buttonTint="@color/color_blue"
+                        android:checked="true"
+                        android:thumb="@drawable/switch_color"
+                        android:track="@drawable/switch_track_color" />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -316,18 +378,50 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_toStartOf="@id/switchCash"
+                        android:layout_toStartOf="@id/radCash"
                         android:text="@string/cash_on_pickup"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
-                    <Switch
-                        android:id="@+id/switchCash"
+                    <RadioButton
+                        android:id="@+id/radCash"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:checked="true"
+                        android:buttonTint="@color/color_blue"
+                        android:checked="false"
+                        android:thumb="@drawable/switch_color"
+                        android:track="@drawable/switch_track_color" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp">
+
+                    <TextView
+                        style="@style/poppins_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_toStartOf="@id/radWallet"
+                        android:text="@string/pay_from_my_wallet"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <RadioButton
+                        android:id="@+id/radWallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:buttonTint="@color/color_blue"
+                        android:checked="false"
                         android:thumb="@drawable/switch_color"
                         android:track="@drawable/switch_track_color" />
 

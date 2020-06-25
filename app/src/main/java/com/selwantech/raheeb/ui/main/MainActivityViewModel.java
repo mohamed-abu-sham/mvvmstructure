@@ -73,7 +73,7 @@ public class MainActivityViewModel extends BaseViewModel<MainActivityNavigator, 
 
     private void checkNotification() {
         if (getNavigator().getNotification() != null) {
-            new NotificationHelper(getBaseActivity(), getNavigator().getNotification());
+            new NotificationHelper(getBaseActivity(), getNavigator().getNotification()).handleNotificationEvent();
         }
     }
     private void navigate(int id) {

@@ -165,6 +165,9 @@
         <action
             android:id="@+id/action_nav_account_to_payFragment"
             app:destination="@id/payFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_walletFragment"
+            app:destination="@id/walletFragment" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -265,5 +268,9 @@
             app:destination="@id/settingsFragment"
             app:popUpTo="@id/nav_home" />
     </fragment>
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.payment.wallet.WalletFragment"
+        android:label="WalletFragment" />
 
 </navigation>

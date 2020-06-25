@@ -37,14 +37,37 @@ public class ReviewOfferViewModel extends BaseViewModel<ReviewOfferNavigator, Fr
     @Override
     protected void setUp() {
         setData();
-        getViewBinding().linearGooglePay.setAlpha((float) 0.5);
-        GeneralFunction.enableDisableViewHolder(getViewBinding().linearGooglePay, false);
-        getViewBinding().switchCash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//        getViewBinding().linearGooglePay.setAlpha((float) 0.5);
+//        GeneralFunction.enableDisableViewHolder(getViewBinding().linearGooglePay, false);
+        getViewBinding().radCash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buyNow.setPayment_method(isChecked ? "cash" : "");
-                GeneralFunction.enableDisableViewHolder(getViewBinding().linearGooglePay, !isChecked);
-                getViewBinding().linearGooglePay.setAlpha(isChecked ? (float) 0.5 : (float) 1);
+                if (isChecked) {
+                    buyNow.setPayment_method("cash");
+                    getViewBinding().radOnline.setChecked(false);
+                    getViewBinding().radWallet.setChecked(false);
+                }
+
+            }
+        });
+        getViewBinding().radOnline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    buyNow.setPayment_method("online");
+                    getViewBinding().radCash.setChecked(false);
+                    getViewBinding().radWallet.setChecked(false);
+                }
+            }
+        });
+        getViewBinding().radWallet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    buyNow.setPayment_method("wallet");
+                    getViewBinding().radOnline.setChecked(false);
+                    getViewBinding().radCash.setChecked(false);
+                }
             }
         });
     }
@@ -116,9 +139,13 @@ public class ReviewOfferViewModel extends BaseViewModel<ReviewOfferNavigator, Fr
             getViewBinding().tvLocation.setText(Html.fromHtml(getLocationText()));
             getViewBinding().tvShippingAddress.setVisibility(View.VISIBLE);
             getViewBinding().viewShippingAddress.setVisibility(View.VISIBLE);
+            getViewBinding().itemView.setVisibility(View.VISIBLE);
+            getViewBinding().tvLocationTitle.setVisibility(View.VISIBLE);
         }
         getData();
         setGooglePayDis();
+
+
     }
 
     private void setGooglePayDis() {

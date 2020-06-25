@@ -5,6 +5,7 @@ import android.content.Context;
 import com.selwantech.raheeb.model.ProductOwner;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.VerifyPhoneResponse;
+import com.selwantech.raheeb.model.Wallet;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.ApiClient;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
@@ -122,11 +123,22 @@ public class AccountService {
                 .subscribe(new CustomObserverResponse<VerifyPhoneResponse>(mContext, enableLoading, apiCallBack));
     }
 
+    public void getWallet(Context mContext, boolean enableLoading, APICallBack<Wallet> apiCallBack) {
+        getDataApi().getWallet()
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CustomObserverResponse<Wallet>(mContext, enableLoading, apiCallBack));
+    }
+
     public DataApi getDataApi() {
         return mDataApi;
     }
 
     public interface DataApi {
+
+        @GET(ApiConstants.apiAccountService.FOLLOWERS)
+        Single<Response<GeneralResponse<Wallet>>> getWallet();
 
         @Multipart
         @POST(ApiConstants.apiAccountService.UPDATE_AVATAR)

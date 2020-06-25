@@ -10,6 +10,7 @@ import com.selwantech.raheeb.ui.accountjourney.followers.FollowersViewModel;
 import com.selwantech.raheeb.ui.accountjourney.following.FollowingViewModel;
 import com.selwantech.raheeb.ui.accountjourney.help.HelpViewModel;
 import com.selwantech.raheeb.ui.accountjourney.payment.pay.PayViewModel;
+import com.selwantech.raheeb.ui.accountjourney.payment.wallet.WalletViewModel;
 import com.selwantech.raheeb.ui.accountjourney.setlocation.SetLocationViewModel;
 import com.selwantech.raheeb.ui.accountjourney.settings.SettingsViewModel;
 import com.selwantech.raheeb.ui.accountjourney.twitterfriends.TwitterFriendsViewModel;
@@ -278,6 +279,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(OtpVerifierToUpdateViewModel.class)) {
             //noinspection unchecked
             return (T) new OtpVerifierToUpdateViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(WalletViewModel.class)) {
+            //noinspection unchecked
+            return (T) new WalletViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

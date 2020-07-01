@@ -14,8 +14,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
 
-public class ForgetPasswordActivity extends BaseActivity<ActivityForgetPasswordBinding, ForgetPasswordViewModel>
-        implements ForgetPasswordNavigator {
+public class ForgetPasswordActivity extends BaseActivity<ActivityForgetPasswordBinding, ForgetPasswordViewModel> {
 
     int type;
     @Inject
@@ -45,7 +44,7 @@ public class ForgetPasswordActivity extends BaseActivity<ActivityForgetPasswordB
     @Override
     public ForgetPasswordViewModel getViewModel() {
         mPhoneNumberViewModel = (ForgetPasswordViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(ForgetPasswordViewModel.class, getViewDataBinding(), this);
+                .create(ForgetPasswordViewModel.class, getViewDataBinding(), getIntent());
         return mPhoneNumberViewModel;
     }
 

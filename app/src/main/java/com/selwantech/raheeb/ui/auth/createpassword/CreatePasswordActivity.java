@@ -12,10 +12,8 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
-public class CreatePasswordActivity extends BaseActivity<ActivityCreatePasswordBinding, CreatePasswordViewModel>
-        implements CreatePasswordNavigator {
+public class CreatePasswordActivity extends BaseActivity<ActivityCreatePasswordBinding, CreatePasswordViewModel> {
 
-    String token = "";
     @Inject
     ViewModelProviderFactory factory;
     private CreatePasswordViewModel mCreatePasswordViewModel;
@@ -43,7 +41,7 @@ public class CreatePasswordActivity extends BaseActivity<ActivityCreatePasswordB
     @Override
     public CreatePasswordViewModel getViewModel() {
         mCreatePasswordViewModel = (CreatePasswordViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(CreatePasswordViewModel.class, getViewDataBinding(), this);
+                .create(CreatePasswordViewModel.class, getViewDataBinding(),getIntent());
         return mCreatePasswordViewModel;
     }
 
@@ -56,12 +54,7 @@ public class CreatePasswordActivity extends BaseActivity<ActivityCreatePasswordB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewBinding = getViewDataBinding();
-        token = getIntent().getStringExtra("token");
         mCreatePasswordViewModel.setUp();
     }
 
-    @Override
-    public String getToken() {
-        return token;
-    }
 }

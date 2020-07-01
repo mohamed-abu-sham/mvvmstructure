@@ -11,7 +11,6 @@ import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
 import com.selwantech.raheeb.ui.auth.login.LoginActivity;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 
@@ -19,17 +18,17 @@ import androidx.databinding.ViewDataBinding;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class CreatePasswordViewModel extends BaseViewModel<CreatePasswordNavigator, ActivityCreatePasswordBinding> {
+public class CreatePasswordViewModel extends BaseViewModel<ActivityCreatePasswordBinding> {
 
     String token = "";
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> CreatePasswordViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (CreatePasswordNavigator) navigation, (ActivityCreatePasswordBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> CreatePasswordViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager, intent, (ActivityCreatePasswordBinding) viewDataBinding);
     }
 
     @Override
     protected void setUp() {
-        token = getNavigator().getToken();
+        token = getIntent().getStringExtra("token");
     }
 
     public boolean isValid() {

@@ -11,14 +11,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.helper.GeneralFunction;
-import com.selwantech.raheeb.ui.filebox.FileBoxActivity;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class ViewImageFragmentDialog extends BottomSheetDialogFragment {
 
@@ -64,7 +63,7 @@ public class ViewImageFragmentDialog extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
-                startActivity(FileBoxActivity.getStartIntent(getContext(), image));
+//                startActivity(FileBoxActivity.getStartIntent(getContext(), image));
             }
         });
     }

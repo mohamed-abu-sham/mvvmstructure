@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.auth.changepassword;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
@@ -8,17 +9,16 @@ import com.selwantech.raheeb.databinding.FragmentChangePasswordBinding;
 import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import androidx.databinding.ViewDataBinding;
 
-public class ChangePasswordViewModel extends BaseViewModel<ChangePasswordNavigator, FragmentChangePasswordBinding> {
+public class ChangePasswordViewModel extends BaseViewModel< FragmentChangePasswordBinding> {
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> ChangePasswordViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (ChangePasswordNavigator) navigation, (FragmentChangePasswordBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> ChangePasswordViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager,intent, (FragmentChangePasswordBinding) viewDataBinding);
 
     }
 

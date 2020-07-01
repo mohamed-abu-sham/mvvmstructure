@@ -13,8 +13,7 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
-public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, RegisterViewModel>
-        implements RegisterNavigator {
+public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, RegisterViewModel> {
 
     @Inject
     ViewModelProviderFactory factory;
@@ -45,7 +44,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     @Override
     public RegisterViewModel getViewModel() {
         mRegisterViewModel = (RegisterViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(RegisterViewModel.class, getViewDataBinding(), this);
+                .create(RegisterViewModel.class, getViewDataBinding(), getIntent());
         return mRegisterViewModel;
     }
 
@@ -61,10 +60,4 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         mRegisterViewModel.setUp();
 
     }
-
-    @Override
-    public String getInviteToken() {
-        return getIntent().getStringExtra(AppConstants.BundleData.INVITE_TOKEN);
-    }
-
 }

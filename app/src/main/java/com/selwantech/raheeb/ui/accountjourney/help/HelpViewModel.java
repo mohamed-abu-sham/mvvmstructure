@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.accountjourney.help;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -10,7 +11,6 @@ import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.enums.PickImageTypes;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 import com.selwantech.raheeb.ui.dialog.PickImageFragmentDialog;
@@ -19,12 +19,12 @@ import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import androidx.databinding.ViewDataBinding;
 
-public class HelpViewModel extends BaseViewModel<HelpNavigator, FragmentHelpBinding> {
+public class HelpViewModel extends BaseViewModel<FragmentHelpBinding> {
 
     private Uri imageUri;
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> HelpViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (HelpNavigator) navigation, (FragmentHelpBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> HelpViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager, intent, (FragmentHelpBinding) viewDataBinding);
 
     }
 

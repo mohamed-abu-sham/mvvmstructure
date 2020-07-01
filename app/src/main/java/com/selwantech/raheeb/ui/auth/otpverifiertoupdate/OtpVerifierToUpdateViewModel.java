@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.auth.otpverifiertoupdate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,16 +14,16 @@ import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.TimeUtils;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.navigation.Navigation;
 
-public class OtpVerifierToUpdateViewModel extends BaseViewModel<OtpVerifierToUpdateNavigator, FragmentOtpVerifierToUpdateBinding> {
+public class OtpVerifierToUpdateViewModel extends BaseViewModel<FragmentOtpVerifierToUpdateBinding> {
 
     int type;
     long milliToFinish = 90000;
@@ -39,8 +40,8 @@ public class OtpVerifierToUpdateViewModel extends BaseViewModel<OtpVerifierToUpd
         }
     };
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> OtpVerifierToUpdateViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (OtpVerifierToUpdateNavigator) navigation, (FragmentOtpVerifierToUpdateBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> OtpVerifierToUpdateViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager, intent, (FragmentOtpVerifierToUpdateBinding) viewDataBinding);
         setOtpTextWatcher();
         countDownTimer.start();
     }
@@ -57,7 +58,7 @@ public class OtpVerifierToUpdateViewModel extends BaseViewModel<OtpVerifierToUpd
 
     private void verifyOtpToUpdate() {
         getDataManager().getAuthService().verifyOtpToUpdate(getMyContext(),
-                true, getNavigator().getToken(), getOtp(), new APICallBack<User>() {
+                true, getBundle().getString(AppConstants.BundleData.TOKEN), getOtp(), new APICallBack<User>() {
                     @Override
                     public void onSuccess(User response) {
                         showSuccessDialog();

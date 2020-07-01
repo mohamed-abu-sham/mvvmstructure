@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.selwantech.raheeb.ui.emptyfragment.EmptyFragmentViewModel" />
+            type="com.selwantech.raheeb.ui.standard.emptyfragment.EmptyFragmentViewModel" />
     </data>
 
     <RelativeLayout

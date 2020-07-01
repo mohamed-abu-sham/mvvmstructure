@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.auth.otpverifier;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,21 +17,21 @@ import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordActivity;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.main.MainActivity;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.TimeUtils;
 
 import androidx.databinding.ViewDataBinding;
 
-public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, ActivityOtpVerifierBinding> {
+public class OtpVerifierViewModel extends BaseViewModel<ActivityOtpVerifierBinding> {
 
     int type;
     long milliToFinish = 90000;
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> OtpVerifierViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (OtpVerifierNavigator) navigation, (ActivityOtpVerifierBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> OtpVerifierViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager, intent, (ActivityOtpVerifierBinding) viewDataBinding);
         setOtpTextWatcher();
         countDownTimer.start();
     }
@@ -64,13 +65,13 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
 
     private void verifyOtp() {
         getDataManager().getAuthService().verifyOtp(getMyContext(),
-                true, getNavigator().getToken(), getOtp(), new APICallBack<String>() {
+                true, getIntent().getStringExtra(AppConstants.BundleData.TOKEN), getOtp(), new APICallBack<String>() {
                     @Override
                     public void onSuccess(String response) {
                         if (type == PhoneNumberTypes.REGISTER.getValue()) {
                             registerUser();
                         } else if (type == PhoneNumberTypes.FORGET_PASSWORD.getValue()) {
-                            getBaseActivity().startActivity(CreatePasswordActivity.newIntent(getMyContext(), getNavigator().getToken()));
+                            getBaseActivity().startActivity(CreatePasswordActivity.newIntent(getMyContext(), getIntent().getStringExtra(AppConstants.BundleData.TOKEN)));
                         }
                     }
 
@@ -91,7 +92,7 @@ public class OtpVerifierViewModel extends BaseViewModel<OtpVerifierNavigator, Ac
     public void registerUser() {
         if (isValidate()) {
             getDataManager().getAuthService().registerUser(getMyContext(),
-                    true, User.getInstance(), getNavigator().getInviteToken(), new APICallBack<RegisterResponse>() {
+                    true, User.getInstance(), getIntent().getStringExtra(AppConstants.BundleData.INVITE_TOKEN), new APICallBack<RegisterResponse>() {
                         @Override
                         public void onSuccess(RegisterResponse response) {
                             User user = response.getUser();

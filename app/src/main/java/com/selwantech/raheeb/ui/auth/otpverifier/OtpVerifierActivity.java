@@ -13,8 +13,7 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
-public class OtpVerifierActivity extends BaseActivity<ActivityOtpVerifierBinding, OtpVerifierViewModel>
-        implements OtpVerifierNavigator {
+public class OtpVerifierActivity extends BaseActivity<ActivityOtpVerifierBinding, OtpVerifierViewModel> {
 
     @Inject
     ViewModelProviderFactory factory;
@@ -47,7 +46,7 @@ public class OtpVerifierActivity extends BaseActivity<ActivityOtpVerifierBinding
     @Override
     public OtpVerifierViewModel getViewModel() {
         mOtpViewModel = (OtpVerifierViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(OtpVerifierViewModel.class, getViewDataBinding(), this);
+                .create(OtpVerifierViewModel.class, getViewDataBinding(), getIntent());
         return mOtpViewModel;
     }
 
@@ -63,16 +62,4 @@ public class OtpVerifierActivity extends BaseActivity<ActivityOtpVerifierBinding
         mOtpViewModel.setType(getIntent().getIntExtra(AppConstants.BundleData.TYPE, 0));
         mOtpViewModel.setUp();
     }
-
-
-    @Override
-    public String getToken() {
-        return getIntent().getStringExtra(AppConstants.BundleData.TOKEN);
-    }
-
-    @Override
-    public String getInviteToken() {
-        return getIntent().getStringExtra(AppConstants.BundleData.INVITE_TOKEN);
-    }
-
 }

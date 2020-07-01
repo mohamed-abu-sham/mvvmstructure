@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.auth.changepassword;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChangePasswordBinding;
@@ -12,7 +13,7 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 import javax.inject.Inject;
 
 
-public class ChangePasswordFragment extends BaseFragment<FragmentChangePasswordBinding, ChangePasswordViewModel> implements ChangePasswordNavigator {
+public class ChangePasswordFragment extends BaseFragment<FragmentChangePasswordBinding, ChangePasswordViewModel> {
 
     private static final String TAG = ChangePasswordFragment.class.getSimpleName();
 
@@ -51,7 +52,7 @@ public class ChangePasswordFragment extends BaseFragment<FragmentChangePasswordB
     @Override
     public ChangePasswordViewModel getViewModel() {
         mChangePasswordViewModel = (ChangePasswordViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(ChangePasswordViewModel.class, getViewDataBinding(), this);
+                .create(ChangePasswordViewModel.class, getViewDataBinding(), new Intent().putExtras(getArguments()));
         return mChangePasswordViewModel;
     }
 

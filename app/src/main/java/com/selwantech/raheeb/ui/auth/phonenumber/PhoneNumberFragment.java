@@ -12,8 +12,7 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
-public class PhoneNumberFragment extends BaseFragment<FragmentUpdatePhoneBinding, PhoneNumberViewModel>
-        implements PhoneNumberNavigator {
+public class PhoneNumberFragment extends BaseFragment<FragmentUpdatePhoneBinding, PhoneNumberViewModel> {
 
     int type;
     @Inject
@@ -53,7 +52,7 @@ public class PhoneNumberFragment extends BaseFragment<FragmentUpdatePhoneBinding
     @Override
     public PhoneNumberViewModel getViewModel() {
         mPhoneNumberViewModel = (PhoneNumberViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(PhoneNumberViewModel.class, getViewDataBinding(), this);
+                .create(PhoneNumberViewModel.class, getViewDataBinding(), new Intent().putExtras(getArguments()));
         return mPhoneNumberViewModel;
     }
 

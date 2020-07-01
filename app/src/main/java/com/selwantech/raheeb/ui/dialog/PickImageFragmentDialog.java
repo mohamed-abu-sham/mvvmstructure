@@ -10,17 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
-
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.ButtomSheetPickImageBinding;
 import com.selwantech.raheeb.enums.PickImageTypes;
 import com.selwantech.raheeb.interfaces.ImageCallback;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;

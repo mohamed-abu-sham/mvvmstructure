@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.accountjourney.updateprofilepicture;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -8,12 +9,8 @@ import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentUpdateProfilePictureBinding;
 import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.enums.PickImageTypes;
-import com.selwantech.raheeb.helper.GeneralFunction;
-import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.repository.DataManager;
-import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 import com.selwantech.raheeb.ui.dialog.PickImageFragmentDialog;
@@ -22,12 +19,12 @@ import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import androidx.databinding.ViewDataBinding;
 
-public class UpdateProfilePictureViewModel extends BaseViewModel<UpdateProfilePictureNavigator, FragmentUpdateProfilePictureBinding> {
+public class UpdateProfilePictureViewModel extends BaseViewModel<FragmentUpdateProfilePictureBinding> {
 
     private Uri reportImageUri;
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> UpdateProfilePictureViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (UpdateProfilePictureNavigator) navigation, (FragmentUpdateProfilePictureBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> UpdateProfilePictureViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager, intent, (FragmentUpdateProfilePictureBinding) viewDataBinding);
 
     }
 
@@ -61,21 +58,21 @@ public class UpdateProfilePictureViewModel extends BaseViewModel<UpdateProfilePi
 
     public void onSaveClicked() {
         if (isValid()) {
-            getDataManager().getAccountService().updateAvatar(getMyContext(), true,
-                    GeneralFunction.getImageMultipart(reportImageUri.getPath(), "avatar"), new APICallBack<User>() {
-                        @Override
-                        public void onSuccess(User response) {
-                            response.setToken(User.getInstance().getToken());
-                            User.getInstance().setObjUser(response);
-                            SessionManager.createUserLoginSession();
-                            showSuccessDialog();
-                        }
-
-                        @Override
-                        public void onError(String error, int errorCode) {
-                            showErrorSnackBar(error);
-                        }
-                    });
+//            getDataManager().getAccountService().updateAvatar(getMyContext(), true,
+//                    GeneralFunction.getImageMultipart(reportImageUri.getPath(), "avatar"), new APICallBack<User>() {
+//                        @Override
+//                        public void onSuccess(User response) {
+//                            response.setToken(User.getInstance().getToken());
+//                            User.getInstance().setObjUser(response);
+//                            SessionManager.createUserLoginSession();
+//                            showSuccessDialog();
+//                        }
+//
+//                        @Override
+//                        public void onError(String error, int errorCode) {
+//                            showErrorSnackBar(error);
+//                        }
+//                    });
         }
     }
 

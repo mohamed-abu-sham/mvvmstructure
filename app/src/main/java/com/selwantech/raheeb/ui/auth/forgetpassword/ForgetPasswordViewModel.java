@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.auth.forgetpassword;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
@@ -10,16 +11,15 @@ import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierActivity;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import androidx.databinding.ViewDataBinding;
 
-public class ForgetPasswordViewModel extends BaseViewModel<ForgetPasswordNavigator, ActivityForgetPasswordBinding> {
+public class ForgetPasswordViewModel extends BaseViewModel<ActivityForgetPasswordBinding> {
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> ForgetPasswordViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (ForgetPasswordNavigator) navigation, (ActivityForgetPasswordBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> ForgetPasswordViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager, intent, (ActivityForgetPasswordBinding) viewDataBinding);
 
     }
 

@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.auth.phonenumber;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -10,7 +11,6 @@ import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
@@ -18,12 +18,12 @@ import com.selwantech.raheeb.utils.SnackViewBulider;
 import androidx.databinding.ViewDataBinding;
 import androidx.navigation.Navigation;
 
-public class PhoneNumberViewModel extends BaseViewModel<PhoneNumberNavigator, FragmentUpdatePhoneBinding> {
+public class PhoneNumberViewModel extends BaseViewModel<FragmentUpdatePhoneBinding> {
 
     int type;
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> PhoneNumberViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (PhoneNumberNavigator) navigation, (FragmentUpdatePhoneBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> PhoneNumberViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager, intent, (FragmentUpdatePhoneBinding) viewDataBinding);
 
     }
 

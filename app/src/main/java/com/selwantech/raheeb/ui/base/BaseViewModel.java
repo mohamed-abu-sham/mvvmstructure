@@ -2,32 +2,33 @@
 package com.selwantech.raheeb.ui.base;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
-import java.lang.ref.WeakReference;
-
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
 import androidx.navigation.Navigation;
 
 
-public abstract class BaseViewModel<N, T extends ViewDataBinding> extends ViewModel {
+public abstract class BaseViewModel<T extends ViewDataBinding> extends ViewModel {
 
 
-    private WeakReference<N> mNavigator;
     private T ViewBinding;
     private Context mContext;
     private DataManager dataManager;
 
-    public BaseViewModel(Context mContext, DataManager dataManager, N navigator, T viewBinding) {
+    Intent intent;
+
+    public BaseViewModel(Context mContext, DataManager dataManager, Intent intent, T viewBinding) {
         this.mContext = mContext;
         this.dataManager = dataManager;
         this.ViewBinding = viewBinding;
-        this.mNavigator = new WeakReference<>(navigator);
+        this.intent = intent;
     }
 
 
@@ -46,8 +47,15 @@ public abstract class BaseViewModel<N, T extends ViewDataBinding> extends ViewMo
     }
 
 
-    protected N getNavigator() {
-        return mNavigator.get();
+    protected Intent getIntent() {
+        return intent;
+    }
+
+    protected Bundle getBundle() {
+        if (getIntent().getExtras() != null) {
+            return getIntent().getExtras();
+        } else
+            return new Bundle();
     }
 
     protected Context getMyContext() {

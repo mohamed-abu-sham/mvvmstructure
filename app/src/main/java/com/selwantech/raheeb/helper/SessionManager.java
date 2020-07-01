@@ -5,11 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.selwantech.raheeb.R;
-import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.model.User;
-import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeActivity;
-import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 
 public class SessionManager {
     private static final String PREF_NAME = "com.selwantech.spring_nights";
@@ -106,26 +102,6 @@ public class SessionManager {
         return mSharedPref.getBoolean(KEY_ALLOW_EMAIL_NOTIFICATIONS, true) ? 1 : 0;
     }
 
-    public static boolean isLoggedInAndLogin(Activity activity) {
-        if (isLoggedIn()) {
-            return true;
-        } else {
-            new OnLineDialog(activity) {
-                @Override
-                public void onPositiveButtonClicked() {
-                    dismiss();
-                    activity.startActivity(ChooseUserTypeActivity.newIntent(activity, ""));
-                }
-
-                @Override
-                public void onNegativeButtonClicked() {
-                    dismiss();
-                }
-            }.showConfirmationDialog(DialogTypes.OK_CANCEL, activity.getResources().getString(R.string.login_is_required),
-                    activity.getResources().getString(R.string.go_to_login));
-            return false;
-        }
-    }
     public static boolean isLoggedIn() {
         return mSharedPref.getBoolean(IS_LOGIN, false);
     }

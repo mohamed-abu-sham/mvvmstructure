@@ -25,12 +25,12 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBinding, SplashScreenViewModel>
-        implements SplashScreenNavigator {
+{
 
     private SplashScreenViewModel mSplashViewModel;
     private ActivitySplashScreenBinding mViewBinding;
 
-    String inviteToken = "";
+
     public static Intent newIntent(Context context) {
         return new Intent(context, SplashScreenActivity.class);
     }
@@ -53,7 +53,7 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     @Override
     public SplashScreenViewModel getViewModel() {
         mSplashViewModel = (SplashScreenViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(SplashScreenViewModel.class, getViewDataBinding(), this);
+                .create(SplashScreenViewModel.class, getViewDataBinding(), getIntent());
         return mSplashViewModel;
     }
 
@@ -66,25 +66,10 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewBinding = getViewDataBinding();
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-
-        if (Intent.ACTION_VIEW.equals(action)) {
-            handleSendText(intent);
-        }
+        mSplashViewModel.setUp();
     }
 
-    void handleSendText(Intent intent) {
-        Bundle data = new Bundle();
-        String sharedText = intent.getData().toString();
-        if (sharedText != null &&
-                sharedText.contains("invite") &&
-                sharedText.contains("token")) {
 
-            inviteToken = sharedText.substring(sharedText.indexOf("=") + 1);
-        }
-    }
 
 
     @Override
@@ -120,16 +105,4 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
         }
     }
 
-    @Override
-    public String getInviteToken() {
-        return inviteToken;
-    }
-
-    @Override
-    public NotifyData getNotification() {
-        if (getIntent().getExtras() != null)
-            return new NotifyData(Integer.valueOf(getIntent().getExtras().getString(("acction_id"))),
-                    getIntent().getExtras().getString("type"));
-        else return null;
-    }
 }

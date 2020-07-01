@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.accountjourney.about;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.selwantech.raheeb.R;
@@ -13,8 +14,7 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 import javax.inject.Inject;
 
 
-public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewModel>
-        implements AboutNavigator {
+public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewModel> {
 
     private static final String TAG = AboutFragment.class.getSimpleName();
 
@@ -59,7 +59,7 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
     @Override
     public AboutViewModel getViewModel() {
         mViewModel = (AboutViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(AboutViewModel.class, getViewDataBinding(), this);
+                .create(AboutViewModel.class, getViewDataBinding(), new Intent().putExtras(getArguments()));
         return mViewModel;
     }
 

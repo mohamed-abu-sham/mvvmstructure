@@ -13,8 +13,7 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
-public class OtpVerifierToUpdateFragment extends BaseFragment<FragmentOtpVerifierToUpdateBinding, OtpVerifierToUpdateViewModel>
-        implements OtpVerifierToUpdateNavigator {
+public class OtpVerifierToUpdateFragment extends BaseFragment<FragmentOtpVerifierToUpdateBinding, OtpVerifierToUpdateViewModel> {
 
     @Inject
     ViewModelProviderFactory factory;
@@ -58,7 +57,7 @@ public class OtpVerifierToUpdateFragment extends BaseFragment<FragmentOtpVerifie
     @Override
     public OtpVerifierToUpdateViewModel getViewModel() {
         mOtpViewModel = (OtpVerifierToUpdateViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(OtpVerifierToUpdateViewModel.class, getViewDataBinding(), this);
+                .create(OtpVerifierToUpdateViewModel.class, getViewDataBinding(), new Intent().putExtras(getArguments()));
         return mOtpViewModel;
     }
 
@@ -73,12 +72,5 @@ public class OtpVerifierToUpdateFragment extends BaseFragment<FragmentOtpVerifie
         mOtpViewModel.setUp();
         setUpToolbar(mViewBinding.toolbar, "", R.string.verification_code);
     }
-
-
-    @Override
-    public String getToken() {
-        return getArguments().getString(AppConstants.BundleData.TOKEN);
-    }
-
 
 }

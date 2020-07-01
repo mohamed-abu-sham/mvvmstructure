@@ -65,10 +65,6 @@
         <item name="fontFamily">@font/poppins_regular</item>
     </style>
 
-    <style name="poppins_light">
-        <item name="fontFamily">@font/poppins_light</item>
-    </style>
-
     <style name="AppThemeBlackText" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -94,16 +90,6 @@
         <!--&lt;!&ndash;        <item name="itemTextColor">@color/white</item>&ndash;&gt;-->
         <!--        <item name="itemTextAppearanceActive">@color/white</item>-->
         <!--        <item name="itemTextAppearanceInactive">#BFBEBE</item>-->
-    </style>
-
-    <style name="RatingBarToRate" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/light_gray2</item>
-        <item name="colorControlActivated">@color/color_dark_gold</item>
-    </style>
-
-    <style name="RatingBarColor" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlActivated">@color/white</item>
     </style>
 
     <style name="DialogThemeforview">
@@ -170,14 +156,6 @@
         <attr name="donutProgressStyle" format="reference" />
         <attr name="arcProgressStyle" format="reference" />
     </declare-styleable>
-
-    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
-    </style>
-
-    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
 
     <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>

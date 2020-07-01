@@ -19,7 +19,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class HelpFragment extends BaseFragment<FragmentHelpBinding, HelpViewModel>
-        implements HelpNavigator, ActivityResultCallBack {
+        implements ActivityResultCallBack {
 
     private static final String TAG = HelpFragment.class.getSimpleName();
 
@@ -56,7 +56,7 @@ public class HelpFragment extends BaseFragment<FragmentHelpBinding, HelpViewMode
     @Override
     public HelpViewModel getViewModel() {
         mViewModel = (HelpViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(HelpViewModel.class, getViewDataBinding(), this);
+                .create(HelpViewModel.class, getViewDataBinding(), new Intent().putExtras(getArguments()));
         return mViewModel;
     }
 

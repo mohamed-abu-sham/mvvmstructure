@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.accountjourney.changelanguage;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentChangeLanguageBinding;
@@ -12,7 +13,7 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 import javax.inject.Inject;
 
 
-public class ChangeLanguageFragment extends BaseFragment<FragmentChangeLanguageBinding, ChangeLanguageViewModel> implements ChangeLanguageNavigator {
+public class ChangeLanguageFragment extends BaseFragment<FragmentChangeLanguageBinding, ChangeLanguageViewModel> {
 
     private static final String TAG = ChangeLanguageFragment.class.getSimpleName();
 
@@ -49,7 +50,7 @@ public class ChangeLanguageFragment extends BaseFragment<FragmentChangeLanguageB
     @Override
     public ChangeLanguageViewModel getViewModel() {
         mChangeLanguageViewModel = (ChangeLanguageViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(ChangeLanguageViewModel.class, getViewDataBinding(), this);
+                .create(ChangeLanguageViewModel.class, getViewDataBinding(), new Intent().putExtras(getArguments()));
         return mChangeLanguageViewModel;
     }
 

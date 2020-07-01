@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.accountjourney.about;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -8,16 +9,15 @@ import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAboutBinding;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import androidx.databinding.ViewDataBinding;
 
-public class AboutViewModel extends BaseViewModel<AboutNavigator, FragmentAboutBinding> {
+public class AboutViewModel extends BaseViewModel<FragmentAboutBinding> {
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> AboutViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (AboutNavigator) navigation, (FragmentAboutBinding) viewDataBinding);
+            public <V extends ViewDataBinding, N> AboutViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager, intent, (FragmentAboutBinding) viewDataBinding);
 
     }
 

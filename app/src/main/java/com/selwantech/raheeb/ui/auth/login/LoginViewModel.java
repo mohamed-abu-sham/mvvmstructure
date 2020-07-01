@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.auth.login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -13,10 +14,10 @@ import com.selwantech.raheeb.model.User;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.auth.forgetpassword.ForgetPasswordActivity;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.dialog.OnLineDialog;
 import com.selwantech.raheeb.ui.main.MainActivity;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.LanguageUtils;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 import com.selwantech.raheeb.utils.TwitterUtils;
@@ -24,7 +25,7 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import androidx.databinding.ViewDataBinding;
 
-public class LoginViewModel extends BaseViewModel<LoginNavigator, ActivityLoginBinding> implements TwitterUtils.TwitterCallback {
+public class LoginViewModel extends BaseViewModel<ActivityLoginBinding> implements TwitterUtils.TwitterCallback {
 
     private static final String TAG = "LoginViewModel";
     protected static int GOOGLE_SIGN_IN = 1;
@@ -33,8 +34,8 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator, ActivityLoginB
 
 
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> LoginViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (LoginNavigator) navigation, (ActivityLoginBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> LoginViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager,intent, (ActivityLoginBinding) viewDataBinding);
 
     }
 
@@ -64,8 +65,9 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator, ActivityLoginB
 
     @Override
     public void twitterUser(User user) {
+
         getDataManager().getAuthService().registerTwitterUser(getMyContext(),
-                true, user, getNavigator().getInviteToken(), new APICallBack<RegisterResponse>() {
+                true, user, getIntent().getStringExtra(AppConstants.BundleData.INVITE_TOKEN), new APICallBack<RegisterResponse>() {
                     @Override
                     public void onSuccess(RegisterResponse response) {
                         User user = response.getUser();

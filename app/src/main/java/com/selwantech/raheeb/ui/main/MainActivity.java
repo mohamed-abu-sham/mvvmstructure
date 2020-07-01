@@ -21,8 +21,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivityViewModel>
-        implements MainActivityNavigator {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivityViewModel> {
 
     NavController navController;
 
@@ -53,7 +52,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
     @Override
     public MainActivityViewModel getViewModel() {
         mMainViewModel = (MainActivityViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(MainActivityViewModel.class, getViewDataBinding(), this);
+                .create(MainActivityViewModel.class, getViewDataBinding(), getIntent());
         return mMainViewModel;
     }
 
@@ -117,12 +116,4 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
             getActivityResultCallBack().callBack(requestCode, resultCode, data);
         }
     }
-
-    @Override
-    public NotifyData getNotification() {
-        if (getIntent().getExtras() != null)
-            return (NotifyData) getIntent().getSerializableExtra(AppConstants.BundleData.NOTIFICATION);
-        else return null;
-    }
-
 }

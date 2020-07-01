@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.selwantech.raheeb.helper.SessionManager;
 import com.selwantech.raheeb.model.LoginObject;
-import com.selwantech.raheeb.model.ProfileResponse;
 import com.selwantech.raheeb.model.RegisterResponse;
 import com.selwantech.raheeb.model.SocialLogin;
 import com.selwantech.raheeb.model.User;
@@ -69,7 +68,7 @@ public class AuthService {
 
     public void logout(Context mContext, APICallBack apiCallBack) {
         getDataApi().logout(
-                SessionManager.getKeyFirebaseToken())
+                com.selwantech.raheeb.helper.SessionManager.getKeyFirebaseToken())
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -227,14 +226,6 @@ public class AuthService {
         Single<Response<GeneralResponse<String>>> updatePassword(@Query("password") String password,
                                                                  @Query("password_confirmation") String password_confirmation,
                                                                  @Query("current_password") String current_password);
-
-        @PATCH(ApiConstants.apiAuthService.UPDATE_PROFILE)
-        Single<Response<GeneralResponse<ProfileResponse>>> updateProfile(@Query("email") String email,
-                                                                         @Query("name") String name);
-
-        @Multipart
-        @POST(ApiConstants.apiAuthService.UPDATE_PROFILE_PICTURE)
-        Single<Response<GeneralResponse<ProfileResponse>>> updateProfilePicture(@Part MultipartBody.Part image);
 
         @POST(ApiConstants.apiAuthService.UPDATE_EMAIL)
         Single<Response<GeneralResponse<User>>> updateEmail(@Query("email") String email);

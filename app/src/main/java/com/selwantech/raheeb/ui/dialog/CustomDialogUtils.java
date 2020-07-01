@@ -5,10 +5,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.Window;
 
-import androidx.databinding.DataBindingUtil;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.DialogProgressBinding;
+
+import androidx.databinding.DataBindingUtil;
 
 public class CustomDialogUtils extends Dialog {
 

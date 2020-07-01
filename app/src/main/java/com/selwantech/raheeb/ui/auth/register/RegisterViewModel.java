@@ -1,6 +1,7 @@
 package com.selwantech.raheeb.ui.auth.register;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.databinding.ViewDataBinding;
 
@@ -14,14 +15,14 @@ import com.selwantech.raheeb.model.VerifyPhoneResponse;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierActivity;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.utils.SnackViewBulider;
 
-public class RegisterViewModel extends BaseViewModel<RegisterNavigator, ActivityRegisterBinding> {
+public class RegisterViewModel extends BaseViewModel<ActivityRegisterBinding> {
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> RegisterViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (RegisterNavigator) navigation, (ActivityRegisterBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> RegisterViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager,intent, (ActivityRegisterBinding) viewDataBinding);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator, Activity
             public void onSuccess(VerifyPhoneResponse response) {
                 User.getInstance().setToken(response.getToken());
                 getMyContext().startActivity(OtpVerifierActivity.getStartIntent(getMyContext()
-                        , PhoneNumberTypes.REGISTER.getValue(), response.getToken(), getNavigator().getInviteToken()));
+                        , PhoneNumberTypes.REGISTER.getValue(), response.getToken(), getIntent().getStringExtra(AppConstants.BundleData.INVITE_TOKEN)));
             }
 
             @Override

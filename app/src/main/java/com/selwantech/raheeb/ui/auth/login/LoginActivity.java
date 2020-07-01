@@ -13,8 +13,7 @@ import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
-public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel>
-        implements LoginNavigator {
+public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
 
     @Inject
     ViewModelProviderFactory factory;
@@ -44,7 +43,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public LoginViewModel getViewModel() {
         mLoginViewModel = (LoginViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(LoginViewModel.class, getViewDataBinding(), this);
+                .create(LoginViewModel.class, getViewDataBinding(), getIntent());
         return mLoginViewModel;
     }
 
@@ -65,10 +64,5 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mLoginViewModel.getTwitterAuthClient().onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public String getInviteToken() {
-        return getIntent().getStringExtra(AppConstants.BundleData.INVITE_TOKEN);
     }
 }

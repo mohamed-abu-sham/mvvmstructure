@@ -23,7 +23,6 @@ import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentMapPickerBinding;
 import com.selwantech.raheeb.helper.LocationHelper;
 import com.selwantech.raheeb.repository.DataManager;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.main.MainActivity;
 import com.selwantech.raheeb.utils.AppConstants;
@@ -35,7 +34,7 @@ import java.util.List;
 
 import androidx.databinding.ViewDataBinding;
 
-public class MapPickerViewModel extends BaseViewModel<MapPickerNavigator, FragmentMapPickerBinding>
+public class MapPickerViewModel extends BaseViewModel<FragmentMapPickerBinding>
         implements LocationHelper.OnLocationReceived, OnMapReadyCallback {
 
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
@@ -46,19 +45,21 @@ public class MapPickerViewModel extends BaseViewModel<MapPickerNavigator, Fragme
     private Marker PickUpMarker;
     private LocationHelper locHelper;
 
-    public <V extends ViewDataBinding, N extends BaseNavigator> MapPickerViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (MapPickerNavigator) navigation, (FragmentMapPickerBinding) viewDataBinding);
+    public <V extends ViewDataBinding, N> MapPickerViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager,intent, (FragmentMapPickerBinding) viewDataBinding);
     }
 
     @Override
     protected void setUp() {
-        search_place_map = getNavigator().getChildManager();
         if (null != search_place_map) {
             search_place_map.getMapAsync(this);
         }
 
     }
 
+    public void setSupportMapFragment(SupportMapFragment search_place_map) {
+        this.search_place_map = search_place_map;
+    }
     public void returnData() {
         if (!canceled) {
             Intent data = new Intent();
@@ -173,4 +174,6 @@ public class MapPickerViewModel extends BaseViewModel<MapPickerNavigator, Fragme
                 .zoom(16).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
+
+
 }

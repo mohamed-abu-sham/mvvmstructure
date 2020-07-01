@@ -21,8 +21,6 @@ public class User implements Serializable {
     private String phone = "";
     @SerializedName("email")
     private String email = "";
-    @SerializedName("balance")
-    Price balance ;
     @SerializedName("avatar")
     String avatar = "";
     @SerializedName("cover_image")
@@ -62,10 +60,6 @@ public class User implements Serializable {
 
     @SerializedName("show_rate_invite")
     boolean show_rate_invite;
-
-    @SerializedName("rate_invite")
-    Price rateInvite;
-
 
     @SerializedName("twitter_frinds")
     ArrayList<String> twitter_frinds;
@@ -193,13 +187,6 @@ public class User implements Serializable {
         this.platform = platform;
     }
 
-    public Price getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Price balance) {
-        this.balance = balance;
-    }
 
     public String getCover_image() {
         return cover_image;
@@ -282,14 +269,6 @@ public class User implements Serializable {
 
     public void setShow_rate_invite(boolean show_rate_invite) {
         this.show_rate_invite = show_rate_invite;
-    }
-
-    public String getRateInvite() {
-        return App.getInstance().getResources().getString(R.string.invite_friends_and_get) + " " + rateInvite.getFormatted();
-    }
-
-    public void setRateInvite(Price rateInvite) {
-        this.rateInvite = rateInvite;
     }
 
     public ArrayList<String> getTwitter_frinds() {

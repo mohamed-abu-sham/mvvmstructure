@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 
-import androidx.databinding.DataBindingUtil;
-
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.DialogAlertBinding;
 import com.selwantech.raheeb.databinding.DialogInputOneFieledBinding;
@@ -21,6 +19,8 @@ import com.selwantech.raheeb.databinding.DialogLogoutBinding;
 import com.selwantech.raheeb.enums.DialogTypes;
 import com.selwantech.raheeb.interfaces.InputDialogCallback;
 import com.selwantech.raheeb.utils.LanguageUtils;
+
+import androidx.databinding.DataBindingUtil;
 
 public abstract class OnLineDialog extends Dialog {
 

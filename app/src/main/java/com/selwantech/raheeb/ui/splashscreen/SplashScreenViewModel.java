@@ -3,15 +3,15 @@ package com.selwantech.raheeb.ui.splashscreen;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.CountDownTimer;
 
 import com.selwantech.raheeb.databinding.ActivitySplashScreenBinding;
 import com.selwantech.raheeb.helper.SessionManager;
+import com.selwantech.raheeb.model.notificationsdata.NotifyData;
 import com.selwantech.raheeb.repository.DataManager;
-import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeActivity;
 import com.selwantech.raheeb.ui.auth.register.RegisterActivity;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
 import com.selwantech.raheeb.ui.base.BaseViewModel;
 import com.selwantech.raheeb.ui.main.MainActivity;
 
@@ -23,17 +23,36 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class SplashScreenViewModel extends BaseViewModel<SplashScreenNavigator, ActivitySplashScreenBinding> {
+public class SplashScreenViewModel extends BaseViewModel<ActivitySplashScreenBinding> {
 
 
     private static final int PERMISSION_REQUEST_CODE = 1;
     private final double SPLASH_DISPLAY_LENGTH = 3000.00;
-
-    public <V extends ViewDataBinding, N extends BaseNavigator> SplashScreenViewModel(Context mContext, DataManager dataManager, V viewDataBinding, N navigation) {
-        super(mContext, dataManager, (SplashScreenNavigator) navigation, (ActivitySplashScreenBinding) viewDataBinding);
+    String inviteToken = "";
+    public <V extends ViewDataBinding, N> SplashScreenViewModel(Context mContext, DataManager dataManager, V viewDataBinding, Intent intent) {
+        super(mContext, dataManager, intent, (ActivitySplashScreenBinding) viewDataBinding);
         checkPermission();
     }
 
+    @Override
+    protected void setUp() {
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_VIEW.equals(action)) {
+            handleSendText(intent);
+        }
+    }
+    void handleSendText(Intent intent) {
+        String sharedText = intent.getData().toString();
+        if (sharedText != null &&
+                sharedText.contains("invite") &&
+                sharedText.contains("token")) {
+
+            inviteToken = sharedText.substring(sharedText.indexOf("=") + 1);
+        }
+    }
 
     public void checkPermission() {
         if (ContextCompat.checkSelfPermission(getMyContext(),
@@ -65,11 +84,6 @@ public class SplashScreenViewModel extends BaseViewModel<SplashScreenNavigator, 
 
     }
 
-    @Override
-    protected void setUp() {
-
-    }
-
     CountDownTimer countDownTimer = new CountDownTimer((long) SPLASH_DISPLAY_LENGTH, 100) {
         @Override
         public void onTick(long millisUntilFinished) {
@@ -85,14 +99,21 @@ public class SplashScreenViewModel extends BaseViewModel<SplashScreenNavigator, 
             if (SessionManager.isLoggedIn()) {
                 SessionManager.getUserDetails();
                 getBaseActivity().finish();
-                getMyContext().startActivity(MainActivity.newIntent(getMyContext(), getNavigator().getNotification()));
-            } else if (!SessionManager.isLoggedIn() && !getNavigator().getInviteToken().isEmpty()) {
+                getMyContext().startActivity(MainActivity.newIntent(getMyContext(),getNotification()));
+            } else if (!SessionManager.isLoggedIn() && !inviteToken.isEmpty()) {
                 getBaseActivity().finish();
-                getMyContext().startActivity(RegisterActivity.newIntent(getMyContext(), getNavigator().getInviteToken()));
+                getMyContext().startActivity(RegisterActivity.newIntent(getMyContext(), inviteToken));
             } else {
                 getBaseActivity().finish();
-                getMyContext().startActivity(ChooseUserTypeActivity.newIntent(getMyContext(), getNavigator().getInviteToken()));
+//                getMyContext().startActivity(ChooseUserTypeActivity.newIntent(getMyContext(), getNavigator().getInviteToken()));
             }
         }
     };
+
+    public NotifyData getNotification() {
+        if (getIntent().getExtras() != null)
+            return new NotifyData(Integer.valueOf(getIntent().getExtras().getString(("acction_id"))),
+                    getIntent().getExtras().getString("type"));
+        else return null;
+    }
 }

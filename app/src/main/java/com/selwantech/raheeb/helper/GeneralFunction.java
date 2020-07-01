@@ -102,7 +102,7 @@ public class GeneralFunction {
 
     public static void tintImageView(Context mContext, ImageView imageView, int color) {
         imageView.setColorFilter(ContextCompat.getColor(mContext,
-                color), android.graphics.PorterDuff.Mode.SRC_IN);
+                color), PorterDuff.Mode.SRC_IN);
     }
 
     @BindingAdapter("tintButton")

@@ -19,7 +19,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class UpdateProfilePictureFragment extends BaseFragment<FragmentUpdateProfilePictureBinding, UpdateProfilePictureViewModel>
-        implements UpdateProfilePictureNavigator, ActivityResultCallBack {
+        implements ActivityResultCallBack {
 
     private static final String TAG = UpdateProfilePictureFragment.class.getSimpleName();
 
@@ -57,7 +57,7 @@ public class UpdateProfilePictureFragment extends BaseFragment<FragmentUpdatePro
     @Override
     public UpdateProfilePictureViewModel getViewModel() {
         mViewModel = (UpdateProfilePictureViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(UpdateProfilePictureViewModel.class, getViewDataBinding(), this);
+                .create(UpdateProfilePictureViewModel.class, getViewDataBinding(), new Intent().putExtras(getArguments()));
         return mViewModel;
     }
 

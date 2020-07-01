@@ -1,26 +1,15 @@
 package com.selwantech.raheeb.viewmodel;
 
 import android.content.Context;
+import android.content.Intent;
+
 
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.accountjourney.about.AboutViewModel;
-import com.selwantech.raheeb.ui.accountjourney.account.AccountViewModel;
 import com.selwantech.raheeb.ui.accountjourney.changelanguage.ChangeLanguageViewModel;
-import com.selwantech.raheeb.ui.accountjourney.followers.FollowersViewModel;
-import com.selwantech.raheeb.ui.accountjourney.following.FollowingViewModel;
 import com.selwantech.raheeb.ui.accountjourney.help.HelpViewModel;
-import com.selwantech.raheeb.ui.accountjourney.payment.checkout.CashOutViewModel;
-import com.selwantech.raheeb.ui.accountjourney.payment.pay.PayViewModel;
-import com.selwantech.raheeb.ui.accountjourney.payment.wallet.WalletViewModel;
-import com.selwantech.raheeb.ui.accountjourney.setlocation.SetLocationViewModel;
-import com.selwantech.raheeb.ui.accountjourney.settings.SettingsViewModel;
-import com.selwantech.raheeb.ui.accountjourney.twitterfriends.TwitterFriendsViewModel;
-import com.selwantech.raheeb.ui.accountjourney.updateemail.UpdateEmailViewModel;
-import com.selwantech.raheeb.ui.accountjourney.updateid.UpdateIDViewModel;
 import com.selwantech.raheeb.ui.accountjourney.updateprofilepicture.UpdateProfilePictureViewModel;
-import com.selwantech.raheeb.ui.accountjourney.validateitems.ValidateItemsViewModel;
 import com.selwantech.raheeb.ui.auth.changepassword.ChangePasswordViewModel;
-import com.selwantech.raheeb.ui.auth.chooseusertype.ChooseUserTypeViewModel;
 import com.selwantech.raheeb.ui.auth.createpassword.CreatePasswordViewModel;
 import com.selwantech.raheeb.ui.auth.forgetpassword.ForgetPasswordViewModel;
 import com.selwantech.raheeb.ui.auth.login.LoginViewModel;
@@ -28,41 +17,11 @@ import com.selwantech.raheeb.ui.auth.otpverifier.OtpVerifierViewModel;
 import com.selwantech.raheeb.ui.auth.otpverifiertoupdate.OtpVerifierToUpdateViewModel;
 import com.selwantech.raheeb.ui.auth.phonenumber.PhoneNumberViewModel;
 import com.selwantech.raheeb.ui.auth.register.RegisterViewModel;
-import com.selwantech.raheeb.ui.base.BaseNavigator;
-import com.selwantech.raheeb.ui.category.CategoryViewModel;
-import com.selwantech.raheeb.ui.emptyactivity.EmptyActivityViewModel;
-import com.selwantech.raheeb.ui.emptyfragment.EmptyFragmentViewModel;
-import com.selwantech.raheeb.ui.filebox.FileBoxViewModel;
+import com.selwantech.raheeb.ui.standard.emptyactivity.EmptyActivityViewModel;
+import com.selwantech.raheeb.ui.standard.emptyfragment.EmptyFragmentViewModel;
 import com.selwantech.raheeb.ui.main.MainActivityViewModel;
 import com.selwantech.raheeb.ui.mappicker.MapPickerViewModel;
-import com.selwantech.raheeb.ui.messagesjourney.chat.ChatViewModel;
-import com.selwantech.raheeb.ui.messagesjourney.chats.ChatsViewModel;
-import com.selwantech.raheeb.ui.messagesjourney.messagestabholder.MessagesTabHolderViewModel;
-import com.selwantech.raheeb.ui.messagesjourney.notifications.NotificationsViewModel;
-import com.selwantech.raheeb.ui.offersjourney.buying.BuyingViewModel;
-import com.selwantech.raheeb.ui.offersjourney.favorite.FavoriteViewModel;
-import com.selwantech.raheeb.ui.offersjourney.offers.OffersViewModel;
-import com.selwantech.raheeb.ui.offersjourney.productbuyingdetails.ProductBuyingDetailsViewModel;
-import com.selwantech.raheeb.ui.offersjourney.productsellingdetails.ProductSellingDetailsViewModel;
-import com.selwantech.raheeb.ui.offersjourney.sell.SellViewModel;
-import com.selwantech.raheeb.ui.offersjourney.selling.SellingViewModel;
-import com.selwantech.raheeb.ui.productjourneys.createproductjourney.add_product_holder.AddProductHolderViewModel;
-import com.selwantech.raheeb.ui.productjourneys.createproductjourney.adddetails.AddDetailsViewModel;
-import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addimage.AddImageViewModel;
-import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addprice.AddPriceViewModel;
-import com.selwantech.raheeb.ui.productjourneys.createproductjourney.addshipping.AddShippingViewModel;
-import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.filterproductslocation.FilterProductLocationViewModel;
-import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.product.ProductViewModel;
-import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productdetails.ProductDetailsViewModel;
-import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.productstabsholder.ProductsHolderViewModel;
-import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.reportproduct.ReportProductViewModel;
-import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.reviewoffer.ReviewOfferViewModel;
-import com.selwantech.raheeb.ui.productjourneys.viewproductjourney.shippinginfo.ShippingInfoViewModel;
 import com.selwantech.raheeb.ui.splashscreen.SplashScreenViewModel;
-import com.selwantech.raheeb.ui.userprofilejourney.myoffers.MyOffersViewModel;
-import com.selwantech.raheeb.ui.userprofilejourney.reportuser.ReportUserViewModel;
-import com.selwantech.raheeb.ui.userprofilejourney.user_profile.UserProfileViewModel;
-import com.selwantech.raheeb.ui.userprofilejourney.user_profile_details.UserProfileDetailsViewModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -84,7 +43,7 @@ import androidx.lifecycle.ViewModelProvider;
  * <p>
  */
 @Singleton
-public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseNavigator>
+public class ViewModelProviderFactory<V extends ViewDataBinding>
         extends ViewModelProvider.NewInstanceFactory {
 
     private final DataManager dataManager;
@@ -104,190 +63,62 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         return super.create(modelClass);
     }
 
-    public <T extends ViewModel> T create(Class<T> modelClass, V viewDataBinding, N navigation) {
+    public <T extends ViewModel> T create(Class<T> modelClass, V viewDataBinding, Intent intent) {
         if (modelClass.isAssignableFrom(EmptyFragmentViewModel.class)) {
             //noinspection unchecked
-            return (T) new EmptyFragmentViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new EmptyFragmentViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(EmptyActivityViewModel.class)) {
             //noinspection unchecked
-            return (T) new EmptyActivityViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new EmptyActivityViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(SplashScreenViewModel.class)) {
             //noinspection unchecked
-            return (T) new SplashScreenViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(ChooseUserTypeViewModel.class)) {
+            return (T) new SplashScreenViewModel(mContext, dataManager, viewDataBinding, intent);
+        }else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
             //noinspection unchecked
-            return (T) new ChooseUserTypeViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-            //noinspection unchecked
-            return (T) new LoginViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new LoginViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(RegisterViewModel.class)) {
             //noinspection unchecked
-            return (T) new RegisterViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(FileBoxViewModel.class)) {
-            //noinspection unchecked
-            return (T) new FileBoxViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new RegisterViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(PhoneNumberViewModel.class)) {
             //noinspection unchecked
-            return (T) new PhoneNumberViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new PhoneNumberViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(OtpVerifierViewModel.class)) {
             //noinspection unchecked
-            return (T) new OtpVerifierViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new OtpVerifierViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(ChangePasswordViewModel.class)) {
             //noinspection unchecked
-            return (T) new ChangePasswordViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new ChangePasswordViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(CreatePasswordViewModel.class)) {
             //noinspection unchecked
-            return (T) new CreatePasswordViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new CreatePasswordViewModel(mContext, dataManager, viewDataBinding, intent);
         }else if (modelClass.isAssignableFrom(MainActivityViewModel.class)) {
             //noinspection unchecked
-            return (T) new MainActivityViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }
-        else if (modelClass.isAssignableFrom(ProductsHolderViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ProductsHolderViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(ProductViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ProductViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(FilterProductLocationViewModel.class)) {
-            //noinspection unchecked
-            return (T) new FilterProductLocationViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(CategoryViewModel.class)) {
-            //noinspection unchecked
-            return (T) new CategoryViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new MainActivityViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(MapPickerViewModel.class)) {
             //noinspection unchecked
-            return (T) new MapPickerViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(ProductDetailsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ProductDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(ReviewOfferViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ReviewOfferViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(ShippingInfoViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ShippingInfoViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(AddProductHolderViewModel.class)) {
-            //noinspection unchecked
-            return (T) new AddProductHolderViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(AddImageViewModel.class)) {
-            //noinspection unchecked
-            return (T) new AddImageViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(AddDetailsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new AddDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(AddPriceViewModel.class)) {
-            //noinspection unchecked
-            return (T) new AddPriceViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(AddShippingViewModel.class)) {
-            //noinspection unchecked
-            return (T) new AddShippingViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(UserProfileViewModel.class)) {
-            //noinspection unchecked
-            return (T) new UserProfileViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(UserProfileDetailsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new UserProfileDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(MyOffersViewModel.class)) {
-            //noinspection unchecked
-            return (T) new MyOffersViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(OffersViewModel.class)) {
-            //noinspection unchecked
-            return (T) new OffersViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(SellingViewModel.class)) {
-            //noinspection unchecked
-            return (T) new SellingViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(BuyingViewModel.class)) {
-            //noinspection unchecked
-            return (T) new BuyingViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(FavoriteViewModel.class)) {
-            //noinspection unchecked
-            return (T) new FavoriteViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(SellViewModel.class)) {
-            //noinspection unchecked
-            return (T) new SellViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(MessagesTabHolderViewModel.class)) {
-            //noinspection unchecked
-            return (T) new MessagesTabHolderViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(ChatsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ChatsViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(NotificationsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new NotificationsViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(ChatViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ChatViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(ReportProductViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ReportProductViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(ReportUserViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ReportUserViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(ProductSellingDetailsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ProductSellingDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(ProductBuyingDetailsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ProductBuyingDetailsViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(AccountViewModel.class)) {
-            //noinspection unchecked
-            return (T) new AccountViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new MapPickerViewModel(mContext, dataManager, viewDataBinding, intent);
         }else if (modelClass.isAssignableFrom(HelpViewModel.class)) {
             //noinspection unchecked
-            return (T) new HelpViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(FollowingViewModel.class)) {
-            //noinspection unchecked
-            return (T) new FollowingViewModel(mContext, dataManager, viewDataBinding, navigation);
-        }else if (modelClass.isAssignableFrom(FollowersViewModel.class)) {
-            //noinspection unchecked
-            return (T) new FollowersViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new SettingsViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new HelpViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(AboutViewModel.class)) {
             //noinspection unchecked
-            return (T) new AboutViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new AboutViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(PhoneNumberViewModel.class)) {
             //noinspection unchecked
-            return (T) new PhoneNumberViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(UpdateEmailViewModel.class)) {
-            //noinspection unchecked
-            return (T) new UpdateEmailViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(UpdateIDViewModel.class)) {
-            //noinspection unchecked
-            return (T) new UpdateIDViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(SetLocationViewModel.class)) {
-            //noinspection unchecked
-            return (T) new SetLocationViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(ValidateItemsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new ValidateItemsViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(TwitterFriendsViewModel.class)) {
-            //noinspection unchecked
-            return (T) new TwitterFriendsViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new PhoneNumberViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(ForgetPasswordViewModel.class)) {
             //noinspection unchecked
-            return (T) new ForgetPasswordViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new ForgetPasswordViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(ChangeLanguageViewModel.class)) {
             //noinspection unchecked
-            return (T) new ChangeLanguageViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new ChangeLanguageViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(UpdateProfilePictureViewModel.class)) {
             //noinspection unchecked
-            return (T) new UpdateProfilePictureViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(PayViewModel.class)) {
-            //noinspection unchecked
-            return (T) new PayViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new UpdateProfilePictureViewModel(mContext, dataManager, viewDataBinding, intent);
         } else if (modelClass.isAssignableFrom(OtpVerifierToUpdateViewModel.class)) {
             //noinspection unchecked
-            return (T) new OtpVerifierToUpdateViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(WalletViewModel.class)) {
-            //noinspection unchecked
-            return (T) new WalletViewModel(mContext, dataManager, viewDataBinding, navigation);
-        } else if (modelClass.isAssignableFrom(CashOutViewModel.class)) {
-            //noinspection unchecked
-            return (T) new CashOutViewModel(mContext, dataManager, viewDataBinding, navigation);
+            return (T) new OtpVerifierToUpdateViewModel(mContext, dataManager, viewDataBinding, intent);
         }
-
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
 

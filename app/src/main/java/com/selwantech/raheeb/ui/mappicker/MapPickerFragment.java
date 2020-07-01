@@ -22,7 +22,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class MapPickerFragment extends BaseFragment<FragmentMapPickerBinding, MapPickerViewModel>
-        implements MapPickerNavigator, ActivityResultCallBack, BackPressed {
+        implements ActivityResultCallBack, BackPressed {
 
     private static final String TAG = MapPickerFragment.class.getSimpleName();
 
@@ -75,7 +75,7 @@ public class MapPickerFragment extends BaseFragment<FragmentMapPickerBinding, Ma
     @Override
     public MapPickerViewModel getViewModel() {
         mMapPickerViewModel = (MapPickerViewModel) new ViewModelProviderFactory(DataManager.getInstance(), getMyContext())
-                .create(MapPickerViewModel.class, getViewDataBinding(), this);
+                .create(MapPickerViewModel.class, getViewDataBinding(), new Intent().putExtras(getArguments()));
         return mMapPickerViewModel;
     }
 
@@ -88,6 +88,7 @@ public class MapPickerFragment extends BaseFragment<FragmentMapPickerBinding, Ma
     protected void setUp() {
         mViewBinding = getViewDataBinding();
         setUpToolbar(mViewBinding.toolbar, TAG, R.string.select_location);
+        mMapPickerViewModel.setSupportMapFragment((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.search_place_map));
         mMapPickerViewModel.setUp();
         setupOnBackPressed();
     }
@@ -111,11 +112,6 @@ public class MapPickerFragment extends BaseFragment<FragmentMapPickerBinding, Ma
         } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
         } else if (resultCode == RESULT_CANCELED) {
         }
-    }
-
-    @Override
-    public SupportMapFragment getChildManager() {
-        return (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.search_place_map);
     }
 
     @Override

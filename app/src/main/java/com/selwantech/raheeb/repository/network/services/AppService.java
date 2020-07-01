@@ -4,8 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.selwantech.raheeb.helper.GeneralFunction;
-import com.selwantech.raheeb.model.Condition;
-import com.selwantech.raheeb.model.Distance;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.APICallBack;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.ApiClient;
 import com.selwantech.raheeb.repository.network.ApiCallHandler.CustomObserverResponse;
@@ -44,31 +42,6 @@ public class AppService {
         return instance;
     }
 
-    public void getDistances(Context mContext, boolean enableLoading, APICallBack<ArrayList<Distance>> apiCallBack) {
-        getDataApi().getDistances()
-                .toObservable()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<ArrayList<Distance>>(mContext, enableLoading, apiCallBack));
-    }
-
-    public void getConditions(Context mContext, boolean enableLoading, APICallBack<ArrayList<Condition>> apiCallBack) {
-        getDataApi().getConditions()
-                .toObservable()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<ArrayList<Condition>>(mContext, enableLoading, apiCallBack));
-    }
-
-    public void getCurrency(Context mContext, boolean enableLoading, APICallBack<String> apiCallBack) {
-        getDataApi().getCurrency()
-                .toObservable()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new CustomObserverResponse<String>(mContext, enableLoading, apiCallBack));
-    }
-
-
     public void sendHelp(Context mContext, boolean enableLoading, String message ,APICallBack<String> apiCallBack) {
         getDataApi().sendHelp(message)
                 .toObservable()
@@ -96,12 +69,6 @@ public class AppService {
     }
 
     public interface DataApi {
-
-        @GET(ApiConstants.apiAppService.DISTANCES)
-        Single<Response<GeneralResponse<ArrayList<Distance>>>> getDistances();
-
-        @GET(ApiConstants.apiAppService.CONDITION)
-        Single<Response<GeneralResponse<ArrayList<Condition>>>> getConditions();
 
         @GET(ApiConstants.apiAppService.CURRENCY)
         Single<Response<GeneralResponse<String>>> getCurrency();

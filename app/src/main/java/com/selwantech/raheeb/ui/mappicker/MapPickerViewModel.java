@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 
-import androidx.databinding.ViewDataBinding;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,6 +32,8 @@ import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.databinding.ViewDataBinding;
 
 public class MapPickerViewModel extends BaseViewModel<MapPickerNavigator, FragmentMapPickerBinding>
         implements LocationHelper.OnLocationReceived, OnMapReadyCallback {
@@ -100,6 +100,7 @@ public class MapPickerViewModel extends BaseViewModel<MapPickerNavigator, Fragme
                             snackbar.dismiss();
                         }
                     });
+            error++;
         }
         return error == 0;
     }

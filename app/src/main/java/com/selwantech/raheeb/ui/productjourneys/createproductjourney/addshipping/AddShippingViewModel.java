@@ -5,11 +5,6 @@ import android.text.Html;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import androidx.databinding.ViewDataBinding;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.Snackbar;
 import com.selwantech.raheeb.R;
@@ -30,6 +25,11 @@ import com.selwantech.raheeb.utils.SnackViewBulider;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class AddShippingViewModel extends BaseViewModel<AddShippingNavigator, FragmentAddProductShippingBinding>
         implements RecyclerClick<BoxSize> {
@@ -79,7 +79,7 @@ public class AddShippingViewModel extends BaseViewModel<AddShippingNavigator, Fr
     }
 
     private void getShippingBoxes() {
-        getDataManager().getCategoryService().getCategoryBoxSize(getMyContext(), true, 1, new APICallBack<ArrayList<BoxSize>>() {
+        getDataManager().getCategoryService().getCategoryBoxSize(getMyContext(), true, getNavigator().getPost().getCategory().getId(), new APICallBack<ArrayList<BoxSize>>() {
             @Override
             public void onSuccess(ArrayList<BoxSize> response) {
                 response.get(0).setSelected(true);

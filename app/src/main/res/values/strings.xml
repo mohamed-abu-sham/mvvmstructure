@@ -274,5 +274,11 @@
     <string name="wallet">Wallet</string>
     <string name="cash_in">Cash In</string>
     <string name="cash_out">Cash Out</string>
+    <string name="enter_your_iban">Enter Your IBan</string>
+    <string name="enter_your_Account_Name">Enter Your Account Name</string>
+    <string name="your_bank">Your Bank</string>
+    <string name="your_bank_account_name">Your bank account name</string>
+    <string name="account_iban">Account IBan</string>
+    <string name="the_amount_to_be_transferred">The amount to be transferred</string>
 
 </resources>

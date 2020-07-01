@@ -8,7 +8,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentMapPickerBinding;
+import com.selwantech.raheeb.helper.BackPressedHandler;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
+import com.selwantech.raheeb.interfaces.BackPressed;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
@@ -20,7 +22,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class MapPickerFragment extends BaseFragment<FragmentMapPickerBinding, MapPickerViewModel>
-        implements MapPickerNavigator, ActivityResultCallBack {
+        implements MapPickerNavigator, ActivityResultCallBack, BackPressed {
 
     private static final String TAG = MapPickerFragment.class.getSimpleName();
 
@@ -28,6 +30,8 @@ public class MapPickerFragment extends BaseFragment<FragmentMapPickerBinding, Ma
     ViewModelProviderFactory factory;
     private MapPickerViewModel mMapPickerViewModel;
     private FragmentMapPickerBinding mViewBinding;
+
+    BackPressedHandler backPressedHandler;
 
     public static MapPickerFragment newInstance() {
         Bundle args = new Bundle();
@@ -85,6 +89,18 @@ public class MapPickerFragment extends BaseFragment<FragmentMapPickerBinding, Ma
         mViewBinding = getViewDataBinding();
         setUpToolbar(mViewBinding.toolbar, TAG, R.string.select_location);
         mMapPickerViewModel.setUp();
+        setupOnBackPressed();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupOnBackPressed();
+    }
+
+    public void setupOnBackPressed() {
+        backPressedHandler = new BackPressedHandler(true, 1, this::onBackPressed);
+        getBaseActivity().getOnBackPressedDispatcher().addCallback(this, backPressedHandler);
     }
 
     @Override
@@ -102,4 +118,8 @@ public class MapPickerFragment extends BaseFragment<FragmentMapPickerBinding, Ma
         return (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.search_place_map);
     }
 
+    @Override
+    public void onBackPressed(int position) {
+        mMapPickerViewModel.popUp();
+    }
 }

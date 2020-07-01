@@ -45,7 +45,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_gravity="end"
                         android:gravity="center|end"
-                        android:text="lvdmklvmdklvd"
+                        android:text="@{viewModel.messages.date}"
                         android:textColor="@color/text_gray"
                         android:textSize="10sp" />
 

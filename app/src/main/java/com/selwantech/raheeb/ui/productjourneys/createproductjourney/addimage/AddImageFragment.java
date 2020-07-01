@@ -5,9 +5,9 @@ import android.content.Intent;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductImagesBinding;
+import com.selwantech.raheeb.helper.BackPressedHandler;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.interfaces.BackPressed;
-import com.selwantech.raheeb.interfaces.BackPressedHandler;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;

@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.selwantech.raheeb.R;
 import com.selwantech.raheeb.databinding.FragmentAddProductPriceBinding;
+import com.selwantech.raheeb.helper.BackPressedHandler;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.interfaces.BackPressed;
-import com.selwantech.raheeb.interfaces.BackPressedHandler;
 import com.selwantech.raheeb.model.Post;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
@@ -105,7 +105,7 @@ public class AddPriceFragment extends BaseFragment<FragmentAddProductPriceBindin
 
     public void setBackPressed(BackPressed backPressed) {
         this.backPressed = backPressed;
-        backPressedHandler = new BackPressedHandler(true, 0, this.backPressed);
+        backPressedHandler = new BackPressedHandler(true, 2, this.backPressed);
     }
 
     public void disableBackPress() {

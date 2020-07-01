@@ -32,6 +32,7 @@ public final class AppConstants {
         public static final String INVITE_TOKEN = "INVITE_TOKEN";
         public static final String CHAT_POSITION = "CHAT_POSITION";
         public static final String NOTIFICATION = "NOTIFICATION";
+        public static final String PAYMENT_ACTION = "PAYMENT_ACTION";
     }
 
     public class FILTER_BY_KEYS {

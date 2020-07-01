@@ -9,6 +9,7 @@ import com.selwantech.raheeb.ui.accountjourney.changelanguage.ChangeLanguageView
 import com.selwantech.raheeb.ui.accountjourney.followers.FollowersViewModel;
 import com.selwantech.raheeb.ui.accountjourney.following.FollowingViewModel;
 import com.selwantech.raheeb.ui.accountjourney.help.HelpViewModel;
+import com.selwantech.raheeb.ui.accountjourney.payment.checkout.CashOutViewModel;
 import com.selwantech.raheeb.ui.accountjourney.payment.pay.PayViewModel;
 import com.selwantech.raheeb.ui.accountjourney.payment.wallet.WalletViewModel;
 import com.selwantech.raheeb.ui.accountjourney.setlocation.SetLocationViewModel;
@@ -282,6 +283,9 @@ public class ViewModelProviderFactory<V extends ViewDataBinding, N extends BaseN
         } else if (modelClass.isAssignableFrom(WalletViewModel.class)) {
             //noinspection unchecked
             return (T) new WalletViewModel(mContext, dataManager, viewDataBinding, navigation);
+        } else if (modelClass.isAssignableFrom(CashOutViewModel.class)) {
+            //noinspection unchecked
+            return (T) new CashOutViewModel(mContext, dataManager, viewDataBinding, navigation);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

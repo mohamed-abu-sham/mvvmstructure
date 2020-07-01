@@ -47,7 +47,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:gravity="center|start"
-                        android:text="mvjkndjkvndjn"
+                        android:text="@{viewModel.messages.date}"
                         android:textColor="@color/text_gray"
                         android:textSize="10sp" />
 

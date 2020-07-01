@@ -4,4 +4,5 @@ import com.selwantech.raheeb.ui.base.BaseNavigator;
 
 public interface PayNavigator extends BaseNavigator {
 
+    int getPaymentAction();
 }

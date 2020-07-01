@@ -18,6 +18,9 @@ public class Post implements Serializable {
     @SerializedName("id")
     private int id;
 
+    @SerializedName("user_id")
+    private int user_id;
+
     @SerializedName("title")
     private String title;
 
@@ -42,5 +45,13 @@ public class Post implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }

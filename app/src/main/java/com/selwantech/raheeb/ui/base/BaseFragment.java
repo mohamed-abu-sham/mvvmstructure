@@ -87,6 +87,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
             mRootView = mViewDataBinding.getRoot();
             this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
             mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
+
             mViewDataBinding.setLifecycleOwner(this);
             mViewDataBinding.executePendingBindings();
             setUp();

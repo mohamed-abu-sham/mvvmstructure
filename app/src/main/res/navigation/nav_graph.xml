@@ -271,6 +271,17 @@
     <fragment
         android:id="@+id/walletFragment"
         android:name="com.selwantech.raheeb.ui.accountjourney.payment.wallet.WalletFragment"
-        android:label="WalletFragment" />
+        android:label="WalletFragment">
+        <action
+            android:id="@+id/action_walletFragment_to_cashOutFragment"
+            app:destination="@id/cashOutFragment" />
+        <action
+            android:id="@+id/action_walletFragment_to_payFragment"
+            app:destination="@id/payFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cashOutFragment"
+        android:name="com.selwantech.raheeb.ui.accountjourney.payment.checkout.CashOutFragment"
+        android:label="CashOutFragment" />
 
 </navigation>

@@ -7,6 +7,7 @@ import com.selwantech.raheeb.databinding.FragmentPaymentWebviewBinding;
 import com.selwantech.raheeb.interfaces.ActivityResultCallBack;
 import com.selwantech.raheeb.repository.DataManager;
 import com.selwantech.raheeb.ui.base.BaseFragment;
+import com.selwantech.raheeb.utils.AppConstants;
 import com.selwantech.raheeb.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -79,5 +80,10 @@ public class PayFragment extends BaseFragment<FragmentPaymentWebviewBinding, Pay
 
             }
         });
+    }
+
+    @Override
+    public int getPaymentAction() {
+        return getArguments().getInt(AppConstants.BundleData.PAYMENT_ACTION, -1);
     }
 }

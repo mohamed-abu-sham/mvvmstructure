@@ -171,9 +171,12 @@ public class ChatViewModel extends BaseViewModel<ChatNavigator, FragmentChatBind
     public void onProductClicked(){
         if(chat!=null){
             Bundle data = new Bundle();
-            data.putInt(AppConstants.BundleData.PRODUCT_ID,chat.getPost().getId());
-            Navigation.findNavController(getBaseActivity(),R.id.nav_host_fragment)
-                    .navigate(R.id.productDetailsFragment,data);
+            data.putInt(AppConstants.BundleData.PRODUCT_ID, chat.getPost().getId());
+            if (chat.getPost().getUser_id() != User.getInstance().getUserID()
+                    && chat.getPost().getStatus().equals(AppConstants.PRODUCT_STATUS.AVAILABLE)) {
+                Navigation.findNavController(getBaseActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.productDetailsFragment, data);
+            }
         }
     }
 

@@ -79,6 +79,7 @@ public class PhoneNumberViewModel extends BaseViewModel<PhoneNumberNavigator, Fr
     }
 
     public String phoneNumber() {
-        return User.getInstance().getPhone().isEmpty() ? "" : User.getInstance().getPhone();
+        return User.getInstance().getPhone() != null &&
+                User.getInstance().getPhone().isEmpty() ? "" : User.getInstance().getPhone();
     }
 }

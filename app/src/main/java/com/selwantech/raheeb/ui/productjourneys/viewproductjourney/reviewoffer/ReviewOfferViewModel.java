@@ -54,7 +54,7 @@ public class ReviewOfferViewModel extends BaseViewModel<ReviewOfferNavigator, Fr
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    buyNow.setPayment_method("online");
+                    buyNow.setPayment_method("wait_online");
                     getViewBinding().radCash.setChecked(false);
                     getViewBinding().radWallet.setChecked(false);
                 }
@@ -64,7 +64,7 @@ public class ReviewOfferViewModel extends BaseViewModel<ReviewOfferNavigator, Fr
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    buyNow.setPayment_method("wallet");
+                    buyNow.setPayment_method("user_balance");
                     getViewBinding().radOnline.setChecked(false);
                     getViewBinding().radCash.setChecked(false);
                 }

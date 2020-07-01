@@ -19,6 +19,7 @@ public class Chat implements Serializable {
 
     @SerializedName("user")
     private User user;
+
     @SerializedName("is_seen")
     boolean is_seen;
     public String getDate() {
